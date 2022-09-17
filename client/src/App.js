@@ -1,10 +1,12 @@
 import "./App.css";
-// import { useState } from "react";
-// import Axios from "axios";
+import { useState } from "react";
+import Axios from "axios";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom"
 import HomePage from "./homePage"
 import Login from "./login"
 import Signup from "./signup"
+import Account from "./account";
+import GenPassword from "./genPassword";
 
 // INSERT INTO user (First_Name, Last_Name, Email, Password, DOB, Phone_Number, Created2) VALUES ('HO', 'TUNG', 'h@gamil.com', 'abc123', '1-11-1111', '0101112345', current_timestamp())
 
@@ -35,6 +37,8 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/login.js" element={<Login />} />
           <Route path="/signup.js" element={<Signup />} />
+          <Route path="/account.js" element={<Account />} />
+          <Route path="/genPassword.js" element={<GenPassword />} />
         </Routes>
       </Router>
     </>

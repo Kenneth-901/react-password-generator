@@ -11,7 +11,9 @@ const Navbar = () => {
     <nav>
       <Link to="/">Home</Link> &nbsp; | &nbsp;
       <Link to="/login.js">Log In</Link> &nbsp; | &nbsp;
-      <Link to="/signup.js">Sign up</Link>
+      <Link to="/signup.js">Sign up</Link> &nbsp; | &nbsp;
+      <Link to="/account.js">Account</Link> &nbsp; | &nbsp;
+      <Link to="/genPassword.js">Passwords</Link>
     </nav>
   )
 }
