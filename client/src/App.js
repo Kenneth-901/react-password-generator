@@ -1,17 +1,32 @@
 import "./App.css";
-import { useState } from "react";
-import Axios from "axios";
+// import React, { useState } from "react";
+// import Axios from "axios";
+import React from "react";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom"
-import HomePage from "./homePage"
-import Login from "./login"
-import Signup from "./signup"
+import HomePage from "./homePage";
+import Login from "./login";
+import Signup from "./signup";
 import Account from "./account";
 import GenPassword from "./genPassword";
 
-// INSERT INTO user (First_Name, Last_Name, Email, Password, DOB, Phone_Number, Created2) VALUES ('HO', 'TUNG', 'h@gamil.com', 'abc123', '1-11-1111', '0101112345', current_timestamp())
-
-
 const App = () => {
+  
+  return(
+    <>
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login.js" element={<Login />} />
+          <Route path="/signup.js" element={<Signup />} />
+          <Route path="/account.js" element={<Account />} />
+          <Route path="/genPassword.js" element={<GenPassword />} />
+        </Routes>
+      </Router>
+    </>
+  )
+
+  // THIS IS JUST TO TEST
+
   // const [name, setName] = useState("")
 
   // const addUser = () => {
@@ -30,20 +45,10 @@ const App = () => {
   //     </div>
   //   </div>
   // )
-  return(
-    <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login.js" element={<Login />} />
-          <Route path="/signup.js" element={<Signup />} />
-          <Route path="/account.js" element={<Account />} />
-          <Route path="/genPassword.js" element={<GenPassword />} />
-        </Routes>
-      </Router>
-    </>
-  )
 }
+
+
+// THIS IS FROM THE VIDEO
 
 // function App() {
 //   const [name, setName] = useState("");
@@ -201,29 +206,3 @@ const App = () => {
 // }
 
 export default App;
-
-// import logo from './logo.svg';
-// import './App.css';
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
-
-// export default App;

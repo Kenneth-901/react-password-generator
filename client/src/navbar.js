@@ -3,11 +3,7 @@ import { Link } from "react-router-dom"
 
 const Navbar = () => {
   return(
-    // <nav>
-    //   <a href="homePage.js">Logo Here</a> &nbsp; | &nbsp;
-    //   <a href="login.js">Log In</a> &nbsp; | &nbsp;
-    //   <a href="signup.js">Sign Up</a> 
-    // </nav>
+
     <nav>
       <Link to="/">Home</Link> &nbsp; | &nbsp;
       <Link to="/login.js">Log In</Link> &nbsp; | &nbsp;
@@ -15,6 +11,15 @@ const Navbar = () => {
       <Link to="/account.js">Account</Link> &nbsp; | &nbsp;
       <Link to="/genPassword.js">Passwords</Link>
     </nav>
+
+    // COULDN'T DO IT THIS WAY
+
+    // <nav>
+    //   <a href="homePage.js">Logo Here</a> &nbsp; | &nbsp;
+    //   <a href="login.js">Log In</a> &nbsp; | &nbsp;
+    //   <a href="signup.js">Sign Up</a> 
+    // </nav>
+
   )
 }
 

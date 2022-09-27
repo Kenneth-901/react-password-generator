@@ -4,8 +4,8 @@ import Navbar from "./navbar"
 
 const Login = () => {
   
-  const [vali_email, setemail] = useState("")
-  const [vali_pass, setpass] = useState("")
+  const [vali_email, setvaliemail] = useState("")
+  const [vali_pass, setvalipass] = useState("")
 
   return(
     <>
@@ -17,7 +17,7 @@ const Login = () => {
         <input 
           type="email" 
           name="checkEmail"
-          onChange={(event) => {setemail(event.target.value)}}
+          onChange={(event) => {setvaliemail(event.target.value)}}
           placeholder="Email"
         />
 
@@ -26,7 +26,7 @@ const Login = () => {
         <input 
           type="password" 
           name="checkPassword"
-          onChange={(event) => {setpass(event.target.value)}}
+          onChange={(event) => {setvalipass(event.target.value)}}
           placeholder="Password"
         />  
 
