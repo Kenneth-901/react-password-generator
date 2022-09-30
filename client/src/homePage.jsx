@@ -1,4 +1,4 @@
-import react from 'react'
+import React from 'react'
 // import "./homePage.css";
 import { useState } from "react";
 import Axios from "axios";

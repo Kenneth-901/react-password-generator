@@ -19,6 +19,10 @@ const Account = () => {
         <h1>Date of Birth: </h1>
         
         <h1>Phone Number: </h1>
+
+        <div>
+          Testingsadad 
+        </div>
       </div>
 
       <Footer />
