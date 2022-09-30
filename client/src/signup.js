@@ -64,8 +64,9 @@ const Signup = () => {
 
         <br />
 
+        {/* Help me with this */}
         <input 
-          type="text" 
+          type="email" 
           name="newEmail"
           onChange={(event) => {setemail(event.target.value)}}
           placeholder="Email"
