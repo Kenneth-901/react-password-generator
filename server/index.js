@@ -2,6 +2,8 @@ const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 const app = express();
 
@@ -34,13 +36,19 @@ app.post("/create", (req, res) => {
   const dob = req.body.dob;
   const phoneNumber = req.body.phoneNumber;
 
-  db.query("INSERT INTO user (First_Name, Last_Name, Email, Password, DOB, Phone_Number, Created) VALUES (?, ?, ?, ?, ?, ?, current_timestamp())", [firstName, lastName, email, password, dob, phoneNumber], (err, result) => {
-    console.log(err)
-    // if(err){
-    //   console.log(err)
-    // }else{
-    //   res.send("Values Added")
-    // }
+  bcrypt.hash(password, saltRounds, (err, hash) => {
+    if(err){
+      console.log(err)
+    }
+    
+    db.query("INSERT INTO user (First_Name, Last_Name, Email, Password, DOB, Phone_Number, Created) VALUES (?, ?, ?, ?, ?, ?, current_timestamp())", [firstName, lastName, email, hash, dob, phoneNumber], (err, result) => {
+      console.log(err)
+      // if(err){
+      //   console.log(err)
+      // }else{
+      //   res.send("Values Added")
+      // }
+    })
   })
 
   // THIS IS FOR THE "test" TABLE
@@ -50,8 +58,38 @@ app.post("/create", (req, res) => {
   // db.query("INSERT INTO test (meter) VALUES (?)", name, (err, result) => {
   //   console.log(err)
   // })
+  
 
 })
+
+app.post("/login", (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  db.query(
+    "SELECT * FROM user WHERE Email = ?;",
+    email,
+    (err, result) => {
+      if (err) {
+        res.send({ err: err });
+      }
+
+      if (result.length > 0) {
+        bcrypt.compare(password, result[0].password, (error, response) => {
+          if (response) {
+            req.session.user = result;
+            console.log(req.session.user);
+            res.send(result);
+          } else {
+            res.send({ message: "Wrong username/password combination!" });
+          }
+        });
+      } else {
+        res.send({ message: "User doesn't exist" });
+      }
+    }
+  );
+});
 
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");

@@ -21,8 +21,6 @@ const Signup = () => {
   //   })
   // }
 
-  // Axios.defaults.withCredentials = true;
-
   const register = () => {
     Axios.post("http://localhost:3001/create", {
       firstName: firstName,
