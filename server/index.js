@@ -2,6 +2,7 @@ const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const { Register } = require("./models/model")
 
 const app = express();
 
@@ -15,7 +16,7 @@ app.use(cors())
 app.use(express.json());
 
 
-const db = mysql.createConnection({
+const db = mysql.createPool({
   user: "root",
   host: "localhost",
   port: 3306,
@@ -25,7 +26,7 @@ const db = mysql.createConnection({
 
 // INSERT INTO user (First_Name, Last_Name, Email, Password, DOB, Phone_Number, Created2) VALUES ('HO', 'TUNG', 'h@gamil.com', 'abc123', '1-11-1111', '0101112345', current_timestamp())
 
-app.post("/create", (req, res) => {
+app.post("/create", async (req, res) => {
   
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
@@ -33,8 +34,8 @@ app.post("/create", (req, res) => {
   const password = req.body.password;
   const dob = req.body.dob;
   const phoneNumber = req.body.phoneNumber;
-
-  db.query("INSERT INTO user (First_Name, Last_Name, Email, Password, DOB, Phone_Number, Created) VALUES (?, ?, ?, ?, ?, ?, current_timestamp())", [firstName, lastName, email, password, dob, phoneNumber], (err, result) => {
+  db.query("INSERT INTO user (First_Name, Last_Name, Email, Password, DOB, Phone_Number, Created) VALUES (?, ?, ?, ?, ?, ?, current_timestamp())", 
+    [firstName, lastName, email, password, dob, phoneNumber], (err, result) => {
     console.log(err)
     // if(err){
     //   console.log(err)
@@ -52,6 +53,25 @@ app.post("/create", (req, res) => {
   // })
 
 })
+
+app.get("/account", async (req, res) => {
+
+  db.getConnection( (err, conn) => {
+    if (err) throw err;
+
+    try {
+      const qry = `SELECT * FROM password_generator.user`
+      conn.query(qry, (err, result) => {
+        conn.release();
+        if (err) throw err;
+        res.send(JSON.stringify(result));
+      });
+    } catch (error) {
+      console.log(error);
+      res.end();
+    }
+  });
+});
 
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");
