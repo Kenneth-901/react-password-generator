@@ -55,7 +55,7 @@ const Account = () => {
                   {passwordType ? <FaEye /> : <FaEyeSlash />}
                 </i>
               </div><br/>
-              {`Date of Birth: ${m.Created}`}
+              {`Date of Birth: ${m.DOB}`}
             </fieldset><br/>
           </div>
         ))}
