@@ -22,6 +22,10 @@ input {
 
 }
 
+span {
+  color: red;
+}
+
  button {
   width: 320px;
   height: 50px;
