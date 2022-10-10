@@ -50,6 +50,8 @@ app.post("/create", async (req, res) => {
       //   res.send("Values Added")
       // }
     })
+
+    res.redirect('http://localhost:3000/login.js')
   })
 
   // THIS IS FOR THE "test" TABLE
@@ -68,18 +70,17 @@ app.post("/login", (req, res) => {
   const password = req.body.password;
 
   db.query(
-    "SELECT * FROM user WHERE Email = ?;",
-    email,
-    (err, result) => {
+    "SELECT * FROM user WHERE Email = ?", email, (err, result) => {
       if (err) {
         res.send({ err: err });
       }
-
+      
       if (result.length > 0) {
-        bcrypt.compare(password, result[0].password, (error, response) => {
+        bcrypt.compare(password, result[0].Password, (error, response) => {
+          console.log(response)
           if (response) {
-            req.session.user = result;
-            console.log(req.session.user);
+            // req.session.user = result;
+            // console.log(req.session.user);
             res.send(result);
           } else {
             res.send({ message: "Wrong username/password combination!" });

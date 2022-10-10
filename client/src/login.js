@@ -2,26 +2,50 @@ import React, { useState } from "react"
 import Footer from "./footer"
 import Navbar from "./navbar"
 import Axios from "axios"
+import { Formik, Form, Field, ErrorMessage } from "formik"
+import * as Yup from "yup"
+import "yup-phone"
 
 const Login = () => {
   
-  const [vali_email, setvaliemail] = useState("")
-  const [vali_pass, setvalipass] = useState("")
-
+  // const [vali_email, setvaliemail] = useState("")
+  // const [vali_pass, setvalipass] = useState("")
   const [loginStatus, setLoginStatus] = useState("");
 
-  const logIn = () => {
-    Axios.post("http://localhost:3001/login", {
-      email: vali_email,
-      password: vali_pass,
-    }).then((response) => {
-      if (response.data.message) {
-        setLoginStatus(response.data.message);
-      } else {
-        setLoginStatus(response.data[0].username);
+  // const logIn = () => {
+  //   Axios.post("http://localhost:3001/login", {
+  //     email: vali_email,
+  //     password: vali_pass,
+  //   }).then((response) => {
+  //     if(response.data.message){
+  //       setLoginStatus(response.data.message)
+  //     }else{
+  //       setLoginStatus(response.data[0].First_Name)
+  //     }
+  //   });
+  // };
+
+  const initialValues = {
+    email: "",
+    password: ""
+  };
+
+  const logIn = (data) => {
+    console.log(data);
+    Axios.post("http://localhost:3001/login", data).then((response) => {
+      if(response.data.message){
+        setLoginStatus(response.data.message)
+      }else{
+        setLoginStatus(response.data[0].First_Name)
       }
+      console.log(response)
     });
   };
+
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().required("This is a required field"),
+    password: Yup.string().required("This is a required field"),
+  });
 
   // useEffect(() => {
   //   Axios.get("http://localhost:3001/login").then((response) => {
@@ -39,7 +63,31 @@ const Login = () => {
 
       <div className="App">
         <div className="information">
-          <input 
+        <Formik 
+            initialValues = {initialValues}
+            onSubmit={logIn} 
+            validationSchema={validationSchema}>
+            <Form>
+              <Field
+                id="Email"
+                name="email"
+                placeholder="Enter email"
+              />
+              <ErrorMessage name="email" component="span"/>
+              <br />
+              <Field
+                id="Password"
+                name="password"
+                type="password"
+                placeholder="Enter password"
+              />
+              <ErrorMessage name="password" component="span"/>
+              <br />
+              <button type="submit">Log In</button> 
+            </Form>
+          </Formik>
+
+          {/* <input 
             type="email" 
             name="checkEmail"
             onChange={(event) => {setvaliemail(event.target.value)}}
@@ -57,7 +105,7 @@ const Login = () => {
 
           <br />
 
-          <button onClick={logIn}>Log In</button>
+          <button onClick={logIn}>Log In</button> */}
         </div>
       </div>
     

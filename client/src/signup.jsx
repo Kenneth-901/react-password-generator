@@ -57,8 +57,8 @@ const Signup = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    firstName: Yup.string().min(3).max(15).required("This is a required field"),
-    lastName: Yup.string().min(3).max(15).required("This is a required field"),
+    firstName: Yup.string().required("This is a required field"),
+    lastName: Yup.string().required("This is a required field"),
     email: Yup.string().email().required(),
     password: Yup.string().min(8, "Password is too short - should be 8 chars minimum.").password().required("No password provided."),
     dob: Yup.date().default(function () {
