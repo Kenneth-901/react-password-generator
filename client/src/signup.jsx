@@ -8,38 +8,18 @@ import YupPassword from 'yup-password'
 import "yup-phone"
 import "./App.css"
 
+
+// Things to do
+// Sign Up Page
+// - First Name & Last Name error message
+// - Check for no duplicate email in the db
+// - Password change to hidden text with eye icon beside to change back to plain text
+// - Confirm password field (make sure that both password & confirm password field is the same)
+// - After sign up successful then auto redirect to log in page
+
 const Signup = () => {
   YupPassword(Yup)
-  // const [firstName, setfirstName] = useState("")
-  // const [lastName, setlastName] = useState("")
-  // const [email, setemail] = useState("")
-  // const [password, setpassword] = useState("")
-  // const [dob, setdob] = useState("")
-  // const [phoneNumber, setphoneNumber] = useState("")
-
-  // const [name, setName] = useState("")
-
-  // const addUser = () => {
-  //   Axios.post("http://localhost:3001/create", {
-  //     name: name
-  //   })
-  // }
-
-  // Axios.defaults.withCredentials = true;
-
-  // const register = () => {
-  //   Axios.post("http://localhost:3001/create", {
-  //     firstName: firstName,
-  //     lastName: lastName,
-  //     email: email,
-  //     password: password,
-  //     dob: dob,
-  //     phoneNumber: phoneNumber
-  //   }).then((response) => {
-  //     console.log(response);
-  //   });
-  // };
-
+  
   const initialValues = {
     firstName: "",
     lastName: "",
@@ -213,3 +193,34 @@ const Signup = () => {
 }
 
 export default Signup
+
+
+  // const [firstName, setfirstName] = useState("")
+  // const [lastName, setlastName] = useState("")
+  // const [email, setemail] = useState("")
+  // const [password, setpassword] = useState("")
+  // const [dob, setdob] = useState("")
+  // const [phoneNumber, setphoneNumber] = useState("")
+
+  // const [name, setName] = useState("")
+
+  // const addUser = () => {
+  //   Axios.post("http://localhost:3001/create", {
+  //     name: name
+  //   })
+  // }
+
+  // Axios.defaults.withCredentials = true;
+
+  // const register = () => {
+  //   Axios.post("http://localhost:3001/create", {
+  //     firstName: firstName,
+  //     lastName: lastName,
+  //     email: email,
+  //     password: password,
+  //     dob: dob,
+  //     phoneNumber: phoneNumber
+  //   }).then((response) => {
+  //     console.log(response);
+  //   });
+  // };
