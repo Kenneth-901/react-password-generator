@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Footer from "./footer"
 import Navbar from "./navbar"
 import Axios from "axios"
@@ -25,20 +25,22 @@ const Login = () => {
   //   });
   // };
 
+  Axios.defaults.withCredentials = true
+
   const initialValues = {
     email: "",
     password: ""
   };
 
   const logIn = (data) => {
-    console.log(data);
+    // console.log(data)
     Axios.post("http://localhost:3001/login", data).then((response) => {
       if(response.data.message){
         setLoginStatus(response.data.message)
       }else{
         setLoginStatus(response.data[0].First_Name)
       }
-      console.log(response)
+      // console.log(response)
     });
   };
 
@@ -49,11 +51,20 @@ const Login = () => {
 
   // useEffect(() => {
   //   Axios.get("http://localhost:3001/login").then((response) => {
-  //     if (response.data.loggedIn == true) {
-  //       setLoginStatus(response.data.user[0].username);
+  //     console.log(response)
+  //     if (response.data.loggedIn === true) {
+  //       setLoginStatus(response.data.user[0].First_Name);
   //     }
   //   });
   // }, []);
+
+  useEffect(() => {
+    Axios.get("http://localhost:3001/login").then((response) => {
+      if(response.data.loggedIn === true){
+        setLoginStatus(response.data.user[0].First_Name)
+      }
+    })
+  })
 
   return(
     <>
