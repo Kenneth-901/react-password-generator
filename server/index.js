@@ -4,6 +4,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const { Register } = require("./models/model")
@@ -30,7 +31,6 @@ app.use(session({
     expires: 60 * 60 * 24
   }
 }))
-
 
 const db = mysql.createPool({
   user: "root",
@@ -75,8 +75,30 @@ app.post("/create", async (req, res) => {
   // db.query("INSERT INTO test (meter) VALUES (?)", name, (err, result) => {
   //   console.log(err)
   // })
-  
+})
 
+const verifyJWT = (req, res, next) => {
+  const token = req.headers["x-access-token"]
+
+  if(!token){
+    res.send("Token required")
+  }else{
+    jwt.verify(token, "testToken", (err, decoded) => {
+      if(err){
+        res.json({
+          auth: false,
+          message: "Authentication failed"
+        })
+      }else{
+        req.userID = decoded.id
+        next()
+      }
+    })
+  }
+}
+
+app.get("/isUserAuth", verifyJWT, (req, res) => {
+  res.send("Authentication successful")
 })
 
 app.post("/login", (req, res) => {
@@ -92,15 +114,32 @@ app.post("/login", (req, res) => {
       if (result.length > 0) {
         bcrypt.compare(password, result[0].Password, (error, response) => {
           if (response) {
+            const id = result[0].userID
+            const token = jwt.sign({id}, "testToken", {
+              expiresIn: 30
+            })            
+            
             req.session.user = result;
             // console.log(req.session.user);
-            res.send(result);
+            res.json({
+              auth: true,
+              token: token,
+              // Edit the result because it is passing the password to front end
+              // result: result[0].First_Name + result[0].Last_Name
+              result: result[0]
+            })
           } else {
-            res.send({ message: "Wrong username/password combination!" });
+            res.json({
+              auth: false,
+              message: "Wrong username/password combination!"
+            })
           }
         });
       } else {
-        res.send({ message: "User doesn't exist" });
+        res.json({
+          auth: false,
+          message: "User doesn't exist"
+        })
       }
     }
   );
@@ -108,9 +147,14 @@ app.post("/login", (req, res) => {
 
 app.get("/login", (req, res) => {
   if(req.session.user){
-    res.send({loggedIn: true, user: req.session.user})
+    res.send({
+      loggedIn: true, 
+      user: req.session.user
+    })
   }else{
-    res.send({loggedIn: false})
+    res.send({
+      loggedIn: false
+    })
   }
 })
 

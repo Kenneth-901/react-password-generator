@@ -10,7 +10,8 @@ const Login = () => {
   
   // const [vali_email, setvaliemail] = useState("")
   // const [vali_pass, setvalipass] = useState("")
-  const [loginStatus, setLoginStatus] = useState("");
+  const [loginStatus, setLoginStatus] = useState(false);
+  const [genPass, setgenPass] = useState("")
 
   // const logIn = () => {
   //   Axios.post("http://localhost:3001/login", {
@@ -35,10 +36,13 @@ const Login = () => {
   const logIn = (data) => {
     // console.log(data)
     Axios.post("http://localhost:3001/login", data).then((response) => {
-      if(response.data.message){
-        setLoginStatus(response.data.message)
+      // console.log(response)
+      if(!response.data.auth){
+        setLoginStatus(false)
       }else{
-        setLoginStatus(response.data[0].First_Name)
+        // console.log(response.data)
+        localStorage.setItem("token", response.data.token)
+        setLoginStatus(true)
       }
       // console.log(response)
     });
@@ -49,6 +53,20 @@ const Login = () => {
     password: Yup.string().required("This is a required field"),
   });
 
+  const authenticate = () => {
+    Axios.get("http://localhost:3001/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token")
+      }
+    }).then((response) => {
+      console.log(response.data.auth)
+      if(!response.data.auth){
+        setgenPass("Success")
+      }else{
+        setgenPass("fail")
+      }
+    })
+  }
   // useEffect(() => {
   //   Axios.get("http://localhost:3001/login").then((response) => {
   //     console.log(response)
@@ -120,7 +138,11 @@ const Login = () => {
         </div>
       </div>
     
-      <h1>{loginStatus}</h1>
+      <h1>{loginStatus && (
+        <button onClick={authenticate}>View Password</button>
+      )}</h1>
+
+      <p>{genPass}</p>
       
       <Footer />
     </>
