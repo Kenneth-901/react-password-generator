@@ -11,10 +11,19 @@ const HomePage = () => {
   const [answer2, setanswer2] = useState("")
   const [answer3, setanswer3] = useState("")
   
+  const isLoggedIn = () => {
+    Axios.get("http://localhost:3001/login").then((response) => {
+      console.log(response)
+      console.log(response.data.loggedIn)
+    })
+  }
+
   return(
     <>
       {/* Navigation bar here */}
       <Navbar />
+
+      <button onClick={isLoggedIn}>click here</button>
 
       <main>
         

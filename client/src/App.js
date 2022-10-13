@@ -8,6 +8,7 @@ import Login from "./login";
 import Signup from "./signup";
 import Account from "./account";
 import GenPassword from "./genPassword";
+import SignOut from "./signout";
 
 const App = () => {
   
@@ -17,6 +18,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login.js" element={<Login />} />
+          <Route path="/signout.js" element={<SignOut />} />
           <Route path="/signup.js" element={<Signup />} />
           <Route path="/account.js" element={<Account />} />
           <Route path="/genPassword.js" element={<GenPassword />} />

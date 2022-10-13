@@ -12,7 +12,6 @@ const Login = () => {
   // const [vali_pass, setvalipass] = useState("")
   const [auth, setauth] = useState(false);
   const [logInStatus, setlogInStatus] = useState("")
-  const [genPass, setgenPass] = useState("")
 
   // const logIn = () => {
   //   Axios.post("http://localhost:3001/login", {
@@ -46,15 +45,7 @@ const Login = () => {
         // console.log(response.data)
         localStorage.setItem("token", response.data.token)
         setauth(true)
-        setlogInStatus(() => {
-          return(
-            <>
-            <p>{response.data.result.First_Name}</p>
-            <button onClick={authenticate}>View Password</button>
-            </>
-            
-          )
-        })
+        setlogInStatus(response.data.result.First_Name)
       }
       // console.log(response)
     });
@@ -65,21 +56,6 @@ const Login = () => {
     password: Yup.string().required("This is a required field"),
   });
 
-  const authenticate = () => {
-    Axios.get("http://localhost:3001/isUserAuth", {
-      headers: {
-        "x-access-token": localStorage.getItem("token")
-      }
-    }).then((response) => {
-      console.log(response)
-      console.log(response.data.auth)
-      if(response.data.auth){
-        setgenPass("Success")
-      }else{
-        setgenPass("fail")
-      }
-    })
-  }
   // useEffect(() => {
   //   Axios.get("http://localhost:3001/login").then((response) => {
   //     console.log(response)
@@ -93,15 +69,7 @@ const Login = () => {
     Axios.get("http://localhost:3001/login").then((response) => {
       // console.log(response)
       if(response.data.loggedIn === true){
-        setlogInStatus(() => {
-          return(
-            <>
-            <p>{response.data.user[0].First_Name}</p>
-            <button onClick={authenticate}>View Password</button>
-            </>
-            
-          )
-        })
+        setlogInStatus(response.data.user[0].First_Name)
       }
     })
   }, [])
@@ -162,15 +130,6 @@ const Login = () => {
     
       <h1>{logInStatus}</h1>
 
-      {/* <h1>{auth && (
-        <>
-        <p>{logInStatus}</p>
-        <button onClick={authenticate}>View Password</button>
-        </>
-      )}</h1> */}
-
-      <p>{genPass}</p>
-      
       <Footer />
     </>
   )
