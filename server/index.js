@@ -98,7 +98,11 @@ const verifyJWT = (req, res, next) => {
 }
 
 app.get("/isUserAuth", verifyJWT, (req, res) => {
-  res.send("Authentication successful")
+  // res.send("Authentication successful")
+  res.json({
+    auth: true,
+    message: "Authentication successful"
+  })
 })
 
 app.post("/login", (req, res) => {
