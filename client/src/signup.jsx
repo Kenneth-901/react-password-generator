@@ -7,6 +7,8 @@ import * as Yup from "yup"
 import YupPassword from 'yup-password'
 import "yup-phone"
 import "./App.css"
+import { useNavigate } from "react-router-dom";
+import PasswordShowAndHide from "./components/passwordShowAndHide";
 
 
 // Things to do
@@ -18,7 +20,9 @@ import "./App.css"
 // - After sign up successful then auto redirect to log in page
 
 const Signup = () => {
-  YupPassword(Yup)
+  YupPassword(Yup);
+  const navigate = useNavigate();
+  const [existingEmail, setExistingEmail] = useState(false);
   
   const initialValues = {
     firstName: "",
@@ -30,24 +34,35 @@ const Signup = () => {
   };
 
   const onSubmit = (data) => {
-    console.log(data);
     Axios.post("http://localhost:3001/create", data).then((response) => {
       console.log(response);
+      setExistingEmail(response.data);
+      if (response.data === false) {
+        navigate("/login.js");
+      }
     });
+    
   };
 
   const validationSchema = Yup.object().shape({
-    firstName: Yup.string().required("This is a required field"),
-    lastName: Yup.string().required("This is a required field"),
-    email: Yup.string().email().required(),
+    firstName: Yup.string().required("Required!"),
+    lastName: Yup.string().required("Required!"),
+    email: Yup.string().email().required("Email Required!"),
     password: Yup.string().min(8, "Password is too short - should be 8 chars minimum.").password().required("No password provided."),
+    dPassword: Yup.string().when("password", {
+      is: val => (val && val.length > 0 ? true : false),
+      then: Yup.string().oneOf(
+        [Yup.ref("password")],
+        "Both password need to be the same"
+      )
+    }),
     dob: Yup.date().default(function () {
       return new Date();
     }),
     phoneNumber: Yup.string().phone("MY").required()
   });
 
-  
+  console.log(existingEmail);
   return(
     <>
       <Navbar />
@@ -58,20 +73,20 @@ const Signup = () => {
             initialValues = {initialValues}
             onSubmit={onSubmit} 
             validationSchema={validationSchema}>
-            <Form>
+            <Form className="test">
               <Field
                 id="FirstName"
                 name="firstName"
                 placeholder="First Name"
               />
-              <ErrorMessage name="fName" component="span"/>
+              <ErrorMessage name="firstName" component="span"/>
               <br />
               <Field
                 id="LastName"
                 name="lastName"
                 placeholder="Last Name"
               />
-              <ErrorMessage name="lName" component="span"/>
+              <ErrorMessage name="lastName" component="span"/>
               <br />
               <Field 
                 id="email" 
@@ -80,12 +95,24 @@ const Signup = () => {
               />
               <ErrorMessage name="email" component="span"/>
               <br />
-              <Field 
-                id="Password" 
-                name="password"
-                placeholder="Password"
-              />
-              <ErrorMessage name="password" component="span"/>
+              <div className="passwordInput">
+                <Field 
+                  id="Password" 
+                  name="password"
+                  type="password"
+                  component={PasswordShowAndHide}
+                  placeholder="Password"
+                />
+                <ErrorMessage name="password" component="span"/>
+                <br />
+                <Field 
+                  id="Password" 
+                  name="dPassword"
+                  type="password"
+                  placeholder="Double Confirm Your Password"
+                />
+                <ErrorMessage name="dPassword" component="span"/>
+              </div>
               <br />
               <Field 
                 id="Dob" 
@@ -101,6 +128,7 @@ const Signup = () => {
               />
               <ErrorMessage name="phoneNumber" component="span"/>
               <br />
+              {existingEmail && <span>Email already exsited</span>}
               <button type="submit">Sign Up</button> 
             </Form>
           </Formik>
