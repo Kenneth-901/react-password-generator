@@ -52,20 +52,25 @@ app.post("/create", async (req, res) => {
   const phoneNumber = req.body.phoneNumber;
 
   bcrypt.hash(password, saltRounds, (err, hash) => {
-    if(err){
-      console.log(err)
-    }
-    
-    db.query("INSERT INTO user (First_Name, Last_Name, Email, Password, DOB, Phone_Number, Created) VALUES (?, ?, ?, ?, ?, ?, current_timestamp())", [firstName, lastName, email, hash, dob, phoneNumber], (err, result) => {
-      console.log(err)
-      // if(err){
-      //   console.log(err)
-      // }else{
-      //   res.send("Values Added")
-      // }
-    })
+    if(err) throw err;
 
-    res.redirect('http://localhost:3000/login.js')
+    const list = "SELECT * FROM password_generator.user"
+    db.query(list, (err, result) => {
+      const existEmail = result.map(e => e.Email).includes(email);
+      if (existEmail) {
+        res.send(existEmail);
+      } else {
+        db.query("INSERT INTO user (First_Name, Last_Name, Email, Password, DOB, Phone_Number, Created) VALUES (?, ?, ?, ?, ?, ?, current_timestamp())", [firstName, lastName, email, hash, dob, phoneNumber], (err, result) => {
+          if (err) throw err;
+          // if(err){
+          //   console.log(err)
+          // }else{
+          //   res.send("Values Added")
+          // }
+        })
+      };
+      if (err) throw err;
+    });
   })
 
   // THIS IS FOR THE "test" TABLE
