@@ -34,7 +34,7 @@ const Account = () => {
       {/* Help me with this */}
       {/* Here to display all the account info */}
       <form>
-        {item.map(m => (
+        {item.length > 0 && item.map(m => (
           <div key={m.userID}>
             <fieldset>
               <legend>{`Profile: ${m.First_Name}`}</legend>

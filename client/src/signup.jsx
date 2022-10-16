@@ -22,32 +22,38 @@ import PasswordShowAndHide from "./components/passwordShowAndHide";
 const Signup = () => {
   YupPassword(Yup);
   const navigate = useNavigate();
-  const [existingEmail, setExistingEmail] = useState(false);
   
   const initialValues = {
     firstName: "",
     lastName: "",
     email: "",
     password: "",
+    dPassword: "",
     dob: "",
     phoneNumber: ""
   };
 
   const onSubmit = (data) => {
     Axios.post("http://localhost:3001/create", data).then((response) => {
-      console.log(response);
-      setExistingEmail(response.data);
-      if (response.data === false) {
-        navigate("/login.js");
-      }
+      console.log("success");
     });
-    
   };
 
   const validationSchema = Yup.object().shape({
     firstName: Yup.string().required("Required!"),
     lastName: Yup.string().required("Required!"),
-    email: Yup.string().email().required("Email Required!"),
+    email: Yup.string().email().required("Email Required!").test('Unique Email', 'Email already in use', 
+      function(value){
+        return new Promise((resolve, reject) => {
+          Axios.get(`http://localhost:3001/existed/${value}`).then((res) => {
+            if (res.data.length > 0) {
+              resolve(false);
+            }else {
+              resolve(true);
+            }
+          })
+        })
+    }),
     password: Yup.string().min(8, "Password is too short - should be 8 chars minimum.").password().required("No password provided."),
     dPassword: Yup.string().when("password", {
       is: val => (val && val.length > 0 ? true : false),
@@ -62,7 +68,6 @@ const Signup = () => {
     phoneNumber: Yup.string().phone("MY").required()
   });
 
-  console.log(existingEmail);
   return(
     <>
       <Navbar />
@@ -71,67 +76,79 @@ const Signup = () => {
         <div className="information">
           <Formik 
             initialValues = {initialValues}
-            onSubmit={onSubmit} 
-            validationSchema={validationSchema}>
-            <Form className="test">
-              <Field
-                id="FirstName"
-                name="firstName"
-                placeholder="First Name"
-              />
-              <ErrorMessage name="firstName" component="span"/>
-              <br />
-              <Field
-                id="LastName"
-                name="lastName"
-                placeholder="Last Name"
-              />
-              <ErrorMessage name="lastName" component="span"/>
-              <br />
-              <Field 
-                id="email" 
-                name="email"
-                placeholder="Email"
-              />
-              <ErrorMessage name="email" component="span"/>
-              <br />
-              <div className="passwordInput">
-                <Field 
-                  id="Password" 
-                  name="password"
-                  type="password"
-                  component={PasswordShowAndHide}
-                  placeholder="Password"
-                />
-                <ErrorMessage name="password" component="span"/>
-                <br />
-                <Field 
-                  id="Password" 
-                  name="dPassword"
-                  type="password"
-                  placeholder="Double Confirm Your Password"
-                />
-                <ErrorMessage name="dPassword" component="span"/>
-              </div>
-              <br />
-              <Field 
-                id="Dob" 
-                name="dob"
-                type="date"
-                placeholder="DOB"
-              />
-              <br />
-              <Field 
-                id="PhoneNumber" 
-                name="phoneNumber"
-                placeholder="Phone Number"
-              />
-              <ErrorMessage name="phoneNumber" component="span"/>
-              <br />
-              {existingEmail && <span>Email already exsited</span>}
-              <button type="submit">Sign Up</button> 
-            </Form>
-          </Formik>
+            onSubmit={(v) => {
+              onSubmit(v);
+              navigate("/login.js");
+            }} 
+            validationSchema={validationSchema}
+            render={({ errors, status, touched }) => (
+              <Form className="test">
+                <div className="form-group">
+                  <Field
+                    id="FirstName"
+                    name="firstName"
+                    type="text"
+                    placeholder="First Name"
+                    className={'form-control' + (errors.firstName && touched.firstName ? ' is-invalid' : '')}
+                  />
+                  <ErrorMessage name="firstName" component="span" className="invalid-feedback"/>
+                </div>
+                <div className="form-group">
+                  <Field
+                    id="LastName"
+                    name="lastName"
+                    placeholder="Last Name"
+                  />
+                  <ErrorMessage name="lastName" component="span" className="invalid-feedback"/>
+                </div>
+                <div className="form-group">
+                  <Field 
+                    id="email" 
+                    name="email"
+                    placeholder="Email"
+                  />
+                </div>
+                <ErrorMessage name="email" component="span"/>
+                <div className="form-group">
+                  <Field 
+                    id="Password" 
+                    name="password"
+                    component={PasswordShowAndHide}
+                  />
+                  <ErrorMessage name="password" component="span"/>
+                  <br />
+                  <Field 
+                    id="Password" 
+                    name="dPassword"
+                    type="password"
+                    component={PasswordShowAndHide}
+                    placeholder="Double Confirm Your Password"
+                  />
+                  <ErrorMessage name="dPassword" component="span"/>
+                </div>
+                <div className="form-group">
+                  <Field 
+                    id="Dob" 
+                    name="dob"
+                    type="date"
+                    placeholder="DOB"
+                  />
+                </div>
+                <div className="form-group">
+                  <Field 
+                    id="PhoneNumber" 
+                    name="phoneNumber"
+                    placeholder="Phone Number"
+                  />
+                  <ErrorMessage name="phoneNumber" component="span"/>
+                </div>
+                <div className="form-group">
+                  <button type="submit" className="btn btn-primary mr-2">Register</button>
+                  <button type="reset" className="btn btn-secondary">Reset</button>
+                </div>
+              </Form>
+            )}
+          />
 
         {/* Help me with this */}
 

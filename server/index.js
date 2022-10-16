@@ -58,7 +58,7 @@ app.post("/create", async (req, res) => {
     db.query(list, (err, result) => {
       const existEmail = result.map(e => e.Email).includes(email);
       if (existEmail) {
-        res.send(existEmail);
+        res.send(err);
       } else {
         db.query("INSERT INTO user (First_Name, Last_Name, Email, Password, DOB, Phone_Number, Created) VALUES (?, ?, ?, ?, ?, ?, current_timestamp())", [firstName, lastName, email, hash, dob, phoneNumber], (err, result) => {
           if (err) throw err;
@@ -174,8 +174,30 @@ app.get("/account", async (req, res) => {
     if (err) throw err;
 
     try {
-      const qry = `SELECT * FROM password_generator.user`
-      conn.query(qry, (err, result) => {
+      const result = req.session.user;
+      res.send(result);
+      // const qry = `SELECT * FROM password_generator.user`
+      // conn.query(qry, (err, result) => {
+      //   conn.release();
+      //   if (err) throw err;
+      //   res.send(JSON.stringify(result));
+      // });
+    } catch (error) {
+      console.log(error);
+      res.end();
+    }
+  });
+});
+
+app.get(`/existed/:value`, async (req, res) => {
+  const email = req.params.value;
+  
+  db.getConnection( (err, conn) => {
+    if (err) throw err;
+
+    try {
+      const qry = `SELECT * FROM user WHERE Email = ?`
+      conn.query(qry, email, (err, result) => {
         conn.release();
         if (err) throw err;
         res.send(JSON.stringify(result));
