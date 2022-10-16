@@ -13,11 +13,14 @@ import PasswordShowAndHide from "./components/passwordShowAndHide";
 
 // Things to do
 // Sign Up Page
-// - First Name & Last Name error message
-// - Check for no duplicate email in the db
-// - Password change to hidden text with eye icon beside to change back to plain text
-// - Confirm password field (make sure that both password & confirm password field is the same)
 // - After sign up successful then auto redirect to log in page
+
+// Account Page
+// Only display the logged in user's information
+
+// Navbar (optional but much greatful)
+// Able to change from "log in" -> "sign out" after logging in & refreshing the page
+// Also able to change back from "sign out" -> "log in" after signing out & refreshing the page
 
 const Signup = () => {
   YupPassword(Yup);
