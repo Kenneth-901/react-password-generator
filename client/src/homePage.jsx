@@ -1,54 +1,38 @@
 import React, { useState } from 'react'
-// import "./homePage.css";
+import "./styles/homepage.css";
 import Axios from "axios";
 import Navbar from './navbar';
 import Footer from './footer';
+import PassMeter from './components/passMeter';
 
 const HomePage = () => {
   
-  const [passMeter, setpassMeter] = useState("")
   const [answer1, setanswer1] = useState("")
   const [answer2, setanswer2] = useState("")
   const [answer3, setanswer3] = useState("")
   
-  const isLoggedIn = () => {
-    Axios.get("http://localhost:3001/login").then((response) => {
-      console.log(response)
-      console.log(response.data.loggedIn)
-    })
-  }
+  // const isLoggedIn = () => {
+  //   Axios.get("http://localhost:3001/login").then((response) => {
+  //     console.log(response)
+  //     console.log(response.data.loggedIn)
+  //   })
+  // }
+
+
 
   return(
     <>
       {/* Navigation bar here */}
       <Navbar />
 
-      <button onClick={isLoggedIn}>click here</button>
+      {/* <button onClick={isLoggedIn}>click here</button> */}
 
       <main>
         
         {/* Should I put the input into <form>? */}
 
         {/* Password Meter */}
-        <section>
-          <form>
-            
-            <h2>Password Meter: </h2>
-            
-            <input 
-              type="text" 
-              name="passwordMeter"
-              onChange={(event) => {setpassMeter(event.target.value)}}
-              placeholder="Enter Password"
-            />
-
-            <br /><br />
-
-            {/* Need to put either "onClick" or "onSubmit" */}
-            <input type="submit" value="Check Password"/>
-          
-          </form>
-        </section>
+        <PassMeter />
 
         {/* Password Generator */}
         <section>

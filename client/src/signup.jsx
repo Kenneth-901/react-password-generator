@@ -13,10 +13,7 @@ import PasswordShowAndHide from "./components/passwordShowAndHide";
 
 // Things to do
 // Sign Up Page
-// - After sign up successful then auto redirect to log in page
-
-// Account Page
-// Only display the logged in user's information
+// "double confirm" placeholder
 
 // Navbar (optional but much greatful)
 // Able to change from "log in" -> "sign out" after logging in & refreshing the page

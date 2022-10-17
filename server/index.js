@@ -167,6 +167,11 @@ app.get("/login", (req, res) => {
   }
 })
 
+app.post("/signout", (req, res) => {
+  req.session.destroy((err) => {
+    res.send(err)
+  })
+})
 
 app.get("/account", async (req, res) => {
 

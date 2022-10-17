@@ -51,9 +51,9 @@ const Account = () => {
                   disabled
                   readonly
                 />
-                <i onClick={togglePassword}>
+                {/* <i onClick={togglePassword}>
                   {passwordType ? <FaEye /> : <FaEyeSlash />}
-                </i>
+                </i> */}
               </div><br/>
               {`Date of Birth: ${m.DOB}`}
             </fieldset><br/>
