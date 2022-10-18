@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import Navbar from "./navbar"
+import Navbar from "./NavBar/navbar"
 import Footer from "./footer"
 // import { Link } from "react-router-dom"
 // import Axios from "axios"

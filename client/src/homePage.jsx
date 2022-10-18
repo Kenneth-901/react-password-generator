@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 // import "./homePage.css";
 import Axios from "axios";
-import Navbar from './navbar';
+import Navbar from './NavBar/navbar';
 import Footer from './footer';
 
 const HomePage = () => {

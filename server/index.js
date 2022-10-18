@@ -155,15 +155,22 @@ app.post("/login", (req, res) => {
 })
 
 app.get("/login", (req, res) => {
-  if(req.session.user){
-    res.send({
-      loggedIn: true, 
-      user: req.session.user
-    })
-  }else{
-    res.send({
-      loggedIn: false
-    })
+  // if(req.session.user){
+  //   res.send({
+  //     loggedIn: true, 
+  //     user: req.session.user
+  //   })
+  // }else{
+  //   res.send({
+  //     loggedIn: false
+  //   })
+  // }
+  try {
+    const result = req.session.user;
+    res.send(result);
+  } catch (error) {
+    console.log(error);
+    res.end();
   }
 })
 
