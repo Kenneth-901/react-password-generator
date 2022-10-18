@@ -52,7 +52,7 @@ const Account = () => {
       </div>
       
       <form>
-        {item.map(m => (
+        {item.length > 0 && item.map(m => (
           <div key={m.userID}>
             <fieldset>
               <legend>{`Profile: ${m.First_Name}`}</legend>
@@ -69,9 +69,9 @@ const Account = () => {
                   disabled
                   readonly
                 />
-                <i onClick={togglePassword}>
+                {/* <i onClick={togglePassword}>
                   {passwordType ? <FaEye /> : <FaEyeSlash />}
-                </i>
+                </i> */}
               </div><br/>
               {`Date of Birth: ${m.DOB}`}
             </fieldset><br/>

@@ -5,6 +5,7 @@ import Axios from "axios"
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import * as Yup from "yup"
 import "yup-phone"
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   
@@ -12,7 +13,8 @@ const Login = () => {
   // const [vali_pass, setvalipass] = useState("")
   const [auth, setauth] = useState(false);
   const [logInStatus, setlogInStatus] = useState("")
-
+  const navigate = useNavigate();
+  
   // const logIn = () => {
   //   Axios.post("http://localhost:3001/login", {
   //     email: vali_email,
@@ -46,6 +48,7 @@ const Login = () => {
         localStorage.setItem("token", response.data.token)
         setauth(true)
         setlogInStatus(response.data.result.First_Name)
+        navigate("/")
       }
       // console.log(response)
     });
