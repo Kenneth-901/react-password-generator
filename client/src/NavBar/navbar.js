@@ -12,36 +12,15 @@ import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   
-  const [isloggedIn, setisloggedIn] = useState([])
-  const navigate = useNavigate();
+  // const [isloggedIn, setisloggedIn] = useState([])
 
   // useEffect(() => {
   //   Axios.get("http://localhost:3001/login").then((response) => {
-  //     if(response.data.loggedIn === true){
-  //       setisloggedIn(true)
-  //     }else{
-  //       setisloggedIn(false)
-  //     }
-  //   })
-  // })
+  //   setisloggedIn(response.data);
+  //   });
+  // }, []);
 
-  Axios.get("http://localhost:3001/login").then((response) => {
-    setisloggedIn(response.data);
-  })
-
-  console.log(isloggedIn)
-
-  // const signout = () => {
-  //   Axios.get("http://localhost:3001/login").then((response) => {
-  //     console.log(response + "login")
-  //     localStorage.removeItem("token", response.data.token)
-  //   })
-
-  //   Axios.post("http://localhost:3001/signout").then((response) => {
-  //     console.log(response + "signout")
-  //     navigate("/")
-  //   })
-  // }
+  const isloggedIn = window.localStorage.getItem("isLoggedIn");
   
   return(
     <>
@@ -50,31 +29,32 @@ const Navbar = () => {
           {/* <img src={require('../../images/logo.svg')} alt='logo' /> */}image
         </NavLink>
         <Bars />
-        <NavMenu>
-          <NavLink to="/" activeStyle>Home</NavLink>
-          
-          {/* {isloggedIn && isloggedIn.length > 0 ? <NavLink to="/">Sign Out</NavLink> : 
-          <NavLink to="/login.js">Log In</NavLink>
-          } &nbsp; | &nbsp; */}
-          
-          {isloggedIn &&
+        {isloggedIn ? (
           <>
-            <NavLink to="/account.js" activeStyle>Account</NavLink>
-            <NavLink to="/genPassword.js" activeStyle>Passwords</NavLink>
+            <NavMenu>
+              <NavLink to="/" activeStyle>Home</NavLink>
+              {/* {isloggedIn && isloggedIn.length > 0 ? <NavLink to="/">Sign Out</NavLink> : 
+              <NavLink to="/login.js">Log In</NavLink>
+              } &nbsp; | &nbsp; */}
+              <NavLink to="/account.js" activeStyle>Account</NavLink>
+              <NavLink to="/genPassword.js" activeStyle>Passwords</NavLink>
+            </NavMenu>
+            <NavBtn>
+              <NavBtnLink to="/signout.js">Sign Out</NavBtnLink> 
+            </NavBtn>
           </>
-          }
-        </NavMenu>
-        <NavBtn>
-          {isloggedIn && isloggedIn.length > 0
-            ? <NavBtnLink to="/signout.js">Sign Out</NavBtnLink> 
-            : 
-            <>
+        ) : (
+          <>
+            <NavMenu>
+              <NavLink to="/" activeStyle>Home</NavLink>
+            </NavMenu>
+            <NavBtn>
               <NavBtnLink to="/login.js">Log In</NavBtnLink>
               <NavBtnLink to="/signup.js">Sign up</NavBtnLink>
-            </>
-          }
-          
-        </NavBtn>
+            </NavBtn>
+          </>
+        )}
+        
       </Nav>
     </>
     // COULDN'T DO IT THIS WAY

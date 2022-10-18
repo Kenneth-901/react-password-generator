@@ -8,9 +8,10 @@ const Account = () => {
 
   const [item, setItem] = useState([]);
   const [passwordType, setPasswordType] = useState(false);
+  // const bool = window.localStorage.getItem("isLoggedIn");
 
   const fetchUser = async () => {
-    Axios.get('http://localhost:3001/account').then(resp => {
+    await Axios.get('http://localhost:3001/account').then(resp => {
       setItem(resp.data);
     });
   };

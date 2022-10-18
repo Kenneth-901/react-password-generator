@@ -11,8 +11,10 @@ const SignOut = () => {
 
   useEffect(() => {
     Axios.get("http://localhost:3001/login").then((response) => {
-      console.log(response + "login")
-      localStorage.removeItem("token", response.data.token)
+      console.log(response + "login");
+      localStorage.removeItem("token", response.data.token);
+      localStorage.removeItem("isLoggedIn");
+      navigate("/")
     })
 
     Axios.post("http://localhost:3001/signout").then((response) => {

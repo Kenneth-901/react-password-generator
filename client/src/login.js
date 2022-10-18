@@ -48,6 +48,7 @@ const Login = () => {
         localStorage.setItem("token", response.data.token)
         setauth(true)
         setlogInStatus(response.data.result.First_Name)
+        window.localStorage.setItem("isLoggedIn", true);
         navigate("/")
       }
       // console.log(response)
