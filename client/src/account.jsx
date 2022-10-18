@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import Navbar from "./navbar"
+import Navbar from "./NavBar/navbar"
 import Footer from "./footer"
 import Axios from "axios"
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -33,6 +33,24 @@ const Account = () => {
 
       {/* Help me with this */}
       {/* Here to display all the account info */}
+      <div className="App">
+        <div className="card">
+          <div className="upper-container">
+            <div className="image-container"></div>
+          </div>
+          <div className="lower-container">
+            {item.length > 0 && item.map(a => (
+              <div key={a.userID}>
+                <h3>{a.First_Name}</h3>
+                <h2>{a.First_Name} + {a.Last_Name}</h2>
+                <h2>{a.Email}</h2>
+              </div>
+            ))}
+            <button>Edit Profile</button>
+          </div>
+        </div>
+      </div>
+      
       <form>
         {item.length > 0 && item.map(m => (
           <div key={m.userID}>

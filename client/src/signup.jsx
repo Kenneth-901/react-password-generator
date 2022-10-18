@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import Axios from "axios"
 import Footer from "./footer"
-import Navbar from "./navbar"
+import Navbar from "./NavBar/navbar"
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import * as Yup from "yup"
 import YupPassword from 'yup-password'
