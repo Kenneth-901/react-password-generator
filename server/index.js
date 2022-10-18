@@ -175,6 +175,7 @@ app.get("/login", (req, res) => {
 })
 
 app.post("/signout", (req, res) => {
+  console.log(res)
   req.session.destroy((err) => {
     res.send(err)
   })

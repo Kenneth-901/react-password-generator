@@ -19,6 +19,7 @@ const SignOut = () => {
 
     Axios.post("http://localhost:3001/signout").then((response) => {
       console.log(response + "signout")
+      navigate("/")
     })
   }, [])
 
