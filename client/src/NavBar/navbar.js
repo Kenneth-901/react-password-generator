@@ -11,21 +11,15 @@ import Axios from "axios"
 
 const Navbar = () => {
   
-  const [isloggedIn, setisloggedIn] = useState([])
+  // const [isloggedIn, setisloggedIn] = useState([])
 
   // useEffect(() => {
   //   Axios.get("http://localhost:3001/login").then((response) => {
-  //     if(response.data.loggedIn === true){
-  //       setisloggedIn(true)
-  //     }else{
-  //       setisloggedIn(false)
-  //     }
-  //   })
-  // })
+  //   setisloggedIn(response.data);
+  //   });
+  // }, []);
 
-  Axios.get("http://localhost:3001/login").then((response) => {
-    setisloggedIn(response.data);
-  })
+  const isloggedIn = window.localStorage.getItem("isLoggedIn");
   
   return(
     <>
@@ -34,23 +28,32 @@ const Navbar = () => {
           {/* <img src={require('../../images/logo.svg')} alt='logo' /> */}image
         </NavLink>
         <Bars />
-        <NavMenu>
-          <NavLink to="/" activeStyle>Home</NavLink>
-          
-          {/* {isloggedIn && isloggedIn.length > 0 ? <NavLink to="/">Sign Out</NavLink> : 
-          <NavLink to="/login.js">Log In</NavLink>
-          } &nbsp; | &nbsp; */}
-          
-          
-          <NavLink to="/account.js" activeStyle>Account</NavLink>
-          <NavLink to="/genPassword.js" activeStyle>Passwords</NavLink>
-        </NavMenu>
-        <NavBtn>
-          {isloggedIn && isloggedIn.length > 0
-            ? <NavBtnLink to="/">Sign Out</NavBtnLink> 
-            : <NavBtnLink to="/login.js">Log In</NavBtnLink>}
-          <NavBtnLink to="/signup.js">Sign up</NavBtnLink>
-        </NavBtn>
+        {isloggedIn ? (
+          <>
+            <NavMenu>
+              <NavLink to="/" activeStyle>Home</NavLink>
+              {/* {isloggedIn && isloggedIn.length > 0 ? <NavLink to="/">Sign Out</NavLink> : 
+              <NavLink to="/login.js">Log In</NavLink>
+              } &nbsp; | &nbsp; */}
+              <NavLink to="/account.js" activeStyle>Account</NavLink>
+              <NavLink to="/genPassword.js" activeStyle>Passwords</NavLink>
+            </NavMenu>
+            <NavBtn>
+              <NavBtnLink to="/signout.js">Sign Out</NavBtnLink> 
+            </NavBtn>
+          </>
+        ) : (
+          <>
+            <NavMenu>
+              <NavLink to="/" activeStyle>Home</NavLink>
+            </NavMenu>
+            <NavBtn>
+              <NavBtnLink to="/login.js">Log In</NavBtnLink>
+              <NavBtnLink to="/signup.js">Sign up</NavBtnLink>
+            </NavBtn>
+          </>
+        )}
+        
       </Nav>
     </>
     // COULDN'T DO IT THIS WAY

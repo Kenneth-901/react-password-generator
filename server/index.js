@@ -181,24 +181,23 @@ app.post("/signout", (req, res) => {
 })
 
 app.get("/account", async (req, res) => {
-
-  db.getConnection( (err, conn) => {
-    if (err) throw err;
-
-    try {
-      const result = req.session.user;
+  try {
+    const result = req.session.user;
+    if (result){
       res.send(result);
-      // const qry = `SELECT * FROM password_generator.user`
-      // conn.query(qry, (err, result) => {
-      //   conn.release();
-      //   if (err) throw err;
-      //   res.send(JSON.stringify(result));
-      // });
-    } catch (error) {
-      console.log(error);
-      res.end();
+    }else {
+      res.send({message: "User Not Logged In"});
     }
-  });
+    
+    // const qry = `SELECT * FROM password_generator.user`
+    // conn.query(qry, (err, result) => {
+    //   conn.release();
+    //   if (err) throw err;
+    //   res.send(JSON.stringify(result));
+    // });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 app.get(`/existed/:value`, async (req, res) => {
