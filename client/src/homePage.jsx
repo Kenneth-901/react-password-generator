@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import "./styles/homepage.css";
 import Axios from "axios";
 import Navbar from './NavBar/navbar';
 import Footer from './footer';
@@ -18,8 +17,6 @@ const HomePage = () => {
   //   })
   // }
 
-
-
   return(
     <>
       {/* Navigation bar here */}
@@ -33,6 +30,8 @@ const HomePage = () => {
 
         {/* Password Meter */}
         <PassMeter />
+        
+        <br />
 
         {/* Password Generator */}
         <section>

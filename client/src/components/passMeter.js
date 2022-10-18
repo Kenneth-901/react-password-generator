@@ -1,28 +1,56 @@
 import React, { useEffect, useState } from 'react'
+import "../styles/homepage.css" 
 
 const PassMeter = () => {
   
   const [passMeter, setpassMeter] = useState("")
-  const [reasons, setreasons] = useState()
+  const [reasons, setreasons] = useState([])
+  const [weaknessExist, setweaknessExist] = useState()
   
-  const updateStrengthMeter = () => {
+  // const updateStrengthMeter = () => {
+  //   const weaknesses = calculatePasswordStrength(passMeter)
+  //   // console.log(weaknesses)
+  //   let strength = 100
+  //   // reasonsContainer.innerHTML = ''
+  //   weaknesses.forEach(weakness => {
+  //     if (weakness == null) return
+  //     strength -= weakness.deduction
+  //     setreasons((prevState) => [...prevState, weakness.message])
+  //     // const messageElement = document.createElement('div')
+  //     // messageElement.innerText = weakness.message
+  //     // reasonsContainer.appendChild(messageElement)
+  //   })
+  //   // strengthMeter.style.setProperty('--strength', strength)
+  // }
+
+  // useEffect(updateStrengthMeter, [])
+
+  const checkPassword = () => {
     const weaknesses = calculatePasswordStrength(passMeter)
-    // console.log(weaknesses)
     let strength = 100
-    // reasonsContainer.innerHTML = ''
-    weaknesses.forEach(weakness => {
-      if (weakness == null) return
+
+    console.log(weaknesses)
+    
+    setreasons([])
+
+    weaknesses.forEach((weakness) => {
+      // if(weakness == null) return setweaknessExist(false)
+      if(weakness == null) return
+
       strength -= weakness.deduction
       
-      // const messageElement = document.createElement('div')
-      // messageElement.innerText = weakness.message
-      // reasonsContainer.appendChild(messageElement)
-    })
-    // strengthMeter.style.setProperty('--strength', strength)
-  }
-  console.log(reasons)
-  useEffect(updateStrengthMeter, [])
+      setreasons((prevState) => [
+        ...prevState, <>
+          {weakness.message} <br />
+          </>
+      ])
 
+      // setweaknessExist(true)
+    })
+  }
+
+  // console.log(reasons)
+  
   const calculatePasswordStrength = (password) => {
     const weaknesses = []
     weaknesses.push(lengthWeakness(password))
@@ -30,7 +58,7 @@ const PassMeter = () => {
     weaknesses.push(lowercaseWeakness(password))
     weaknesses.push(numberWeakness(password))
     weaknesses.push(specialCharactersWeakness(password))
-    weaknesses.push(repeatCharactersWeakness(password))
+    // weaknesses.push(repeatCharactersWeakness(password))
     return weaknesses
   }
 
@@ -68,15 +96,16 @@ const PassMeter = () => {
     return characterTypeWeakness(password, /[^0-9a-zA-Z\s]/g, 'special characters')
   }
   
-  const repeatCharactersWeakness = (password) => {
-    const matches = password.match(/(.)\1/g) || []
-    if (matches.length > 0) {
-      return {
-        message: 'Your password has repeat characters',
-        deduction: matches.length * 10
-      }
-    }
-  }
+  // const repeatCharactersWeakness = (password) => {
+  //   const matches = password.match(/(.)\1/g) || []
+  //   console.log(matches)
+  //   if (matches.length > 0) {
+  //     return {
+  //       message: 'Your password has repeat characters',
+  //       deduction: matches.length * 10
+  //     }
+  //   }
+  // }
 
   const characterTypeWeakness = (password, regex, type) => {
     const matches = password.match(regex) || []
@@ -102,9 +131,9 @@ const PassMeter = () => {
             
       <h2>Password Meter: </h2>
       
-      <div className="strength-meter" id="strength-meter"></div> 
+      {/* <div className="strength-meter" id="strength-meter"></div>  */}
 
-      <br />
+      {/* <br /> */}
 
       {/* <input className="password-input" id="password-input" value="password" type="text" autoFocus aria-labelledby='password'/> */}
 
@@ -115,7 +144,17 @@ const PassMeter = () => {
         placeholder="Enter Password"
       />  
 
+      <br />
+
+      <button onClick={checkPassword}>Check Password</button>
+
+      <br />
+
       <div id="reasons" className="reasons">{reasons}</div>
+
+      {/* <div id="reasons" className='reasons'>{weaknessExist ? 
+      <>{reasons}</> : "Your password is complex and secure"}</div> */}
+
     </section>
   </>
   )

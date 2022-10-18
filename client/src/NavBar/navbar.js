@@ -8,10 +8,12 @@ import {
   NavBtnLink
 } from './navBarElement';
 import Axios from "axios"
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   
   const [isloggedIn, setisloggedIn] = useState([])
+  const navigate = useNavigate();
 
   // useEffect(() => {
   //   Axios.get("http://localhost:3001/login").then((response) => {
@@ -26,6 +28,20 @@ const Navbar = () => {
   Axios.get("http://localhost:3001/login").then((response) => {
     setisloggedIn(response.data);
   })
+
+  console.log(isloggedIn)
+
+  // const signout = () => {
+  //   Axios.get("http://localhost:3001/login").then((response) => {
+  //     console.log(response + "login")
+  //     localStorage.removeItem("token", response.data.token)
+  //   })
+
+  //   Axios.post("http://localhost:3001/signout").then((response) => {
+  //     console.log(response + "signout")
+  //     navigate("/")
+  //   })
+  // }
   
   return(
     <>
@@ -41,15 +57,23 @@ const Navbar = () => {
           <NavLink to="/login.js">Log In</NavLink>
           } &nbsp; | &nbsp; */}
           
-          
-          <NavLink to="/account.js" activeStyle>Account</NavLink>
-          <NavLink to="/genPassword.js" activeStyle>Passwords</NavLink>
+          {isloggedIn &&
+          <>
+            <NavLink to="/account.js" activeStyle>Account</NavLink>
+            <NavLink to="/genPassword.js" activeStyle>Passwords</NavLink>
+          </>
+          }
         </NavMenu>
         <NavBtn>
           {isloggedIn && isloggedIn.length > 0
-            ? <NavBtnLink to="/">Sign Out</NavBtnLink> 
-            : <NavBtnLink to="/login.js">Log In</NavBtnLink>}
-          <NavBtnLink to="/signup.js">Sign up</NavBtnLink>
+            ? <NavBtnLink to="/signout.js">Sign Out</NavBtnLink> 
+            : 
+            <>
+              <NavBtnLink to="/login.js">Log In</NavBtnLink>
+              <NavBtnLink to="/signup.js">Sign up</NavBtnLink>
+            </>
+          }
+          
         </NavBtn>
       </Nav>
     </>

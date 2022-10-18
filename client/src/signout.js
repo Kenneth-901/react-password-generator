@@ -13,11 +13,11 @@ const SignOut = () => {
     Axios.get("http://localhost:3001/login").then((response) => {
       console.log(response + "login")
       localStorage.removeItem("token", response.data.token)
-      navigate("/")
     })
 
     Axios.post("http://localhost:3001/signout").then((response) => {
       console.log(response + "signout")
+      navigate("/")
     })
   }, [])
 
