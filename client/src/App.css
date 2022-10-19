@@ -113,8 +113,8 @@ span {
 /* ----card---- */
 .card{
   margin-top: 5%;
-  width: 300px;
-  height: 480px;
+  width: 500px;
+  height: 250px;
   background: #FFFFFF;
   border-radius: 10px;
   box-shadow: 0px 1px 10px 1px #000;

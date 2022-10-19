@@ -9,6 +9,7 @@ import Signup from "./signup";
 import Account from "./account";
 import GenPassword from "./genPassword";
 import SignOut from "./signout";
+import UpdateProfile from "./updateProfile"
 
 const App = () => {
   
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/signup.js" element={<Signup />} />
           <Route path="/account.js" element={<Account />} />
           <Route path="/genPassword.js" element={<GenPassword />} />
+          <Route path="/updateProfile" element={<UpdateProfile />} />
         </Routes>
       </Router>
     </>

@@ -14,6 +14,7 @@ const SignOut = () => {
       console.log(response + "login");
       localStorage.removeItem("token", response.data.token);
       localStorage.removeItem("isLoggedIn");
+      sessionStorage.removeItem("email");
       navigate("/")
     })
 
