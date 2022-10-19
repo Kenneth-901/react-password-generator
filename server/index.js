@@ -181,21 +181,21 @@ app.post("/signout", (req, res) => {
   })
 })
 
-app.get("/account", async (req, res) => {
+app.get("/account/:email", async (req, res) => {
+  const email = req.params.email;
   try {
-    const result = req.session.user;
-    if (result){
-      res.send(result);
-    }else {
-      res.send({message: "User Not Logged In"});
-    }
+    // const result = req.session.user;
+    // if (result){
+    //   res.send(result);
+    // }else {
+    //   res.send({message: "User Not Logged In"});
+    // }
     
-    // const qry = `SELECT * FROM password_generator.user`
-    // conn.query(qry, (err, result) => {
-    //   conn.release();
-    //   if (err) throw err;
-    //   res.send(JSON.stringify(result));
-    // });
+    const qry = `SELECT * FROM password_generator.user where Email = ?`
+    db.query(qry, email, (err, result) => {
+      if (err) throw err;
+      res.send(JSON.stringify(result));
+    });
   } catch (error) {
     console.log(error);
   }

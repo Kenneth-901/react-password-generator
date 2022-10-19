@@ -6,6 +6,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik"
 import * as Yup from "yup"
 import "yup-phone"
 import { useNavigate } from "react-router-dom";
+import { AES }from 'crypto-js';
 
 const Login = () => {
   
@@ -44,12 +45,14 @@ const Login = () => {
         setauth(false)
         setlogInStatus(response.data.message)
       }else{
+        const envryptedString = AES.encrypt(response.data.result.Email,'MYKEY4DEMO');
         // console.log(response.data)
         localStorage.setItem("token", response.data.token)
         setauth(true)
         setlogInStatus(response.data.result.First_Name)
         window.localStorage.setItem("isLoggedIn", true);
-        navigate("/")
+        sessionStorage.setItem("email", envryptedString.toString());
+        navigate("/");
       }
       // console.log(response)
     });
