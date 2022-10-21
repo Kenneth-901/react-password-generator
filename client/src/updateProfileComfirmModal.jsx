@@ -26,7 +26,11 @@ const validationSchema = Yup.object().shape({
     password: Yup.string().required("No password provided.").test('Unique Password', 'Wrong Password', 
     function(value){
         return new Promise((resolve, reject) => {
-            Axios.get(`http://localhost:3001/updateConfirmation/${email.toString()}/${value}`).then((res) => {
+            const apiValue = {
+              email: email,
+              password: value
+            }
+            Axios.post(`http://localhost:3001/updateConfirmation`, apiValue).then((res) => {
                 if (res.data.message === "Success") {
                     resolve(true);
                 }else {

@@ -222,9 +222,9 @@ app.get(`/existed/:value`, async (req, res) => {
   });
 });
 
-app.get("/updateConfirmation/:email/:value", (req, res) => {
-  const email = req.params.email;
-  const password = req.params.value;
+app.post("/updateConfirmation", (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
 
   db.query(
     "SELECT * FROM user WHERE Email = ?", email, (err, result) => {
