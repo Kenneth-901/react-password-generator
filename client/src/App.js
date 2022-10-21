@@ -10,6 +10,7 @@ import Account from "./account";
 import GenPassword from "./genPassword";
 import SignOut from "./signout";
 import UpdateProfile from "./updateProfile"
+import ResetPass from "./resetPass";
 
 const App = () => {
   
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/account.js" element={<Account />} />
           <Route path="/genPassword.js" element={<GenPassword />} />
           <Route path="/updateProfile" element={<UpdateProfile />} />
+          <Route path="/resetPass.js" element={<ResetPass />}/>
         </Routes>
       </Router>
     </>

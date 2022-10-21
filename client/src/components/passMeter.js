@@ -3,9 +3,8 @@ import "../styles/homepage.css"
 
 const PassMeter = () => {
   
-  const [passMeter, setpassMeter] = useState("")
+  const [checkPass, setcheckPass] = useState("")
   const [reasons, setreasons] = useState([])
-  const [weaknessExist, setweaknessExist] = useState()
   
   // const updateStrengthMeter = () => {
   //   const weaknesses = calculatePasswordStrength(passMeter)
@@ -23,30 +22,37 @@ const PassMeter = () => {
   //   // strengthMeter.style.setProperty('--strength', strength)
   // }
 
-  // useEffect(updateStrengthMeter, [])
-
   const checkPassword = () => {
-    const weaknesses = calculatePasswordStrength(passMeter)
-    let strength = 100
-
-    console.log(weaknesses)
+    const weaknesses = calculatePasswordStrength(checkPass)
+    // let strength = 100
     
     setreasons([])
 
-    weaknesses.forEach((weakness) => {
-      // if(weakness == null) return setweaknessExist(false)
-      if(weakness == null) return
+    checkPass.length === 0 ? 
+      setreasons("Enter your password") 
+      : 
+      weaknesses.forEach((weakness) => {
+        // if(weakness == null) return setweaknessExist(false)
+        if(weakness == null) return
 
-      strength -= weakness.deduction
-      
-      setreasons((prevState) => [
-        ...prevState, <>
-          {weakness.message} <br />
-          </>
-      ])
+        // strength -= weakness.deduction
+        
+        setreasons((prevState) => [
+          ...prevState, <>
+            {weakness.message} <br />
+            </>
+        ])
 
-      // setweaknessExist(true)
-    })
+        // setweaknessExist(true)
+      })
+
+    // if(checkPass.length === 0){
+    //   setreasons("Enter your password")
+    // }
+    // console.log(reasons)
+    // if(reasons.length === 0){
+    //   setreasons("Your password is complex and secure")
+    // }
   }
 
   // console.log(reasons)
@@ -125,6 +131,17 @@ const PassMeter = () => {
     }
   }
 
+  // useEffect(() => {
+  //   if(checkPass.length === 0){
+  //     setreasons("Enter your password")
+  //   }
+  //   console.log(reasons)
+  //   if(reasons.length === 0){
+  //     setreasons("Your password is complex and secure")
+  //   }
+  //   // console.log(checkPass)
+  // }, [])
+
   return(
   <>
     <section>
@@ -140,7 +157,7 @@ const PassMeter = () => {
       <input 
         type="text" 
         name="passwordMeter"
-        onChange={(event) => {setpassMeter(event.target.value)}}
+        onChange={(event) => {setcheckPass(event.target.value)}}
         placeholder="Enter Password"
       />  
 
@@ -150,11 +167,14 @@ const PassMeter = () => {
 
       <br />
 
-      <div id="reasons" className="reasons">{reasons}</div>
+      {/* <div id="reasons" className="reasons">{reasons}</div> */}
 
-      {/* <div id="reasons" className='reasons'>{weaknessExist ? 
-      <>{reasons}</> : "Your password is complex and secure"}</div> */}
-
+      <div id="reasons" className='reasons'>
+        { 
+        reasons.length === 0 && checkPass.length !== 0 ? "Your password is complex and secure"
+        :
+        reasons}
+      </div>
     </section>
   </>
   )

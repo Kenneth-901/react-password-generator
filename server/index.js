@@ -167,6 +167,7 @@ app.get("/login", (req, res) => {
   // }
   try {
     const result = req.session.user;
+    console.log(result)
     res.send(result);
   } catch (error) {
     console.log(error);
@@ -175,7 +176,7 @@ app.get("/login", (req, res) => {
 })
 
 app.post("/signout", (req, res) => {
-  console.log(res)
+  // console.log(res)
   req.session.destroy((err) => {
     res.send(err)
   })
