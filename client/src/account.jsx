@@ -9,11 +9,13 @@ import CardButton from "./components/cardButton";
 import InlineDetails from "./components/inlineDetails";
 // import { toDate } from 'date-fns'
 import {AES, enc}from 'crypto-js';
+import UpdateProfileComfirmModal from "./updateProfileComfirmModal";
 
 const Account = () => {
   const navigate = useNavigate();
   const [item, setItem] = useState([]);
   const [passwordType, setPasswordType] = useState(false);
+  const [updateConfirm, setUpdateConfirm] = useState(false);
   // const bool = window.localStorage.getItem("isLoggedIn");
   const decrypted = AES.decrypt(window.sessionStorage.getItem("email"), 'MYKEY4DEMO');
   const loggedEmail = decrypted.toString(enc.Utf8);
@@ -37,8 +39,13 @@ const Account = () => {
 
   return(
     <>
+      <UpdateProfileComfirmModal
+        isOpen={updateConfirm}
+        data={item}
+        onClose={() => setUpdateConfirm(false)}
+      />
       <Navbar />
-
+      {/* navigate("/updateProfile") */}
       {/* Help me with this */}
       {/* Here to display all the account info */}
       <div className="App">
@@ -46,7 +53,7 @@ const Account = () => {
         <>
           <CardButton
           title={`${a.First_Name.toUpperCase()} Profile`}
-          onClick={() => navigate("/updateProfile")}
+          onClick={() => setUpdateConfirm(true)}
           renderBody={() => (
             <div key={a.userID} className="d-flex flex-column lh-24">
               <div className="d-flex flex-row justify-content-between mb-2">

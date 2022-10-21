@@ -1,0 +1,134 @@
+
+
+@mixin modal-overlay-shared {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 15;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+@mixin modal-shared {
+    padding: 0;
+    z-index: 3;
+    background-color: #FFF;
+    overflow: visible;
+    position: initial;
+    border-radius: 2px;
+}
+
+.modal-overlay {
+    @include modal-overlay-shared();
+    overflow: auto;
+}
+
+
+.modal-container {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+  
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    }
+  
+    .modal-content {
+      box-shadow: none;
+      padding: 16px;
+    }
+  }
+
+  /* Disable body scroll when modal is opening. */
+.ReactModal__Body--open {
+    overflow-y: hidden;
+}
+  
+/* Cannot use .modal because it clashes with bootstrap modal */
+.modal-default {
+    @include modal-shared;
+    width: 50%;
+    height: auto;
+    max-height: 95%;
+}
+  
+.modal-fullscreen {
+    @include modal-shared;
+    width: 95%;
+    height: 95%;
+  
+    .modal-content {
+      flex-basis: 100%;
+    }
+}
+  
+.modal-95-width-screen {
+    @include modal-shared;
+    width: 95%;
+    .modal-content {
+      flex-basis: 100%;
+    }
+}
+  
+.modal-100-fullscreen {
+    @include modal-shared;
+    width: 100%;
+    height: 100%;
+    
+    .modal-content {
+      flex-basis: 100%;
+    }
+}
+  
+.modal-small {
+    @include modal-shared;
+    width: 35%;
+    height: auto;
+    max-height: 95%;
+}
+  
+.modal-smallest {
+    @include modal-shared;
+    width: 28%;
+    height: auto;
+    max-height: 95%;
+}
+  
+.modal-large {
+    @include modal-shared;
+    width: 75%;
+    height: auto;
+    max-height: 95%;
+}
+  
+.modal-medium {
+    @include modal-shared;
+    width: 63%;
+    height: auto;
+    max-height: 95%;
+}
+  
+.modal-image-crop {
+    @include modal-shared;
+    width: 98%;
+    height: 95%;
+}
+  
+.modal-auto-width {
+    @include modal-shared;
+    width: auto;
+    height: auto;
+    max-height: 95%;
+}
