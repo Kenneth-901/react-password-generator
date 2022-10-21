@@ -1,0 +1,40 @@
+
+.btn {
+    padding: 0.5rem;
+    border-right: 1px;
+    border-top: 1px;
+    border-bottom: 1px;
+    background-color: transparent;
+    cursor: pointer;
+    
+  
+    &.btn-brand {
+      color: #fff;
+      border-radius: 4px;
+      min-width: 150px;
+      text-transform: none;
+      font-size: 14px;
+    }
+}
+
+.no-decoration-btn {
+    background-color: transparent;
+    border: 0px;
+    padding: 0;
+    margin-right: 5px;
+    cursor: pointer;
+  
+    &.collapse-toggle:focus {
+      color: white;
+    }
+  
+    &.no-pointer {
+      cursor: default !important;
+    }
+}
+
+.no-decoration-btn:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+    color: gray;
+}
