@@ -221,6 +221,63 @@ app.get(`/existed/:value`, async (req, res) => {
   });
 });
 
+app.get("/updateConfirmation/:email/:value", (req, res) => {
+  const email = req.params.email;
+  const password = req.params.value;
+
+  db.query(
+    "SELECT * FROM user WHERE Email = ?", email, (err, result) => {
+      if (err) {
+        res.send({ err: err });
+      }
+      
+      if (result.length > 0) {
+        bcrypt.compare(password, result[0].Password, (error, response) => {
+          if (response) {          
+            res.json({
+              message: "Success"
+            })
+          } else {
+            res.json({
+              message: "Wrong Password"
+            })
+          }
+        });
+      } else {
+        res.json({
+          message: "User doesn't exist"
+        })
+      }
+    }
+  );
+})
+
+app.post("/updateProfile", async (req, res) => {
+  
+  const userId = req.body.id;
+  const firstName = req.body.data.firstName;
+  const lastName = req.body.data.lastName;
+  const password = req.body.data.password;
+  const dateOfBirth = req.body.data.dob;
+  const phoneNumber = req.body.data.phoneNumber;
+
+  bcrypt.hash(password, saltRounds, (err, hash) => {
+    if(err) throw err;
+
+    const sqlQuery = `update user set 
+      First_Name="${firstName}", 
+      Last_Name="${lastName}", 
+      Password="${hash}", 
+      DOB="${dateOfBirth}", 
+      Phone_Number="${phoneNumber}"
+      where userID = ${userId}
+    `
+    db.query(sqlQuery, (err, result) => {
+      if (err) throw err;
+    })
+  });
+});
+
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");
 });

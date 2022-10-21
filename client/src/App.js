@@ -1,4 +1,5 @@
 import "./App.css";
+import "./styles/modal.scss";
 // import React, { useState } from "react";
 // import Axios from "axios";
 import React from "react";
@@ -21,7 +22,7 @@ const App = () => {
           <Route path="/login.js" element={<Login />} />
           <Route path="/signout.js" element={<SignOut />} />
           <Route path="/signup.js" element={<Signup />} />
-          <Route path="/account.js" element={<Account />} />
+          <Route path="/account" element={<Account />} />
           <Route path="/genPassword.js" element={<GenPassword />} />
           <Route path="/updateProfile" element={<UpdateProfile />} />
         </Routes>

@@ -36,7 +36,7 @@ const Navbar = () => {
               {/* {isloggedIn && isloggedIn.length > 0 ? <NavLink to="/">Sign Out</NavLink> : 
               <NavLink to="/login.js">Log In</NavLink>
               } &nbsp; | &nbsp; */}
-              <NavLink to="/account.js" activeStyle>Account</NavLink>
+              <NavLink to="/account" activeStyle>Account</NavLink>
               <NavLink to="/genPassword.js" activeStyle>Passwords</NavLink>
             </NavMenu>
             <NavBtn>
