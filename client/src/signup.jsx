@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Axios from "axios"
 import Footer from "./footer"
 import Navbar from "./NavBar/navbar"
@@ -9,6 +9,9 @@ import "yup-phone"
 import "./App.css"
 import { useNavigate } from "react-router-dom";
 import PasswordShowAndHide from "./components/passwordShowAndHide";
+import ConfirmPasswordShowAndHide from "./components/ConfrimPasswordShowAndHide";
+import FormikDropDownList from "./form/formikDropDownList"
+import Button from "./components/button"
 
 
 // Things to do
@@ -22,6 +25,7 @@ import PasswordShowAndHide from "./components/passwordShowAndHide";
 const Signup = () => {
   YupPassword(Yup);
   const navigate = useNavigate();
+  const [item, setItem] = useState([]);
   
   const initialValues = {
     firstName: "",
@@ -30,10 +34,15 @@ const Signup = () => {
     password: "",
     dPassword: "",
     dob: "",
-    phoneNumber: ""
+    phoneNumber: "",
+    phaseQuestion: "",
+    phaseAnswer: "",
+    phaseQuestion1: "",
+    phaseAnswer1: ""
   };
 
   const onSubmit = (data) => {
+    console.log(data);
     Axios.post("http://localhost:3001/create", data).then((response) => {
       console.log("success");
     });
@@ -65,8 +74,29 @@ const Signup = () => {
     dob: Yup.date().default(function () {
       return new Date();
     }),
-    phoneNumber: Yup.string().phone("MY").required()
+    phoneNumber: Yup.string().phone("MY").required(),
+    phaseQuestion: Yup.mixed(),
+    phaseAnswer: Yup.string().required("Required!"),
+    phaseQuestion1: Yup.mixed(),
+    phaseAnswer1: Yup.string().required("Required!")
   });
+
+  useEffect(() => {
+    Axios.get(`http://localhost:3001/phaseQuestion`).then(resp => {
+      setItem(resp.data);
+    });
+  }, [])
+
+  const phaseQuestionList = React.useMemo(() => {
+    if (!item.length) return [];
+
+    const mappedList = item.map(list => ({
+      value: `${list.questionsID}`,
+      label: `${list.question}`,
+    }));
+
+    return mappedList;
+  }, [item]);
 
   return(
     <>
@@ -89,7 +119,7 @@ const Signup = () => {
                     name="firstName"
                     type="text"
                     placeholder="First Name"
-                    className={'form-control' + (errors.firstName && touched.firstName ? ' is-invalid' : '')}
+                    className={"input100"}
                   />
                   <ErrorMessage name="firstName" component="span" className="invalid-feedback"/>
                 </div>
@@ -98,6 +128,7 @@ const Signup = () => {
                     id="LastName"
                     name="lastName"
                     placeholder="Last Name"
+                    className={"input100"}
                   />
                   <ErrorMessage name="lastName" component="span" className="invalid-feedback"/>
                 </div>
@@ -106,9 +137,10 @@ const Signup = () => {
                     id="email" 
                     name="email"
                     placeholder="Email"
+                    className={"input100"}
                   />
+                  <ErrorMessage name="email" component="span"/>
                 </div>
-                <ErrorMessage name="email" component="span"/>
                 <div className="form-group">
                   <Field 
                     id="Password" 
@@ -121,7 +153,7 @@ const Signup = () => {
                     id="Password" 
                     name="dPassword"
                     type="password"
-                    component={PasswordShowAndHide}
+                    component={ConfirmPasswordShowAndHide}
                     placeholder="Double Confirm Your Password"
                   />
                   <ErrorMessage name="dPassword" component="span"/>
@@ -132,6 +164,7 @@ const Signup = () => {
                     name="dob"
                     type="date"
                     placeholder="DOB"
+                    className={"input100"}
                   />
                 </div>
                 <div className="form-group">
@@ -139,12 +172,47 @@ const Signup = () => {
                     id="PhoneNumber" 
                     name="phoneNumber"
                     placeholder="Phone Number"
+                    className={"input100"}
                   />
                   <ErrorMessage name="phoneNumber" component="span"/>
                 </div>
                 <div className="form-group">
-                  <button type="submit" className="btn btn-primary mr-2">Register</button>
-                  <button type="reset" className="btn btn-secondary">Reset</button>
+                  <FormikDropDownList 
+                    id="PhaseQuestion" 
+                    name="phaseQuestion"
+                    values={phaseQuestionList}
+                    placeholder="Select"
+                    className={"input100"}
+                  />
+                  <ErrorMessage name="phaseQuestion" component="span"/>
+                  <Field
+                    id="PhaseAnswer"
+                    name="phaseAnswer"
+                    placeholder="Phase Answer"
+                    className={"input100"}
+                  />
+                  <ErrorMessage name="phaseAnswer" component="span" className="invalid-feedback"/>
+                </div>
+                <div className="form-group">
+                  <FormikDropDownList 
+                    id="PhaseQuestion1" 
+                    name="phaseQuestion1"
+                    values={phaseQuestionList}
+                    placeholder="Select"
+                    className={"input100"}
+                  />
+                  <ErrorMessage name="phaseQuestion1" component="span"/>
+                  <Field
+                    id="PhaseAnswer1"
+                    name="phaseAnswer1"
+                    placeholder="Phase Answer"
+                    className={"input100"}
+                  />
+                  <ErrorMessage name="phaseAnswer1" component="span" className="invalid-feedback"/>
+                </div>
+                <div className="form-group">
+                  <button type="submit">Register</button>
+                  <button type="reset">Reset</button>
                 </div>
               </Form>
             )}
