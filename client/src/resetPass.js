@@ -6,22 +6,56 @@ import { Formik, Form, Field, ErrorMessage } from "formik"
 import * as Yup from "yup"
 import "yup-phone"
 import { useNavigate } from "react-router-dom";
-import { AES }from 'crypto-js';
 
 const ResetPass = () => {
   
-  // const [vali_email, setvaliemail] = useState("")
+  
+  const [emailExist, setemailExist] = useState()
   // const [vali_pass, setvalipass] = useState("")
   // const [auth, setauth] = useState(false);
   // const [logInStatus, setlogInStatus] = useState("")
   // const navigate = useNavigate();
   
-  // const initialValues = {
-  //   email: "",
-  //   password: ""
-  // };
+  const initialValues = {
+    email: "",
+    // password: ""
+  };
 
-  // const logIn = (data) => {
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().email().required("Email Required!").test('Unique Email', "Email doesn't exist", 
+      function(value){
+        return new Promise((resolve, reject) => {
+          Axios.get(`http://localhost:3001/existed/${value}`).then((res) => {console.log(res)
+            if (res.data.length > 0) {
+              resolve(true);
+              setemailExist(true)
+            }else {
+              resolve(false);
+              setemailExist(false)
+            }
+          })
+        })
+    }),
+    password: Yup.string().min(8, "Password is too short - should be 8 chars minimum.").password().required("No password provided."),
+    dPassword: Yup.string().when("password", {
+      is: val => (val && val.length > 0 ? true : false),
+      then: Yup.string().oneOf(
+        [Yup.ref("password")],
+        "Both password need to be the same"
+      )
+    }),
+    // password: Yup.string().required("This is a required field"),
+  });
+  
+  const checkUser = (data) => {
+    // console.log(data)
+    
+    Axios.post("http://localhost:3001/resetPass", data).then((response) => {
+      
+    });
+  };
+
+  // const checkUser = (data) => {
   //   // console.log(data)
   //   Axios.post("http://localhost:3001/login", data).then((response) => {
   //     // console.log(response)
@@ -42,11 +76,6 @@ const ResetPass = () => {
   //     // console.log(response)
   //   });
   // };
-
-  // const validationSchema = Yup.object().shape({
-  //   email: Yup.string().required("This is a required field"),
-  //   password: Yup.string().required("This is a required field"),
-  // });
 
   // useEffect(() => {
   //   Axios.get("http://localhost:3001/login").then((response) => {
@@ -71,12 +100,51 @@ const ResetPass = () => {
       <Navbar />
 
       <br />
-      <h1>Hello World</h1>
-      {/* <div className="App">
+
+      <div className="App">
         <div className="information">
-        <Formik 
+          <Formik 
             initialValues = {initialValues}
-            onSubmit={logIn} 
+            onSubmit={checkUser} 
+            validationSchema={validationSchema}>
+            <Form>
+              <Field
+                id="Email"
+                name="email"
+                placeholder="Enter email"
+              />
+              <ErrorMessage name="email" component="span"/>
+
+              <br />
+
+              
+
+              <Field
+                id="seed"
+                name="seed"
+                placeholder="Enter phase"
+              />
+
+              <br />
+
+              <Field
+                id="seed"
+                name="seed"
+                placeholder="Enter phase"
+              />
+
+              <br />
+
+
+              <button type="submit">Next</button> 
+
+              <p>{}</p>
+            </Form>
+          </Formik>
+
+          {/* <Formik 
+            initialValues = {initialValues}
+            onSubmit={checkUser} 
             validationSchema={validationSchema}>
             <Form>
               <Field
@@ -96,9 +164,9 @@ const ResetPass = () => {
               <br />
               <button type="submit">Log In</button> 
             </Form>
-          </Formik>
+          </Formik> */}
         </div>
-      </div> */}
+      </div>
     
       <Footer />
     </>

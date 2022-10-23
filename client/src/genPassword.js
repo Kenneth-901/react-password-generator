@@ -28,7 +28,7 @@ const GenPassword = () => {
 
   const vali = (data) => {
     Axios.post("http://localhost:3001/validateUser", data).then((response) => {
-      
+      console.log(response)
     })
   }
 

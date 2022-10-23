@@ -5,7 +5,7 @@ import Axios from "axios"
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import * as Yup from "yup"
 import "yup-phone"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { AES }from 'crypto-js';
 
 const Login = () => {
@@ -109,7 +109,8 @@ const Login = () => {
               />
               <ErrorMessage name="password" component="span"/>
               <br />
-              <button type="submit">Log In</button> 
+              <button type="submit">Log In</button> &nbsp; &nbsp;
+              <Link to="/resetPass.js">Forget Password</Link>
             </Form>
           </Formik>
 
