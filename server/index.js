@@ -49,6 +49,10 @@ app.post("/create", async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   const dob = req.body.dob;
+  const phaseQuestion = req.body.phaseQuestion.value;
+  const phaseAnswer = req.body.phaseAnswer;
+  const phaseQuestion1 = req.body.phaseQuestion1.value;
+  const phaseAnswer1 = req.body.phaseAnswer1;
   const phoneNumber = req.body.phoneNumber;
 
   bcrypt.hash(password, saltRounds, (err, hash) => {
@@ -60,7 +64,8 @@ app.post("/create", async (req, res) => {
       if (existEmail) {
         res.send(err);
       } else {
-        db.query("INSERT INTO user (First_Name, Last_Name, Email, Password, DOB, Phone_Number, Created) VALUES (?, ?, ?, ?, ?, ?, current_timestamp())", [firstName, lastName, email, hash, dob, phoneNumber], (err, result) => {
+        db.query("INSERT INTO user (First_Name, Last_Name, Email, Password, DOB, Phone_Number, question, answer, question2, answer2, Created) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, current_timestamp())", 
+        [firstName, lastName, email, hash, dob, phoneNumber, phaseQuestion, phaseAnswer, phaseQuestion1, phaseAnswer1], (err, result) => {
           if (err) throw err;
           // if(err){
           //   console.log(err)
@@ -277,6 +282,19 @@ app.post("/updateProfile", async (req, res) => {
       if (err) throw err;
     })
   });
+});
+
+app.get("/phaseQuestion", async (req, res) => {
+  const email = req.params.email;
+  try {
+    const qry = `SELECT * FROM password_generator.phase_questions`
+    db.query(qry, (err, result) => {
+      if (err) throw err;
+      res.send(JSON.stringify(result));
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 app.listen(3001, () => {
