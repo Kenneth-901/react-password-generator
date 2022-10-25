@@ -11,7 +11,7 @@ const ButtonComponent = styled.button`
     text-decoration: none;
     vertical-align: middle;
     cursor: pointer;
-    user-select: none;
+    outline: none;
     border-radius: 0.3rem;
     padding: 0 ${(props) => 
       props.size === "sm" ? "1.1rem"
@@ -23,6 +23,14 @@ const ButtonComponent = styled.button`
       : props.size === "lg" ? "40px" : "34px"};
     font-weight: 500;
     border: 1px solid #8e00b9;
+    background-color: white;
+    transition: 0.2s;
+    margin-bottom: 0.5rem;
+
+    &:hover {
+      background: rgba(27, 156, 252, 0.1);
+      transform: scale(1);
+    }
   `;
 
 const Button = ({
@@ -33,10 +41,11 @@ const Button = ({
   className,
   id,
   size,
+  type,
 }) => {
   return (
     <ButtonComponent
-      type="button"
+      type={type || "button"}
       className={`btn-component ${className || ''}`}
       disabled={disabled || isLoading}
       id={id}
@@ -54,6 +63,7 @@ Button.propTypes = {
   className: PropTypes.string,
   id: PropTypes.any,
   size: PropTypes.string,
+  type: PropTypes.string,
 };
 
 export default Button;

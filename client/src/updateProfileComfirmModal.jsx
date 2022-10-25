@@ -5,6 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik"
 import * as Yup from "yup"
 import Axios from "axios"
 import { useNavigate } from "react-router-dom";
+import Button from './components/button';
 
 const UpdateProfileComfirmModal = ({
   isOpen, onClose, onClickYes, isLoading, data
@@ -57,8 +58,8 @@ return (
               navigate("/updateProfile");
             }} 
             validationSchema={validationSchema}
-            render={({ errors, status, touched }) => (
-              <Form>
+            render={({ handleSubmit, errors, status, touched }) => (
+              <Form onSubmit={handleSubmit}>
                 <div className="form-group">
                   <Field
                     id="Email"
@@ -79,7 +80,7 @@ return (
                     <button type="button" onClick={onClose} className="no-decoration-btn text-gray fs-standard mr-4">
                         {"Cancel"}
                     </button>
-                    <button type="submit" className="btn btn-brand">Yes</button>
+                    <Button onClick={handleSubmit} className="btn btn-brand">Yes</Button>
                 </div>
               </Form>
             )}

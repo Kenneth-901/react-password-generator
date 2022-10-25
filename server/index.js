@@ -320,6 +320,106 @@ app.post("/updateConfirmation", (req, res) => {
   );
 })
 
+app.post("/updateProfile", async (req, res) => {
+  
+  const userId = req.body.id;
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const password = req.body.password;
+  const dateOfBirth = req.body.dob;
+  const phoneNumber = req.body.phoneNumber;
+
+  if (firstName){
+    const sqlQuery = `update user set First_Name="${firstName}" where userID = ${userId}`
+    db.query(sqlQuery, (err, result) => {
+      if (err) throw err;
+    })
+  } else if (lastName){
+    const sqlQuery = `update user set Last_Name="${lastName}" where userID = ${userId}`
+    db.query(sqlQuery, (err, result) => {
+      if (err) throw err;
+    })
+  } else if (password){
+    bcrypt.hash(password, saltRounds, (err, hash) => {
+      if(err) throw err;
+      
+      const sqlQuery = `update user set 
+        Password="${hash}"
+        where userID = ${userId}`
+      db.query(sqlQuery, (err, result) => {
+        if (err) throw err;
+      })
+    });
+  } else if (dateOfBirth){
+    const sqlQuery = `update user set DOB="${dateOfBirth}" where userID = ${userId}`
+    db.query(sqlQuery, (err, result) => {
+      if (err) throw err;
+    })
+  } else {
+    const sqlQuery = `update user set Phone_Number="${phoneNumber}" where userID = ${userId}`
+    db.query(sqlQuery, (err, result) => {
+      if (err) throw err;
+    })
+  }
+});
+
+app.post("/resetPass", (req, res) => {
+  // const email = req.body.email;
+  // // const password = req.body.password;
+
+  // db.query(
+  //   "SELECT * FROM user WHERE Email = ?", email, (err, result) => {
+  //     if (err) {
+  //       res.send({ err: err });
+  //     }
+  //     console.log(err)
+  //     if (result.length > 0) {
+  //       // res.json({
+  //       //   auth: true,
+  //       //   result: result[0]
+  //       // })
+  //       res.send({existUser: true})
+  //     } else {
+  //       res.json({
+  //         existUser: false,
+  //         message: "User doesn't exist"
+  //       })
+  //     }
+
+  //     // if (result.length > 0) {
+  //     //   bcrypt.compare(password, result[0].Password, (error, response) => {
+  //     //     if (response) {
+  //     //       const id = result[0].userID
+  //     //       const token = jwt.sign({id}, "testToken", {
+  //     //         expiresIn: 30
+  //     //       })            
+            
+  //     //       req.session.user = result;
+  //     //       userSession = req.session.user
+  //     //       // console.log(req.session.user);
+  //     //       res.json({
+  //     //         auth: true,
+  //     //         token: token,
+  //     //         // Edit the result because it is passing the password to front end
+  //     //         // result: result[0].First_Name + result[0].Last_Name
+  //     //         result: result[0]
+  //     //       })
+  //     //     } else {
+  //     //       res.json({
+  //     //         auth: false,
+  //     //         message: "Wrong username/password combination!"
+  //     //       })
+  //     //     }
+  //     //   });
+  //     // } else {
+  //     //   res.json({
+  //     //     auth: false,
+  //     //     message: "User doesn't exist"
+  //     //   })
+  //     // }
+  //   }
+  // );
+})
 
 // RESET PASSWORD
 
