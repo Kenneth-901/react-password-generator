@@ -42,6 +42,8 @@ const db = mysql.createPool({
 
 // INSERT INTO user (First_Name, Last_Name, Email, Password, DOB, Phone_Number, Created2) VALUES ('HO', 'TUNG', 'h@gamil.com', 'abc123', '1-11-1111', '0101112345', current_timestamp())
 
+
+// SIGN UP
 app.post("/create", async (req, res) => {
   
   const firstName = req.body.firstName;
@@ -87,6 +89,45 @@ app.post("/create", async (req, res) => {
   // })
 })
 
+app.get("/phaseQuestion", async (req, res) => {
+  const email = req.params.email;
+  try {
+    const qry = `SELECT * FROM password_generator.phase_questions`
+    db.query(qry, (err, result) => {
+      if (err) throw err;
+      res.send(JSON.stringify(result));
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+  // Sign up, reset password
+app.get(`/existed/:value`, async (req, res) => {
+  const email = req.params.value;
+  
+  db.getConnection( (err, conn) => {
+    if (err) throw err;
+
+    try {
+      const qry = `SELECT * FROM user WHERE Email = ?`
+      conn.query(qry, email, (err, result) => {
+        conn.release();
+        if (err) throw err;
+        res.send(JSON.stringify(result));
+      });
+    } catch (error) {
+      console.log(error);
+      res.end();
+    }
+  });
+});
+
+
+// VIEW GENERATED PASSWORD
+
+  // Function to verify the token
+  // This is a middleware
 const verifyJWT = (req, res, next) => {
   const token = req.headers["x-access-token"]
 
@@ -107,6 +148,7 @@ const verifyJWT = (req, res, next) => {
   }
 }
 
+  // Verify the token
 app.get("/isUserAuth", verifyJWT, (req, res) => {
   // res.send("Authentication successful")
   res.json({
@@ -114,6 +156,9 @@ app.get("/isUserAuth", verifyJWT, (req, res) => {
     message: "Authentication successful"
   })
 })
+
+
+// LOG IN
 
 let userSession = []
 
@@ -183,6 +228,8 @@ app.get("/login", (req, res) => {
   }
 })
 
+
+// SIGN OUT
 app.post("/signout", (req, res) => {
   // console.log(res)
   req.session.destroy((err) => {
@@ -190,6 +237,8 @@ app.post("/signout", (req, res) => {
   })
 })
 
+
+// ACCOUNT
 app.get("/account/:email", async (req, res) => {
   const email = req.params.email;
   try {
@@ -210,26 +259,36 @@ app.get("/account/:email", async (req, res) => {
   }
 });
 
-app.get(`/existed/:value`, async (req, res) => {
-  const email = req.params.value;
-  
-  db.getConnection( (err, conn) => {
-    if (err) throw err;
 
-    try {
-      const qry = `SELECT * FROM user WHERE Email = ?`
-      conn.query(qry, email, (err, result) => {
-        conn.release();
-        if (err) throw err;
-        res.send(JSON.stringify(result));
-      });
-    } catch (error) {
-      console.log(error);
-      res.end();
-    }
+// UPDATE ACCOUNT
+app.post("/updateProfile", async (req, res) => {
+  
+  const userId = req.body.id;
+  const firstName = req.body.data.firstName;
+  const lastName = req.body.data.lastName;
+  const password = req.body.data.password;
+  const dateOfBirth = req.body.data.dob;
+  const phoneNumber = req.body.data.phoneNumber;
+
+  bcrypt.hash(password, saltRounds, (err, hash) => {
+    if(err) throw err;
+
+    const sqlQuery = `update user set 
+      First_Name="${firstName}", 
+      Last_Name="${lastName}", 
+      Password="${hash}", 
+      DOB="${dateOfBirth}", 
+      Phone_Number="${phoneNumber}"
+      where userID = ${userId}
+    `
+    db.query(sqlQuery, (err, result) => {
+      if (err) throw err;
+    })
   });
 });
 
+
+// UPDATE ACCOUNT AUTHENTICATION
 app.post("/updateConfirmation", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -362,25 +421,59 @@ app.post("/resetPass", (req, res) => {
   // );
 })
 
-app.post("/validateUser", (req, res) => {
-  const test = req.session.user
-  res.send(req.session.user)
-  // console.log(req.signedCookies)
-  console.log(userSession)
-})
-app.get("/phaseQuestion", async (req, res) => {
+// RESET PASSWORD
+
+  // Get the user's phase question
+app.get("/selectedPhaseQuestion/:email", (req, res) => {
   const email = req.params.email;
   try {
-    const qry = `SELECT * FROM password_generator.phase_questions`
-    db.query(qry, (err, result) => {
+    const qry = `select pq.* from password_generator.phase_questions pq join password_generator.user u on u.question = pq.questionsID or u.question2 = pq.questionsID where u.Email= ?`
+    db.query(qry, email, (err, result) => {
       if (err) throw err;
       res.send(JSON.stringify(result));
     });
   } catch (error) {
     console.log(error);
   }
-});
+})
 
+  // Verify the user's phase question & answer
+app.post("/comparedPhaseAnswer", (req, res) => {
+  const email = req.body.email
+  const questionNumber = req.body.questionNumber
+  const phaseAnswer = req.body.phaseAnswer
+
+  try{
+    const qry = `SELECT Email FROM user WHERE email=? and ((question=? and answer=?) or (question2=? and answer2=?));`
+    db.query(qry, [email, questionNumber, phaseAnswer, questionNumber, phaseAnswer], (err, result) => {
+      if(err) throw err
+      res.send(result)
+    })
+  }catch(error){
+    console.log(error)
+  }
+})
+
+  // Update/Reset the password
+app.post("/resetPassword", (req, res) => {
+  const email = req.body.email
+  const password = req.body.password
+
+  try{
+    bcrypt.hash(password, saltRounds, (err, hash) => {
+      const qry = "UPDATE user SET Password=? WHERE Email=?"
+      db.query(qry, [hash, email], (err, result) => {
+        if(err) throw err
+        res.send(result)
+      })
+    })
+  }catch(error){
+    console.log(error)
+  }
+})
+
+
+// CHECK IF THE SERVER IS RUNNING
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");
 });
