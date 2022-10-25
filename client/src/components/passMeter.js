@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import "../styles/homepage.css" 
 
 const PassMeter = () => {
@@ -45,17 +45,7 @@ const PassMeter = () => {
 
         // setweaknessExist(true)
       })
-
-    // if(checkPass.length === 0){
-    //   setreasons("Enter your password")
-    // }
-    // console.log(reasons)
-    // if(reasons.length === 0){
-    //   setreasons("Your password is complex and secure")
-    // }
   }
-
-  // console.log(reasons)
   
   const calculatePasswordStrength = (password) => {
     const weaknesses = []
@@ -64,7 +54,6 @@ const PassMeter = () => {
     weaknesses.push(lowercaseWeakness(password))
     weaknesses.push(numberWeakness(password))
     weaknesses.push(specialCharactersWeakness(password))
-    // weaknesses.push(repeatCharactersWeakness(password))
     return weaknesses
   }
 
@@ -101,17 +90,6 @@ const PassMeter = () => {
   const specialCharactersWeakness = (password) => {
     return characterTypeWeakness(password, /[^0-9a-zA-Z\s]/g, 'special characters')
   }
-  
-  // const repeatCharactersWeakness = (password) => {
-  //   const matches = password.match(/(.)\1/g) || []
-  //   console.log(matches)
-  //   if (matches.length > 0) {
-  //     return {
-  //       message: 'Your password has repeat characters',
-  //       deduction: matches.length * 10
-  //     }
-  //   }
-  // }
 
   const characterTypeWeakness = (password, regex, type) => {
     const matches = password.match(regex) || []
@@ -123,7 +101,7 @@ const PassMeter = () => {
       }
     }
   
-    if (matches.length <= 2) {
+    if (matches.length <= 1) {
       return {
         message: `Your password could use more ${type}`,
         deduction: 5
@@ -131,16 +109,11 @@ const PassMeter = () => {
     }
   }
 
-  // useEffect(() => {
-  //   if(checkPass.length === 0){
-  //     setreasons("Enter your password")
-  //   }
-  //   console.log(reasons)
-  //   if(reasons.length === 0){
-  //     setreasons("Your password is complex and secure")
-  //   }
-  //   // console.log(checkPass)
-  // }, [])
+  useMemo(() => {
+    if(reasons.length === 0 && checkPass.length !== 0){
+      setreasons("Your password is complex and secure")
+    }
+  }, [reasons])
 
   return(
   <>
@@ -167,13 +140,8 @@ const PassMeter = () => {
 
       <br />
 
-      {/* <div id="reasons" className="reasons">{reasons}</div> */}
-
       <div id="reasons" className='reasons'>
-        { 
-        reasons.length === 0 && checkPass.length !== 0 ? "Your password is complex and secure"
-        :
-        reasons}
+        {reasons}
       </div>
     </section>
   </>
