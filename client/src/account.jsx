@@ -14,11 +14,14 @@ import UpdateProfileComfirmModal from "./updateProfileComfirmModal";
 const Account = () => {
   const navigate = useNavigate();
   const [item, setItem] = useState([]);
+  const [phaseQuestion, getPhaseQuestion] = useState([]);
   const [passwordType, setPasswordType] = useState(false);
   const [updateConfirm, setUpdateConfirm] = useState(false);
   // const bool = window.localStorage.getItem("isLoggedIn");
   const decrypted = AES.decrypt(window.sessionStorage.getItem("email"), 'MYKEY4DEMO');
   const loggedEmail = decrypted.toString(enc.Utf8);
+  const question = item.map(m => m.question);
+  const question1 = item.map(m => m.question2);
   const fetchUser = async () => {
     await Axios.get(`http://localhost:3001/account/${loggedEmail}`).then(resp => {
       setItem(resp.data);
@@ -35,7 +38,21 @@ const Account = () => {
 
   useEffect(() => {
     fetchUser();
+    Axios.get(`http://localhost:3001/phaseQuestion`).then(resp => {
+      getPhaseQuestion(resp.data);
+    });
   }, []);
+
+  const phaseQuestionList = React.useMemo(() => {
+    if (!phaseQuestion.length) return [];
+
+    const mappedList = phaseQuestion.map(list => ({
+      value: `${list.questionsID}`,
+      label: `${list.question}`,
+    }));
+
+    return mappedList;
+  }, [phaseQuestion]);
 
   return(
     <>
@@ -68,6 +85,18 @@ const Account = () => {
                 <InlineDetails
                   title={"Date Of Birth: "}
                   label={a.DOB}
+                />
+                <InlineDetails
+                  title={"Password: "}
+                  label={"*********"}
+                />
+                <InlineDetails
+                  title={"PhaseQuestion: "}
+                  label={phaseQuestionList.filter(b => b.value === question.toString()).map(m => m.label).toString()}
+                />
+                <InlineDetails
+                  title={"PhaseQuestion1: "}
+                  label={phaseQuestionList.filter(b => b.value === question1.toString()).map(m => m.label).toString()}
                 />
               </div>
             </div>
