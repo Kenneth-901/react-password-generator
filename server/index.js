@@ -264,27 +264,44 @@ app.post("/updateConfirmation", (req, res) => {
 app.post("/updateProfile", async (req, res) => {
   
   const userId = req.body.id;
-  const firstName = req.body.data.firstName;
-  const lastName = req.body.data.lastName;
-  const password = req.body.data.password;
-  const dateOfBirth = req.body.data.dob;
-  const phoneNumber = req.body.data.phoneNumber;
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const password = req.body.password;
+  const dateOfBirth = req.body.dob;
+  const phoneNumber = req.body.phoneNumber;
 
-  bcrypt.hash(password, saltRounds, (err, hash) => {
-    if(err) throw err;
-
-    const sqlQuery = `update user set 
-      First_Name="${firstName}", 
-      Last_Name="${lastName}", 
-      Password="${hash}", 
-      DOB="${dateOfBirth}", 
-      Phone_Number="${phoneNumber}"
-      where userID = ${userId}
-    `
+  if (firstName){
+    const sqlQuery = `update user set First_Name="${firstName}" where userID = ${userId}`
     db.query(sqlQuery, (err, result) => {
       if (err) throw err;
     })
-  });
+  } else if (lastName){
+    const sqlQuery = `update user set Last_Name="${lastName}" where userID = ${userId}`
+    db.query(sqlQuery, (err, result) => {
+      if (err) throw err;
+    })
+  } else if (password){
+    bcrypt.hash(password, saltRounds, (err, hash) => {
+      if(err) throw err;
+      
+      const sqlQuery = `update user set 
+        Password="${hash}"
+        where userID = ${userId}`
+      db.query(sqlQuery, (err, result) => {
+        if (err) throw err;
+      })
+    });
+  } else if (dateOfBirth){
+    const sqlQuery = `update user set DOB="${dateOfBirth}" where userID = ${userId}`
+    db.query(sqlQuery, (err, result) => {
+      if (err) throw err;
+    })
+  } else {
+    const sqlQuery = `update user set Phone_Number="${phoneNumber}" where userID = ${userId}`
+    db.query(sqlQuery, (err, result) => {
+      if (err) throw err;
+    })
+  }
 });
 
 app.post("/resetPass", (req, res) => {

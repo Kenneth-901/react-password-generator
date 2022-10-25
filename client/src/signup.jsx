@@ -111,8 +111,8 @@ const Signup = () => {
               navigate("/login.js");
             }} 
             validationSchema={validationSchema}
-            render={({ errors, status, touched }) => (
-              <Form className="test">
+            render={({ errors, status, touched, handleSubmit }) => (
+              <Form className="test" onSubmit={handleSubmit}>
                 <div className="form-group">
                   <Field
                     id="FirstName"
@@ -211,7 +211,7 @@ const Signup = () => {
                   <ErrorMessage name="phaseAnswer1" component="span" className="invalid-feedback"/>
                 </div>
                 <div className="form-group">
-                  <button type="submit">Register</button>
+                  <Button onClick={handleSubmit}>Register</Button>
                   <button type="reset">Reset</button>
                 </div>
               </Form>
