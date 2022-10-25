@@ -4,7 +4,7 @@ import * as Yup from "yup"
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import FormikDropDownList from "../form/formikDropDownList"
 import { useNavigate } from "react-router-dom";
-import { Algo1 } from './generatorAlgo'
+import Algo1 from './generatorAlgo'
 import "../styles/homepage.css" 
 
 const PassGen = () => {
@@ -12,7 +12,7 @@ const PassGen = () => {
   const [stringQuestion, setstringQuestion] = useState([])
   const [intQuestion, setintQuestion] = useState([])
   const [item, setitem] = useState([])
-  const [password, setpassword] = useState()
+  const [generatedPassword, setgeneratedPassword] = useState([])
 
   const initialValues = {
     generatorQuestion: "",
@@ -33,13 +33,10 @@ const PassGen = () => {
   })
 
   const generatePassword = (data) => {
-    const ans = data.generatorAnswer.split(" ").join("")
-    const ans2 = data.generatorAnswer2.split(" ").join("")
-    // console.log(`${ans} and ${ans2[0]}`)
-    const together = ans.concat(ans2)
-    // console.log(data.generatorAnswer3)
-     setpassword(Algo1(data.generatorAnswer, data.generatorAnswer2, data.generatorAnswer3))
+    setgeneratedPassword(Algo1(data.generatorAnswer, data.generatorAnswer2, data.generatorAnswer3))
   }
+  
+  // console.log(generatedPassword)
 
   const generatorQuestion = React.useMemo(() => {
     if (!item.length) return [];
@@ -169,7 +166,9 @@ const PassGen = () => {
             <button type="submit">Generate Password</button>
             </Form>
         </Formik>
-        <h1>{password}</h1>
+        <h1>
+          {generatedPassword[0]} <br /> {generatedPassword[1]}
+        </h1>
       </div>
     </section>
   </>

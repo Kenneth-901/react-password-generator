@@ -260,34 +260,6 @@ app.get("/account/:email", async (req, res) => {
 });
 
 
-// UPDATE ACCOUNT
-app.post("/updateProfile", async (req, res) => {
-  
-  const userId = req.body.id;
-  const firstName = req.body.data.firstName;
-  const lastName = req.body.data.lastName;
-  const password = req.body.data.password;
-  const dateOfBirth = req.body.data.dob;
-  const phoneNumber = req.body.data.phoneNumber;
-
-  bcrypt.hash(password, saltRounds, (err, hash) => {
-    if(err) throw err;
-
-    const sqlQuery = `update user set 
-      First_Name="${firstName}", 
-      Last_Name="${lastName}", 
-      Password="${hash}", 
-      DOB="${dateOfBirth}", 
-      Phone_Number="${phoneNumber}"
-      where userID = ${userId}
-    `
-    db.query(sqlQuery, (err, result) => {
-      if (err) throw err;
-    })
-  });
-});
-
-
 // UPDATE ACCOUNT AUTHENTICATION
 app.post("/updateConfirmation", (req, res) => {
   const email = req.body.email;
@@ -362,64 +334,6 @@ app.post("/updateProfile", async (req, res) => {
     })
   }
 });
-
-app.post("/resetPass", (req, res) => {
-  // const email = req.body.email;
-  // // const password = req.body.password;
-
-  // db.query(
-  //   "SELECT * FROM user WHERE Email = ?", email, (err, result) => {
-  //     if (err) {
-  //       res.send({ err: err });
-  //     }
-  //     console.log(err)
-  //     if (result.length > 0) {
-  //       // res.json({
-  //       //   auth: true,
-  //       //   result: result[0]
-  //       // })
-  //       res.send({existUser: true})
-  //     } else {
-  //       res.json({
-  //         existUser: false,
-  //         message: "User doesn't exist"
-  //       })
-  //     }
-
-  //     // if (result.length > 0) {
-  //     //   bcrypt.compare(password, result[0].Password, (error, response) => {
-  //     //     if (response) {
-  //     //       const id = result[0].userID
-  //     //       const token = jwt.sign({id}, "testToken", {
-  //     //         expiresIn: 30
-  //     //       })            
-            
-  //     //       req.session.user = result;
-  //     //       userSession = req.session.user
-  //     //       // console.log(req.session.user);
-  //     //       res.json({
-  //     //         auth: true,
-  //     //         token: token,
-  //     //         // Edit the result because it is passing the password to front end
-  //     //         // result: result[0].First_Name + result[0].Last_Name
-  //     //         result: result[0]
-  //     //       })
-  //     //     } else {
-  //     //       res.json({
-  //     //         auth: false,
-  //     //         message: "Wrong username/password combination!"
-  //     //       })
-  //     //     }
-  //     //   });
-  //     // } else {
-  //     //   res.json({
-  //     //     auth: false,
-  //     //     message: "User doesn't exist"
-  //     //   })
-  //     // }
-  //   }
-  // );
-})
 
 // RESET PASSWORD
 
