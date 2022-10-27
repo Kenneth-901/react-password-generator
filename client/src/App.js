@@ -1,5 +1,7 @@
 import "./App.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "./styles/modal.scss";
+import 'react-toastify/dist/ReactToastify.css';
 // import React, { useState } from "react";
 // import Axios from "axios";
 import React from "react";
@@ -12,6 +14,7 @@ import GenPassword from "./genPassword";
 import SignOut from "./signout";
 import UpdateProfile from "./updateProfile"
 import ResetPass from "./resetPass";
+import { ToastContainer } from 'react-toastify';
 
 const App = () => {
   
@@ -29,6 +32,19 @@ const App = () => {
           <Route path="/resetPass.js" element={<ResetPass />}/>
         </Routes>
       </Router>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable={false}
+        pauseOnHover
+        theme="colored"
+      />
+      
     </>
   )
 
