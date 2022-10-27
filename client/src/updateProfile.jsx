@@ -128,7 +128,7 @@ const UpdateProfile = () => {
                             type="text"
                             placeholder="First Name"
                           />
-                          <ErrorMessage name="firstName" component="span" className="invalid-feedback"/>
+                          <ErrorMessage name="firstName" component="span"/>
                         </div>
                         <div className="form-group">
                           <Field
@@ -136,7 +136,7 @@ const UpdateProfile = () => {
                             name="lastName"
                             placeholder="Last Name"
                           />
-                          <ErrorMessage name="lastName" component="span" className="invalid-feedback"/>
+                          <ErrorMessage name="lastName" component="span"/>
                         </div>
                         <div className="form-group">
                           <Button onClick={handleSubmit} className="btn btn-primary mr-2">Update</Button>

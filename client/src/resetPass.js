@@ -140,7 +140,7 @@ const ResetPass = () => {
                     placeholder="Phase Answer"
                     className={"input100"}
                   />
-                  <ErrorMessage name="phaseAnswer" component="span" className="invalid-feedback"/>
+                  <ErrorMessage name="phaseAnswer" component="span"/>
 
                   <br />
                 </>

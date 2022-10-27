@@ -3,7 +3,6 @@ import Axios from "axios"
 import * as Yup from "yup"
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import FormikDropDownList from "../form/formikDropDownList"
-import { useNavigate } from "react-router-dom";
 import Algo1 from './generatorAlgo'
 import "../styles/homepage.css" 
 
@@ -116,7 +115,7 @@ const PassGen = () => {
               placeholder="Enter Answer"
               className={"input100"}
             />
-            <ErrorMessage name="generatorAnswer" component="span" className="invalid-feedback"/>
+            <ErrorMessage name="generatorAnswer" component="span"/>
 
             <br />
 
@@ -137,7 +136,7 @@ const PassGen = () => {
               placeholder="Enter Answer"
               className={"input100"}
             />
-            <ErrorMessage name="generatorAnswer2" component="span" className="invalid-feedback"/>
+            <ErrorMessage name="generatorAnswer2" component="span"/>
             
             <br />
 
@@ -159,7 +158,7 @@ const PassGen = () => {
               type="number"
               className={"input100"}
             />
-            <ErrorMessage name="generatorAnswer3" component="span" className="invalid-feedback"/>
+            <ErrorMessage name="generatorAnswer3" component="span"/>
 
             <br /><br />
 
@@ -167,7 +166,13 @@ const PassGen = () => {
             </Form>
         </Formik>
         <h1>
-          {generatedPassword[0]} <br /> {generatedPassword[1]}
+          {generatedPassword[0]} 
+          <br /> 
+          {generatedPassword[1]}
+          <br /> 
+          {generatedPassword[2]} 
+          <br /> 
+          {generatedPassword[3]}
         </h1>
       </div>
     </section>

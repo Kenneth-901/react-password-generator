@@ -386,17 +386,17 @@ app.post("/resetPassword", (req, res) => {
 // PASSWORD GENERATOR
 
   // GET THE QUESTIONS
-// app.get("/generatorQuestion", (req, res) => {
-//   try {
-//     const qry = `SELECT * FROM password_generator.generator_questions;`
-//     db.query(qry, (err, result) => {
-//       if (err) throw err;
-//       res.send(JSON.stringify(result));
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// })
+app.get("/generatorQuestion", (req, res) => {
+  try {
+    const qry = `SELECT * FROM password_generator.generator_questions;`
+    db.query(qry, (err, result) => {
+      if (err) throw err;
+      res.send(JSON.stringify(result));
+    });
+  } catch (error) {
+    console.log(error);
+  }
+})
 
 // CHECK IF THE SERVER IS RUNNING
 app.listen(3001, () => {
