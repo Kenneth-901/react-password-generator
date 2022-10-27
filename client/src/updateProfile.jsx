@@ -11,6 +11,7 @@ import ConfirmPasswordShowAndHide from "./components/ConfrimPasswordShowAndHide"
 import ViewEditToggle from "./components/viewEditToggle";
 import Button from "./components/button";
 import InlineDetails from "./components/inlineDetails";
+import { toast } from "./common/toast"
 
 const UpdateProfile = () => {
   YupPassword(Yup);
@@ -22,6 +23,7 @@ const UpdateProfile = () => {
   const [editPhoneNumber, setEditPhoneNumber] = useState(false);
   const decrypted = AES.decrypt(window.sessionStorage.getItem("email"), 'MYKEY4DEMO');
   const loggedEmail = decrypted.toString(enc.Utf8);
+  // const refresh = () => window.location.reload(true);
 
   const id = item.map(a => a.userID);
 
@@ -35,11 +37,15 @@ const UpdateProfile = () => {
       dob: data.dob || "",
       phoneNumber: data.phoneNumber || ""
     };
-    
-    // console.log(apiValue);
-    Axios.post("http://localhost:3001/updateProfile", apiValue).then((response) => {
-      console.log("success");
-    });
+
+    try {
+      Axios.post("http://localhost:3001/updateProfile", apiValue).then((response) => {
+        console.log(response);
+      });
+      toast.success("Success");
+    } catch(e) {
+      toast.error(e);
+    }
   };
 
   const validationName = Yup.object().shape({
@@ -72,7 +78,7 @@ const UpdateProfile = () => {
     Axios.get(`http://localhost:3001/account/${loggedEmail}`).then(resp => {
       setItem(resp.data);
     });
-  }, [loggedEmail, item]);
+  }, [loggedEmail]);
 
   return(
     <div className="App">
@@ -102,7 +108,7 @@ const UpdateProfile = () => {
                     <>
                       {item.length > 0 && item.map(a => (
                         <div key={a.userID} className="d-flex flex-column lh-24">
-                          <div className="d-flex flex-row justify-content-between mb-2">
+                          <div className="">
                             <InlineDetails
                               title={"Full Name: "}
                               label={`${a.First_Name} ${a.Last_Name}`}
@@ -171,7 +177,7 @@ const UpdateProfile = () => {
                     <>
                       {item.length > 0 && item.map(a => (
                         <div key={a.userID} className="d-flex flex-column lh-24">
-                          <div className="d-flex flex-row justify-content-between mb-2">
+                          <div className="">
                             <InlineDetails
                               title={"Email: "}
                               label={`${a.Email}`}
@@ -214,7 +220,7 @@ const UpdateProfile = () => {
                     <>
                       {item.length > 0 && item.map(a => (
                         <div key={a.userID} className="d-flex flex-column lh-24">
-                          <div className="d-flex flex-row justify-content-between mb-2">
+                          <div className="">
                             <InlineDetails
                               title={"Password: "}
                               label={`***********`}
@@ -283,7 +289,7 @@ const UpdateProfile = () => {
                     <>
                       {item.length > 0 && item.map(a => (
                         <div key={a.userID} className="d-flex flex-column lh-24">
-                          <div className="d-flex flex-row justify-content-between mb-2">
+                          <div className="">
                             <InlineDetails
                               title={"Date Of Birth: "}
                               label={`${a.DOB}`}
@@ -343,7 +349,7 @@ const UpdateProfile = () => {
                     <>
                       {item.length > 0 && item.map(a => (
                         <div key={a.userID} className="d-flex flex-column lh-24">
-                          <div className="d-flex flex-row justify-content-between mb-2">
+                          <div className="">
                             <InlineDetails
                               title={"Phone Number: "}
                               label={`${a.Phone_Number}`}

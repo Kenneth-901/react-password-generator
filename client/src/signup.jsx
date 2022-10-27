@@ -12,6 +12,7 @@ import PasswordShowAndHide from "./components/passwordShowAndHide";
 import ConfirmPasswordShowAndHide from "./components/ConfrimPasswordShowAndHide";
 import FormikDropDownList from "./form/formikDropDownList"
 import Button from "./components/button"
+import { toast } from "./common/toast"
 
 
 // Things to do
@@ -42,10 +43,15 @@ const Signup = () => {
   };
 
   const onSubmit = (data) => {
-    console.log(data);
-    Axios.post("http://localhost:3001/create", data).then((response) => {
-      console.log("success");
-    });
+    try {
+      Axios.post("http://localhost:3001/create", data).then((response) => {
+        console.log("success");
+      });
+      toast.success("success");
+    } catch(e) {
+      toast.error(e);
+    }
+    
   };
 
   const validationSchema = Yup.object().shape({
@@ -103,7 +109,7 @@ const Signup = () => {
       <Navbar />
       
       <div className="App">
-        <div className="information">
+        <div className="test">
           <Formik 
             initialValues = {initialValues}
             onSubmit={(v) => {
@@ -112,7 +118,7 @@ const Signup = () => {
             }} 
             validationSchema={validationSchema}
             render={({ errors, status, touched, handleSubmit }) => (
-              <Form className="test" onSubmit={handleSubmit}>
+              <Form className="" onSubmit={handleSubmit}>
                 <div className="form-group">
                   <Field
                     id="FirstName"
@@ -121,7 +127,7 @@ const Signup = () => {
                     placeholder="First Name"
                     className={"input100"}
                   />
-                  <ErrorMessage name="firstName" component="span" className="invalid-feedback"/>
+                  <ErrorMessage name="firstName" component="span"/>
                 </div>
                 <div className="form-group">
                   <Field
@@ -130,7 +136,7 @@ const Signup = () => {
                     placeholder="Last Name"
                     className={"input100"}
                   />
-                  <ErrorMessage name="lastName" component="span" className="invalid-feedback"/>
+                  <ErrorMessage name="lastName" component="span"/>
                 </div>
                 <div className="form-group">
                   <Field 
@@ -191,7 +197,7 @@ const Signup = () => {
                     placeholder="Phase Answer"
                     className={"input100"}
                   />
-                  <ErrorMessage name="phaseAnswer" component="span" className="invalid-feedback"/>
+                  <ErrorMessage name="phaseAnswer" component="span"/>
                 </div>
                 <div className="form-group">
                   <FormikDropDownList 

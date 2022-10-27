@@ -301,15 +301,11 @@ app.post("/updateProfile", async (req, res) => {
   const dateOfBirth = req.body.dob;
   const phoneNumber = req.body.phoneNumber;
 
-  if (firstName){
-    const sqlQuery = `update user set First_Name="${firstName}" where userID = ${userId}`
+  if (phoneNumber){
+    const sqlQuery = `update user set Phone_Number="${phoneNumber}" where userID = ${userId}`
     db.query(sqlQuery, (err, result) => {
       if (err) throw err;
-    })
-  } else if (lastName){
-    const sqlQuery = `update user set Last_Name="${lastName}" where userID = ${userId}`
-    db.query(sqlQuery, (err, result) => {
-      if (err) throw err;
+      res.send(JSON.stringify(result));
     })
   } else if (password){
     bcrypt.hash(password, saltRounds, (err, hash) => {
@@ -328,7 +324,7 @@ app.post("/updateProfile", async (req, res) => {
       if (err) throw err;
     })
   } else {
-    const sqlQuery = `update user set Phone_Number="${phoneNumber}" where userID = ${userId}`
+    const sqlQuery = `update user set First_Name="${firstName}", Last_Name="${lastName}" where userID = ${userId}`
     db.query(sqlQuery, (err, result) => {
       if (err) throw err;
     })
@@ -390,17 +386,17 @@ app.post("/resetPassword", (req, res) => {
 // PASSWORD GENERATOR
 
   // GET THE QUESTIONS
-app.get("/generatorQuestion", (req, res) => {
-  try {
-    const qry = `SELECT * FROM password_generator.generator_questions;`
-    db.query(qry, (err, result) => {
-      if (err) throw err;
-      res.send(JSON.stringify(result));
-    });
-  } catch (error) {
-    console.log(error);
-  }
-})
+// app.get("/generatorQuestion", (req, res) => {
+//   try {
+//     const qry = `SELECT * FROM password_generator.generator_questions;`
+//     db.query(qry, (err, result) => {
+//       if (err) throw err;
+//       res.send(JSON.stringify(result));
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// })
 
 // CHECK IF THE SERVER IS RUNNING
 app.listen(3001, () => {
