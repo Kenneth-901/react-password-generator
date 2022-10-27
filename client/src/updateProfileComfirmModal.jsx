@@ -6,6 +6,7 @@ import * as Yup from "yup"
 import Axios from "axios"
 import { useNavigate } from "react-router-dom";
 import Button from './components/button';
+import { toast } from "./common/toast"
 
 const UpdateProfileComfirmModal = ({
   isOpen, onClose, onClickYes, isLoading, data
@@ -50,41 +51,43 @@ return (
     styleMode="small"
     overlayClassName="front"
   >
-    <div className="App">
+    <div className="">
       <Formik 
-            initialValues = {initialValues}
-            onSubmit={(v) => {
-              onSubmit(v);
-              navigate("/updateProfile");
-            }} 
-            validationSchema={validationSchema}
-            render={({ handleSubmit, errors, status, touched }) => (
-              <Form onSubmit={handleSubmit}>
-                <div className="form-group">
-                  <Field
-                    id="Email"
-                    name="email"
-                    readOnly
-                  />
-                </div>
-                <div className="form-group">
-                  <Field
-                    id="Password"
-                    name="password"
-                    type="password"
-                    placeholder="Enter Your Password"
-                  />
-                  <ErrorMessage name="password" component="span" className="invalid-feedback"/>
-                </div>
-                <div className="d-flex justify-content-center mt-4">
-                    <button type="button" onClick={onClose} className="no-decoration-btn text-gray fs-standard mr-4">
-                        {"Cancel"}
-                    </button>
-                    <Button onClick={handleSubmit} className="btn btn-brand">Yes</Button>
-                </div>
-              </Form>
-            )}
-        />
+        initialValues = {initialValues}
+        onSubmit={(v) => {
+          onSubmit(v);
+          navigate("/updateProfile");
+        }} 
+        validationSchema={validationSchema}
+        render={({ handleSubmit, errors, status, touched }) => (
+          <>
+            <Form onSubmit={handleSubmit} className="App">
+              <div className="form-group">
+                <Field
+                  id="Email"
+                  name="email"
+                  readOnly
+                />
+              </div>
+              <div className="form-group">
+                <Field
+                  id="Password"
+                  name="password"
+                  type="password"
+                  placeholder="Enter Your Password"
+                />
+                <ErrorMessage name="password" component="span"/>
+              </div>
+            </Form>
+            <div className="d-flex justify-content-end mt-4">
+              <button type="button" onClick={onClose} className="no-decoration-btn text-gray fs-standard mr-4">
+                  {"Cancel"}
+              </button>
+              <Button onClick={handleSubmit} className="btn btn-brand">Yes</Button>
+            </div>
+          </>
+        )}
+      />
     </div>
   </Modal>
 )};

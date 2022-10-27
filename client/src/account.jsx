@@ -73,7 +73,7 @@ const Account = () => {
           onClick={() => setUpdateConfirm(true)}
           renderBody={() => (
             <div key={a.userID} className="d-flex flex-column lh-24">
-              <div className="d-flex flex-row justify-content-between mb-2">
+              <div className="">
                 <InlineDetails
                   title={"Full Name: "}
                   label={`${a.First_Name} ${a.Last_Name}`}
