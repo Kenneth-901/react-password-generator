@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import Footer from "./footer"
+import Footer from "./footerContainer"
 import Navbar from "./NavBar/navbar"
 import Axios from "axios"
 import { Formik, Form, Field, ErrorMessage } from "formik"
