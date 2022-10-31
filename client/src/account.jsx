@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import Navbar from "./NavBar/navbar"
-import Footer from "./footer"
+import Footer from "./footerContainer"
 import Axios from "axios"
 // import { Link, Redirect } from 'react-router-dom';
 // import { FaEye, FaEyeSlash } from "react-icons/fa";

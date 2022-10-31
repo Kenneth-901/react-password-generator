@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Axios from "axios";
 import Navbar from './NavBar/navbar';
-import Footer from './footer';
+import Footer from './footerContainer';
 import PassMeter from './components/passMeter';
 import PassGen from './components/passGen';
 
