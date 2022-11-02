@@ -2,7 +2,7 @@ const Algo1 = (answer, answer2, answer3) => {
   let joinAns = answer.replace(/\s/g,'').toLowerCase()
   let joinAns2 = answer2.replace(/\s/g,'').toLowerCase()
   const splitAns3 = answer3.toString().split("")
-  const symbol = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "="]
+  const symbol = ["=", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-"]
 
   const addingNumbers = (forAnswer3) => {
     let additional = 0
@@ -25,6 +25,16 @@ const Algo1 = (answer, answer2, answer3) => {
   const symbolIndex = Math.floor(Math.random() * symbol.length)
   const chosenSymbol = symbol[symbolIndex]
   const chosenSymbol2 = symbolIndex === 11 ? symbol[symbolIndex - 1] : symbol[symbolIndex + 1]
+
+  const secondPasswordFormat = (string, string2, string3) => {
+    string = string.charAt(0).toUpperCase() + string.slice(1)
+
+    string2 = string2.slice(0, string2.length - 1) + string2.charAt(string2.length - 1).toUpperCase()
+
+    string3 = splitAns3.length === 1 ? symbol[splitAns3[0]] : splitAns3[1] == 0 ? symbol[splitAns3[1]] : symbol[splitAns3[1] - 1]
+
+    return string.concat(answer3).concat(string2).concat(string3)
+  }
 
   const capitalization = (string, string2) => {
     // For answer 1
@@ -53,9 +63,9 @@ const Algo1 = (answer, answer2, answer3) => {
   
   const genPass1 = chosenSymbol.concat(joinAns).concat(answer3).concat(joinAns2).concat(chosenSymbol)
 
-  const genPass2 = chosenSymbol.concat(afterCapitalize[0]).concat(answer3).concat(afterCapitalize[1]).concat(chosenSymbol2)
+  const genPass2 = secondPasswordFormat(joinAns, joinAns2)
+  // chosenSymbol.concat(afterCapitalize[0]).concat(answer3).concat(afterCapitalize[1]).concat(chosenSymbol2)
 
-  // 369@Passwork147#
   const genpass3 = afterAddingNumbers.concat(chosenSymbol).concat(afterCapitalize[0]).concat(afterAddingNumbers).concat(chosenSymbol2)
 
   const genpass4 = afterAddingNumbers.concat(chosenSymbol).concat(afterCapitalize[1]).concat(afterAddingNumbers).concat(chosenSymbol2)
