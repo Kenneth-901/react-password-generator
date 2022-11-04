@@ -398,6 +398,14 @@ app.get("/generatorQuestion", (req, res) => {
   }
 })
 
+
+// IF GOT ACC THEN ADD GENERATED PASSWORD TO THEIR ACC
+app.post("/addGeneratedPassToAcc", (req, res) => {
+  const passwords = req.body.generatedPassword
+
+  console.log(passwords)
+})
+
 // CHECK IF THE SERVER IS RUNNING
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");

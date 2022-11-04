@@ -1,9 +1,17 @@
 const Algo1 = (answer, answer2, answer3) => {
+  // Declaring Variables
   let joinAns = answer.replace(/\s/g,'').toLowerCase()
   let joinAns2 = answer2.replace(/\s/g,'').toLowerCase()
   const splitAns3 = answer3.toString().split("")
   const symbol = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "="]
+  const randomIndex = Math.floor(Math.random() * joinAns.length)
+  const randomIndex2 = Math.floor(Math.random() * joinAns2.length)
+  const symbolIndex = Math.floor(Math.random() * symbol.length)
+  const chosenSymbol = symbol[symbolIndex]
+  const chosenSymbol2 = symbolIndex === 11 ? symbol[symbolIndex - 1] : symbol[symbolIndex + 1]
 
+
+  // Functions to use in the Password Formats
   const addingNumbers = (forAnswer3) => {
     let additional = 0
     let ans3Length = forAnswer3.toString().length
@@ -18,36 +26,6 @@ const Algo1 = (answer, answer2, answer3) => {
     }
 
     return ans3
-  }
-
-  const randomIndex = Math.floor(Math.random() * joinAns.length)
-  const randomIndex2 = Math.floor(Math.random() * joinAns2.length)
-  const symbolIndex = Math.floor(Math.random() * symbol.length)
-  const chosenSymbol = symbol[symbolIndex]
-  const chosenSymbol2 = symbolIndex === 11 ? symbol[symbolIndex - 1] : symbol[symbolIndex + 1]
-
-  const secondPasswordFormat = (string, string2, string3) => {
-    string = string.charAt(0).toUpperCase() + string.slice(1)
-
-    string2 = string2.slice(0, string2.length - 1) + string2.charAt(string2.length - 1).toUpperCase()
-    
-    if(splitAns3.length === 1){
-      console.log(splitAns3[0] + symbol[9])
-      if(splitAns3[0] == 0){
-        string3 = symbol[9]
-        console.log("Hello")
-      }else{
-        string3 = symbol[splitAns3[0] - 1]
-      }
-    }else{
-      if(splitAns3[1] == 0){
-        string3 = symbol[9]
-      }else{
-        string3 = symbol[splitAns3[1] - 1]
-      }
-    }
-
-    return string.concat(answer3).concat(string2).concat(string3).concat(string3)
   }
 
   const capitalization = (string, string2) => {
@@ -72,30 +50,94 @@ const Algo1 = (answer, answer2, answer3) => {
     return [string, string2]
   }
 
+  const addingSymbol = () => {
+    let addedSymbol = ""
+
+    if(splitAns3.length === 1){
+      if(splitAns3[0] == 0){
+        addedSymbol = symbol[9]
+      }else{
+        addedSymbol = symbol[splitAns3[0] - 1]
+      }
+    }else{
+      if(splitAns3[1] == 0){
+        addedSymbol = symbol[9]
+      }else{
+        addedSymbol = symbol[splitAns3[1] - 1]
+      }
+    }
+
+    return addedSymbol.concat(addedSymbol)
+  }
+
+
+  // All 5 Password Formats
+  const firstPasswordFormat = (string, string2, integer, symbol) => {
+    return symbol.concat(string).concat(integer).concat(string2).concat(symbol)
+  }
+  
+  const secondPasswordFormat = (string, string2) => {
+    string = string.charAt(0).toUpperCase() + string.slice(1)
+
+    string2 = string2.slice(0, string2.length - 1) + string2.charAt(string2.length - 1).toUpperCase()
+    
+    let specialCharacter = addingSymbol()
+
+    return string.concat(answer3).concat(string2).concat(specialCharacter)
+  }
+
+  const thirdPasswordFormat = (string, string2, integer) => {
+    let specialCharacter = addingSymbol()
+    let chosenIntegers = addingNumbers(integer)
+
+    if(string.length <= 8){
+      string = string.charAt(0).toUpperCase() + string.slice(1) 
+      string2 = string2.charAt(0).toUpperCase() + string2.slice(1)
+
+      return string.concat(string2).concat(chosenIntegers).concat(specialCharacter)
+
+    }else{
+      string = string.charAt(0).toUpperCase() + string.slice(1, string.length - 1) + string.charAt(string.length - 1).toUpperCase()
+
+      return string.concat(specialCharacter).concat(chosenIntegers) 
+    }
+  }
+
+  const fourthPasswordFormat = (string, string2, integer) => {
+    let specialCharacter = addingSymbol()
+    let chosenIntegers = addingNumbers(integer)
+
+    if(string2.length <= 8){
+      string = string.charAt(0).toUpperCase() + string.slice(1) 
+      string2 = string2.charAt(0).toUpperCase() + string2.slice(1)
+
+      return string2.concat(string).concat(chosenIntegers).concat(specialCharacter)
+
+    }else{
+      string2 = string2.charAt(0).toUpperCase() + string2.slice(1, string2.length - 1) + string2.charAt(string2.length - 1).toUpperCase()
+
+      return string2.concat(specialCharacter).concat(chosenIntegers) 
+    }
+  }
+
+  const fifthPasswordFormat = (string, string2, integer) => {
+
+  }
+
   const afterCapitalize = capitalization(joinAns, joinAns2)
   const afterAddingNumbers = addingNumbers(answer3).toString()
   
-  const genPass1 = chosenSymbol.concat(joinAns).concat(answer3).concat(joinAns2).concat(chosenSymbol)
+  const genPass1 = firstPasswordFormat(joinAns, joinAns2, answer3, chosenSymbol)
 
-  const genPass2 = secondPasswordFormat(joinAns, joinAns2, splitAns3)
+  const genPass2 = secondPasswordFormat(joinAns, joinAns2)
 
-  const genpass3 = afterAddingNumbers.concat(chosenSymbol).concat(afterCapitalize[0]).concat(afterAddingNumbers).concat(chosenSymbol2)
-
-  const genpass4 = afterAddingNumbers.concat(chosenSymbol).concat(afterCapitalize[1]).concat(afterAddingNumbers).concat(chosenSymbol2)
+  const genpass3 = thirdPasswordFormat(joinAns, joinAns2, answer3)
   
-  const genpass5 = ""
+  const genpass4 = fourthPasswordFormat(joinAns, joinAns2, answer3)
+
+  const genpass5 = fifthPasswordFormat(joinAns, joinAns2, answer3)
   
-  // console.log(`${afterCapitalize[0]} RandomIndex: ${randomIndex}`)
-  // console.log(`${afterCapitalize[1]}; RandomIndex: ${randomIndex}`)
-  // // console.log(`${addingNumbers(answer3)}`)
-  // console.log(`${afterAddingNumbers}`)
-  // console.log(`${typeof afterAddingNumbers}`)
-  console.log(splitAns3)
-
-  // console.log(`randomInt: ${randomIndex}`)
-
-
-  return [genPass1, genPass2, genpass3, genpass4]
+  return [genPass1, genPass2, genpass3, genpass4, genpass5]
 }
 
 export default Algo1

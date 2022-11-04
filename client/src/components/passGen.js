@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Axios from "axios"
 import * as Yup from "yup"
 import { Formik, Form, Field, ErrorMessage } from "formik"
@@ -12,6 +12,8 @@ const PassGen = () => {
   const [intQuestion, setintQuestion] = useState([])
   const [item, setitem] = useState([])
   const [generatedPassword, setgeneratedPassword] = useState([])
+  const isLoggedIn = localStorage.getItem("isLoggedIn")
+  
 
   const initialValues = {
     generatorQuestion: "",
@@ -33,6 +35,16 @@ const PassGen = () => {
 
   const generatePassword = (data) => {
     setgeneratedPassword(Algo1(data.generatorAnswer, data.generatorAnswer2, data.generatorAnswer3))
+    if(isLoggedIn){
+      // Axios.post("http://localhost:3001/addGeneratedPassToAcc", generatedPassword).then((response) => {
+      //   if(response){
+      //     console.log("Hello world")
+      //   }
+      // })
+      // console.log(generatedPassword[0]) 
+    }else{
+      console.log("need to be logged in")
+    }
   }
   
   // console.log(generatedPassword)
@@ -86,6 +98,16 @@ const PassGen = () => {
   useEffect(() => {
     Axios.get(`http://localhost:3001/generatorQuestion`).then(resp => { setitem(resp.data); }); 
   }, [])
+
+  // if(localStorage.getItem("isLoggedIn")){
+  //   if(generatedPassword.length > 0){
+  //     console.log(generatedPassword)
+  //   }else{
+  //     console.log("nothing here")
+  //   }
+  // }else{
+  //   console.log("Need to be logged in")
+  // }
 
   return(
   <>
@@ -173,6 +195,8 @@ const PassGen = () => {
           {generatedPassword[2]} 
           <br /> 
           {generatedPassword[3]}
+          <br /> 
+          {generatedPassword[4]}
         </h1>
       </div>
     </section>
