@@ -52,8 +52,9 @@ const Login = () => {
         setlogInStatus(response.data.result.First_Name)
         window.localStorage.setItem("isLoggedIn", true);
         sessionStorage.setItem("email", envryptedString.toString());
+        sessionStorage.setItem("email2", response.data.result.Email)
         sessionStorage.setItem("userID", response.data.result.userID)
-        console.log(response)
+        // console.log(response)
         navigate("/");
       }
       // console.log(response)

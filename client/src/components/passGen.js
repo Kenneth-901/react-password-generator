@@ -8,11 +8,8 @@ import "../styles/homepage.css"
 
 const PassGen = () => {
   
-  const [stringQuestion, setstringQuestion] = useState([])
-  const [intQuestion, setintQuestion] = useState([])
   const [item, setitem] = useState([])
   const [generatedPassword, setgeneratedPassword] = useState([])
-  
   
   const initialValues = {
     generatorQuestion: "",
@@ -35,21 +32,16 @@ const PassGen = () => {
   const generatePassword = (data) => {
     setgeneratedPassword(Algo1(data.generatorAnswer, data.generatorAnswer2, data.generatorAnswer3))
   }
-  
-  // console.log(generatedPassword)
 
   const generatorQuestion = React.useMemo(() => {
     if (!item.length) return [];
-
-    setstringQuestion([])
+    let stringQuestion = []
 
     item.forEach((a) => {
       let count = 5
 
       if(a.passGenID <= count){
-        setstringQuestion((prevState) => [
-          ...prevState, a
-        ])
+        stringQuestion.push(a)
       }
     })
 
@@ -57,22 +49,19 @@ const PassGen = () => {
       value: `${list.passGenID}`,
       label: `${list.question}`,
     }));
-
+    
     return mappedList;
   }, [item]);
 
   const generatorQuestion2 = React.useMemo(() => {
     if (!item.length) return [];
-
-    setintQuestion([])
+    let intQuestion = []
 
     item.forEach((a) => {
       let count = 6
 
       if(a.passGenID >= count){
-        setintQuestion((prevState) => [
-          ...prevState, a
-        ])
+        intQuestion.push(a)
       }
     })
 
