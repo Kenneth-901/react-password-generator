@@ -13,6 +13,8 @@ const SignOut = () => {
       localStorage.removeItem("token", response.data.token);
       localStorage.removeItem("isLoggedIn");
       sessionStorage.removeItem("email");
+      sessionStorage.removeItem("userID");
+      
       navigate("/")
     })
 

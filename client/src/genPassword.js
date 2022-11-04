@@ -9,6 +9,7 @@ const GenPassword = () => {
   
   const [genPass, setgenPass] = useState("")
   const [toValidate, settoValidate] = useState()
+  const userID = sessionStorage.getItem("userID")
 
   const authenticate = () => {
     Axios.get("http://localhost:3001/isUserAuth", {

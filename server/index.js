@@ -157,6 +157,13 @@ app.get("/isUserAuth", verifyJWT, (req, res) => {
   })
 })
 
+app.post("/viewGeneratedPass", (req, res) => {
+  const id = result[0].userID
+  const token = jwt.sign({id}, "testToken", {
+    expiresIn: 30
+  }) 
+})
+
 
 // LOG IN
 
@@ -401,10 +408,21 @@ app.get("/generatorQuestion", (req, res) => {
 
 // IF GOT ACC THEN ADD GENERATED PASSWORD TO THEIR ACC
 app.post("/addGeneratedPassToAcc", (req, res) => {
-  const passwords = req.body.generatedPassword
-
-  console.log(passwords)
+  const passwords = req.body.allPassword
+  const userID = req.body.userID
+  
+  try{
+    const qry = "INSERT INTO genpass (userID, password) VALUES (?, ?)"
+    for(let i in passwords){
+      db.query(qry, [userID, passwords[i]], (err, result) => {
+        if(err) throw err
+      })
+    }
+  }catch(error){
+    console.log(error)
+  }
 })
+
 
 // CHECK IF THE SERVER IS RUNNING
 app.listen(3001, () => {

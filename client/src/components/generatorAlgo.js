@@ -1,4 +1,8 @@
+import Axios from "axios"
+
 const Algo1 = (answer, answer2, answer3) => {
+  const isLoggedIn = window.localStorage.getItem("isLoggedIn")
+  const userID = sessionStorage.getItem("userID")
   // Declaring Variables
   let joinAns = answer.replace(/\s/g,'').toLowerCase()
   let joinAns2 = answer2.replace(/\s/g,'').toLowerCase()
@@ -121,7 +125,7 @@ const Algo1 = (answer, answer2, answer3) => {
   }
 
   const fifthPasswordFormat = (string, string2, integer) => {
-
+    return "Hello"
   }
 
   const afterCapitalize = capitalization(joinAns, joinAns2)
@@ -137,7 +141,21 @@ const Algo1 = (answer, answer2, answer3) => {
 
   const genpass5 = fifthPasswordFormat(joinAns, joinAns2, answer3)
   
-  return [genPass1, genPass2, genpass3, genpass4, genpass5]
+  const allPassword = [genPass1, genPass2, genpass3, genpass4, genpass5]
+
+  if(isLoggedIn){
+
+    const data = {
+      allPassword: allPassword,
+      userID: userID
+    }
+    
+    Axios.post("http://localhost:3001/addGeneratedPassToAcc", data)
+  }else{
+    console.log("need to be logged in")
+  }
+
+  return allPassword
 }
 
 export default Algo1
