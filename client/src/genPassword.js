@@ -8,33 +8,54 @@ import * as Yup from "yup"
 
 const GenPassword = () => {
   
-  const [genPass, setgenPass] = useState("")
+  const [verifyUser, setverifyUser] = useState()
   const [item, setItem] = useState([]);
-  const [correctPhase, setcorrectPhase] = useState(false)
+  const userID = sessionStorage.getItem("userID")
   const email = sessionStorage.getItem("email2")
 
-
-  const authenticate = () => {
-    Axios.get("http://localhost:3001/isUserAuth", {
-      headers: {
-        "x-access-token": localStorage.getItem("token")
-      }
-    }).then((response) => {
-      // console.log(response)
-      // console.log(response.data.auth)
-      if(response.data.auth){
-        setgenPass("Success")
-      }else{
-        setgenPass("fail")
-      }
-    })
-  }
-
   const vali = (data) => {
-    Axios.post("http://localhost:3001/validateUser", data).then((response) => {
-      console.log(response)
+    Axios.post(`http://localhost:3001/generateToken/${userID}`).then((response) => {
+
+      if(response.data.gotToken){
+        localStorage.setItem("token", response.data.token)
+        setverifyUser(true)
+
+        // THE IDEA WAS AFTER THEY ARE VERIFIED THEN GET DATA
+        // getGenPass()
+        
+      }else{
+        console.log(response.data.error)
+      }
     })
   }
+
+
+  // HELP ME HERE
+  // I GOT THE DATA BUT DK HOW TO DISPLAY
+  const getGenPass = () => {
+    Axios.get(`http://localhost:3001/viewGeneratedPass/${userID}`).then((response) => {
+      // console.log(response.data)
+      // console.log(response.data.length)
+      const result = response.data
+      const getPass = []
+      
+      for(let i in result){
+        // console.log(response.data[i].password)
+        getPass.push(response.data[i].password)
+      }
+      
+      const mappedList = result.map(list => ({
+        primaryValue: `${list.genPassID}`,
+        secondaryValue: `${list.userID}`,
+        label: `${list.password}`,
+      }));
+      
+      // console.log(mappedList[0])
+
+      return <h1>{mappedList[0]}</h1>
+    })
+  }
+
 
   const initialValues = {
     phaseQuestion: "",
@@ -55,10 +76,10 @@ const GenPassword = () => {
           Axios.post("http://localhost:3001/comparedPhaseAnswer", data).then((response) => {
             if(response.data.length > 0){
               resolve(true)
-              setcorrectPhase(true)
+              // setcorrectPhase(true)
             }else{
               resolve(false)
-              setcorrectPhase(false)
+              // setcorrectPhase(false)
             }
           })
         })
@@ -81,13 +102,27 @@ const GenPassword = () => {
     return mappedList;
   }, [item]);
   
+  useEffect(() => {
+    Axios.get("http://localhost:3001/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token")
+      }
+    }).then((response) => {
+      if(response.data.auth){
+        setverifyUser(true)
+      }else{
+        setverifyUser(false)
+      }
+    })
+  }, [])
+
   return(
     <>
       <Navbar />
 
       <div className="App">
         <div className="information">
-          {!correctPhase ?
+          {!verifyUser ?
             <Formik 
             initialValues = {initialValues}
             onSubmit={vali} 
@@ -117,7 +152,15 @@ const GenPassword = () => {
                 <button type="submit">View my passwords</button> 
               </Form>
             </Formik>
-          : <h1>Here</h1>}
+            : 
+
+            // WANT TO DISPLAY HERE AFTER THEY ARE VERIFIED
+            // getGenPass()
+            <h1>Here</h1>
+            }
+
+          {/* {getGenPass()} */}
+
         </div>
       </div>
 

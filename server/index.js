@@ -126,6 +126,28 @@ app.get(`/existed/:value`, async (req, res) => {
 
 // VIEW GENERATED PASSWORD
 
+  // Create the token
+app.post("/generateToken/:userID", (req, res) => {
+  const userID = req.body.userID
+
+  // const id = result[0].userID
+  const token = jwt.sign({userID}, "testToken", {expiresIn: 30}) 
+
+  try {
+    res.json({
+      gotToken: true,
+      token: token
+    })
+  } catch (error) {
+    res.json({
+      gotToken: false,
+      token: token,
+      error: error
+    })
+    console.log(error);
+  }
+})
+
   // Function to verify the token
   // This is a middleware
 const verifyJWT = (req, res, next) => {
@@ -157,11 +179,21 @@ app.get("/isUserAuth", verifyJWT, (req, res) => {
   })
 })
 
-app.post("/viewGeneratedPass", (req, res) => {
-  const id = result[0].userID
-  const token = jwt.sign({id}, "testToken", {
-    expiresIn: 30
-  }) 
+app.get("/viewGeneratedPass/:userID", (req, res) => {
+  const userID = req.params.userID
+
+  try {
+    const qry = `SELECT * FROM password_generator.genpass WHERE userID=?;`
+    db.query(qry, userID, (err, result) => {
+      // console.log(result)
+      if (err) throw err;
+      // res.send(JSON.stringify(result));
+      res.send(result)
+    });
+  } catch (error) {
+    console.log(error);
+  }
+
 })
 
 
@@ -182,17 +214,17 @@ app.post("/login", (req, res) => {
       if (result.length > 0) {
         bcrypt.compare(password, result[0].Password, (error, response) => {
           if (response) {
-            const id = result[0].userID
-            const token = jwt.sign({id}, "testToken", {
-              expiresIn: 30
-            })            
+            // const id = result[0].userID
+            // const token = jwt.sign({id}, "testToken", {
+            //   expiresIn: 30
+            // })            
             
             req.session.user = result;
             userSession = req.session.user
             // console.log(req.session.user);
             res.json({
               auth: true,
-              token: token,
+              // token: token,
               // Edit the result because it is passing the password to front end
               // result: result[0].First_Name + result[0].Last_Name
               result: result[0]
@@ -341,6 +373,7 @@ app.post("/updateProfile", async (req, res) => {
 // RESET PASSWORD
 
   // Get the user's phase question
+  // Used in "VIEW GENERATED PASSWORD" as well
 app.get("/selectedPhaseQuestion/:email", (req, res) => {
   const email = req.params.email;
   try {
@@ -355,6 +388,7 @@ app.get("/selectedPhaseQuestion/:email", (req, res) => {
 })
 
   // Verify the user's phase question & answer
+  // Used in "VIEW GENERATED PASSWORD" as well
 app.post("/comparedPhaseAnswer", (req, res) => {
   const email = req.body.email
   const questionNumber = req.body.questionNumber
@@ -428,63 +462,3 @@ app.post("/addGeneratedPassToAcc", (req, res) => {
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");
 });
-
-
-// THIS IS FROM THE VIDEO
-
-// app.post("/create", (req, res) => {
-//   const name = req.body.name;
-//   const age = req.body.age;
-//   const country = req.body.country;
-//   const position = req.body.position;
-//   const wage = req.body.wage;
-
-//   db.query(
-//     "INSERT INTO employees (name, age, country, position, wage) VALUES (?,?,?,?,?)",
-//     [name, age, country, position, wage],
-//     (err, result) => {
-//       if (err) {
-//         console.log(err);
-//       } else {
-//         res.send("Values Inserted");
-//       }
-//     }
-//   );
-// });
-
-// app.get("/employees", (req, res) => {
-//   db.query("SELECT * FROM employees", (err, result) => {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       res.send(result);
-//     }
-//   });
-// });
-
-// app.put("/update", (req, res) => {
-//   const id = req.body.id;
-//   const wage = req.body.wage;
-//   db.query(
-//     "UPDATE employees SET wage = ? WHERE id = ?",
-//     [wage, id],
-//     (err, result) => {
-//       if (err) {
-//         console.log(err);
-//       } else {
-//         res.send(result);
-//       }
-//     }
-//   );
-// });
-
-// app.delete("/delete/:id", (req, res) => {
-//   const id = req.params.id;
-//   db.query("DELETE FROM employees WHERE id = ?", id, (err, result) => {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       res.send(result);
-//     }
-//   });
-// });

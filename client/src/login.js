@@ -9,10 +9,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { AES }from 'crypto-js';
 
 const Login = () => {
-  
-  // const [vali_email, setvaliemail] = useState("")
-  // const [vali_pass, setvalipass] = useState("")
-  const [auth, setauth] = useState(false);
+
   const [logInStatus, setlogInStatus] = useState("")
   const navigate = useNavigate();
   
@@ -37,27 +34,18 @@ const Login = () => {
   };
 
   const logIn = (data) => {
-    // console.log(data)
     Axios.post("http://localhost:3001/login", data).then((response) => {
-      // console.log(response)
       if(!response.data.auth){
-        // console.log(response.data.message)
-        setauth(false)
         setlogInStatus(response.data.message)
       }else{
         const envryptedString = AES.encrypt(response.data.result.Email,'MYKEY4DEMO');
-        // console.log(response.data)
-        localStorage.setItem("token", response.data.token)
-        setauth(true)
         setlogInStatus(response.data.result.First_Name)
         window.localStorage.setItem("isLoggedIn", true);
         sessionStorage.setItem("email", envryptedString.toString());
         sessionStorage.setItem("email2", response.data.result.Email)
         sessionStorage.setItem("userID", response.data.result.userID)
-        // console.log(response)
         navigate("/");
       }
-      // console.log(response)
     });
   };
 
@@ -66,18 +54,8 @@ const Login = () => {
     password: Yup.string().required("This is a required field"),
   });
 
-  // useEffect(() => {
-  //   Axios.get("http://localhost:3001/login").then((response) => {
-  //     console.log(response)
-  //     if (response.data.loggedIn === true) {
-  //       setLoginStatus(response.data.user[0].First_Name);
-  //     }
-  //   });
-  // }, []);
-
   useEffect(() => {
     Axios.get("http://localhost:3001/login").then((response) => {
-      // console.log(response)
       if(response.data.loggedIn === true){
         setlogInStatus(response.data.user[0].First_Name)
       }
@@ -93,9 +71,9 @@ const Login = () => {
       <div className="App">
         <div className="information">
         <Formik 
-            initialValues = {initialValues}
-            onSubmit={logIn} 
-            validationSchema={validationSchema}>
+          initialValues = {initialValues}
+          onSubmit={logIn} 
+          validationSchema={validationSchema}>
             <Form>
               <Field
                 id="Email"
@@ -103,7 +81,9 @@ const Login = () => {
                 placeholder="Enter email"
               />
               <ErrorMessage name="email" component="span"/>
+
               <br />
+
               <Field
                 id="Password"
                 name="password"
@@ -111,31 +91,16 @@ const Login = () => {
                 placeholder="Enter password"
               />
               <ErrorMessage name="password" component="span"/>
+
               <br />
+
               <button type="submit">Log In</button> &nbsp; &nbsp;
+
               <Link to="/resetPass.js">Forget Password</Link>
+
             </Form>
-          </Formik>
+        </Formik>
 
-          {/* <input 
-            type="email" 
-            name="checkEmail"
-            onChange={(event) => {setvaliemail(event.target.value)}}
-            placeholder="Email"
-          />
-
-          <br />
-
-          <input 
-            type="password" 
-            name="checkPassword"
-            onChange={(event) => {setvalipass(event.target.value)}}
-            placeholder="Password"
-          />  
-
-          <br />
-
-          <button onClick={logIn}>Log In</button> */}
         </div>
       </div>
     
