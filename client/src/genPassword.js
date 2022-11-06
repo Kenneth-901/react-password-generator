@@ -81,6 +81,7 @@ const GenPassword = () => {
 
   useEffect(() => {
     Axios.get(`http://localhost:3001/selectedPhaseQuestion/${email}`).then(resp => { setItem(resp.data); });
+    getGenPass();
   }, [])
 
   const phaseQuestionList = React.useMemo(() => {
