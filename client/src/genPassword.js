@@ -10,6 +10,7 @@ const GenPassword = () => {
   
   const [verifyUser, setverifyUser] = useState()
   const [item, setItem] = useState([]);
+  const [passList, getPassList] = useState([]);
   const userID = sessionStorage.getItem("userID")
   const email = sessionStorage.getItem("email2")
 
@@ -32,29 +33,20 @@ const GenPassword = () => {
 
   // HELP ME HERE
   // I GOT THE DATA BUT DK HOW TO DISPLAY
-  const getGenPass = () => {
+  const getGenPass = async () => {
     Axios.get(`http://localhost:3001/viewGeneratedPass/${userID}`).then((response) => {
       // console.log(response.data)
       // console.log(response.data.length)
-      const result = response.data
-      const getPass = []
+      // return response.data;
+      getPassList(response.data);
+      // const getPass = []
       
-      for(let i in result){
-        // console.log(response.data[i].password)
-        getPass.push(response.data[i].password)
-      }
-      
-      const mappedList = result.map(list => ({
-        primaryValue: `${list.genPassID}`,
-        secondaryValue: `${list.userID}`,
-        label: `${list.password}`,
-      }));
-      
-      // console.log(mappedList[0])
-
-      return <h1>{mappedList[0]}</h1>
-    })
-  }
+      // for(let i in result){
+      //   // console.log(response.data[i].password)
+      //   getPass.push(response.data[i].password)
+      // }
+    }).catch (err => console.log(err))
+  };
 
 
   const initialValues = {
@@ -89,6 +81,7 @@ const GenPassword = () => {
 
   useEffect(() => {
     Axios.get(`http://localhost:3001/selectedPhaseQuestion/${email}`).then(resp => { setItem(resp.data); });
+    getGenPass();
   }, [])
 
   const phaseQuestionList = React.useMemo(() => {
@@ -152,11 +145,12 @@ const GenPassword = () => {
                 <button type="submit">View my passwords</button> 
               </Form>
             </Formik>
-            : 
+            : ( passList
+            // <h1>Here</h1>
+            )
 
             // WANT TO DISPLAY HERE AFTER THEY ARE VERIFIED
-            // getGenPass()
-            <h1>Here</h1>
+            
             }
 
           {/* {getGenPass()} */}

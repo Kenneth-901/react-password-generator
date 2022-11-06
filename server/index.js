@@ -185,10 +185,10 @@ app.get("/viewGeneratedPass/:userID", (req, res) => {
   try {
     const qry = `SELECT * FROM password_generator.genpass WHERE userID=?;`
     db.query(qry, userID, (err, result) => {
-      // console.log(result)
+      const passList = result.map(a => a.password);
       if (err) throw err;
       // res.send(JSON.stringify(result));
-      res.send(result)
+      res.send(passList);
     });
   } catch (error) {
     console.log(error);
@@ -427,17 +427,17 @@ app.post("/resetPassword", (req, res) => {
 // PASSWORD GENERATOR
 
   // GET THE QUESTIONS
-app.get("/generatorQuestion", (req, res) => {
-  try {
-    const qry = `SELECT * FROM password_generator.generator_questions;`
-    db.query(qry, (err, result) => {
-      if (err) throw err;
-      res.send(JSON.stringify(result));
-    });
-  } catch (error) {
-    console.log(error);
-  }
-})
+// app.get("/generatorQuestion", (req, res) => {
+//   try {
+//     const qry = `SELECT * FROM password_generator.generator_questions;`
+//     db.query(qry, (err, result) => {
+//       if (err) throw err;
+//       res.send(JSON.stringify(result));
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// })
 
 
 // IF GOT ACC THEN ADD GENERATED PASSWORD TO THEIR ACC
