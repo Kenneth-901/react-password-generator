@@ -5,49 +5,71 @@ import Axios from "axios"
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import FormikDropDownList from "./form/formikDropDownList"
 import * as Yup from "yup"
+import { toast } from "./common/toast"
 
 const GenPassword = () => {
   
   const [verifyUser, setverifyUser] = useState()
   const [item, setItem] = useState([]);
-  const [passList, getPassList] = useState([]);
+  const [getPass, setgetPass] = useState([]);
+  const [getPassID, setgetPassID] = useState([])
   const userID = sessionStorage.getItem("userID")
   const email = sessionStorage.getItem("email2")
 
   const vali = (data) => {
-    Axios.post(`http://localhost:3001/generateToken/${userID}`).then((response) => {
+    Axios.get(`http://localhost:3001/generateToken/${userID}`).then((response) => {
 
       if(response.data.gotToken){
         localStorage.setItem("token", response.data.token)
         setverifyUser(true)
-
-        // THE IDEA WAS AFTER THEY ARE VERIFIED THEN GET DATA
-        // getGenPass()
-        
+        getGenPass()
       }else{
         console.log(response.data.error)
       }
     })
   }
 
-
-  // HELP ME HERE
-  // I GOT THE DATA BUT DK HOW TO DISPLAY
-  const getGenPass = async () => {
+  const getGenPass = () => {
     Axios.get(`http://localhost:3001/viewGeneratedPass/${userID}`).then((response) => {
-      console.log(response)
-      // console.log(response.data.length)
-      // return response.data;
-      getPassList(response.data);
-      // const getPass = []
-      
-      // for(let i in result){
-      //   // console.log(response.data[i].password)
-      //   getPass.push(response.data[i].password)
-      // }
+      const passList = response.data.map(a => a.password)
+      const passID = response.data.map(a => a.genPassID)
+      setgetPass(passList);
+      setgetPassID(passID)
     }).catch (err => console.log(err))
-  };
+  }
 
+  const sleep = ms => new Promise(
+    resolve => setTimeout(resolve, ms)
+  );
+
+  const handleDelete = async (thePassID) => {
+    try{
+      Axios.get(`http://localhost:3001/deleteGenPassword/${thePassID}`)
+      toast.success("Delete Sucessfully");
+      await sleep(1500);
+      window.location.reload()
+    }catch(e) {
+      toast.error(e);
+    }
+  }
+
+  const displayPassword = () => {
+    let test = []
+    
+    if(verifyUser){
+      for(let i=0; i<getPass.length; i++){
+        test.push(
+        <tr>
+          <td>{i + 1}</td>
+          <td>{getPass[i]}</td>
+          <td></td>
+          <td><button onClick={() => handleDelete(getPassID[i])}>Delete</button></td>
+        </tr>)
+      }
+
+      return test
+    }
+  }
 
   const initialValues = {
     phaseQuestion: "",
@@ -81,7 +103,6 @@ const GenPassword = () => {
 
   useEffect(() => {
     Axios.get(`http://localhost:3001/selectedPhaseQuestion/${email}`).then(resp => { setItem(resp.data); });
-    getGenPass();
   }, [])
 
   const phaseQuestionList = React.useMemo(() => {
@@ -103,7 +124,7 @@ const GenPassword = () => {
     }).then((response) => {
       if(response.data.auth){
         setverifyUser(true)
-        // getGenPass();
+        getGenPass()
       }else{
         setverifyUser(false)
       }
@@ -146,9 +167,19 @@ const GenPassword = () => {
                 <button type="submit">View my passwords</button> 
               </Form>
             </Formik>
-            : ( passList
-            // <h1>Here</h1>
-            )
+            : 
+            <table>
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Password</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {displayPassword()}
+              </tbody>
+            </table>
 
             // WANT TO DISPLAY HERE AFTER THEY ARE VERIFIED
             

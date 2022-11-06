@@ -127,9 +127,9 @@ app.get(`/existed/:value`, async (req, res) => {
 // VIEW GENERATED PASSWORD
 
   // Create the token
-app.post("/generateToken/:userID", (req, res) => {
-  const userID = req.body.userID
-
+app.get("/generateToken/:userID", (req, res) => {
+  const userID = req.params.userID
+  // console.log(userID)
   // const id = result[0].userID
   const token = jwt.sign({userID}, "testToken", {expiresIn: 30}) 
 
@@ -179,16 +179,17 @@ app.get("/isUserAuth", verifyJWT, (req, res) => {
   })
 })
 
+  // Get all the user's generated passwords
 app.get("/viewGeneratedPass/:userID", (req, res) => {
   const userID = req.params.userID
 
   try {
     const qry = `SELECT * FROM password_generator.genpass WHERE userID=?;`
     db.query(qry, userID, (err, result) => {
-      const passList = result.map(a => a.password);
+      // const passList = result.map(a => a.password);
       if (err) throw err;
       // res.send(JSON.stringify(result));
-      res.send(passList);
+      res.send(result);
     });
   } catch (error) {
     console.log(error);
@@ -196,6 +197,22 @@ app.get("/viewGeneratedPass/:userID", (req, res) => {
 
 })
 
+app.get("/deleteGenPassword/:thePassID", (req, res) => {
+  const passID = req.params.thePassID
+  
+  try {
+    const qry = `DELETE FROM genpass WHERE genPassID=?;`
+    db.query(qry, passID, (err, result) => {
+      // const passList = result.map(a => a.password);
+      if (err) throw err;
+      // res.send(JSON.stringify(result));
+      res.send(result);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  
+})
 
 // LOG IN
 
@@ -427,17 +444,17 @@ app.post("/resetPassword", (req, res) => {
 // PASSWORD GENERATOR
 
   // GET THE QUESTIONS
-// app.get("/generatorQuestion", (req, res) => {
-//   try {
-//     const qry = `SELECT * FROM password_generator.generator_questions;`
-//     db.query(qry, (err, result) => {
-//       if (err) throw err;
-//       res.send(JSON.stringify(result));
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// })
+app.get("/generatorQuestion", (req, res) => {
+  try {
+    const qry = `SELECT * FROM password_generator.generator_questions;`
+    db.query(qry, (err, result) => {
+      if (err) throw err;
+      res.send(JSON.stringify(result));
+    });
+  } catch (error) {
+    console.log(error);
+  }
+})
 
 
 // IF GOT ACC THEN ADD GENERATED PASSWORD TO THEIR ACC

@@ -5,6 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik"
 import FormikDropDownList from "../form/formikDropDownList"
 import Algo1 from './generatorAlgo'
 import "../styles/homepage.css" 
+import { toast } from "../common/toast"
 
 const PassGen = () => {
   
@@ -31,6 +32,7 @@ const PassGen = () => {
 
   const generatePassword = (data) => {
     setgeneratedPassword(Algo1(data.generatorAnswer, data.generatorAnswer2, data.generatorAnswer3))
+    toast.success("Added Successfully");
   }
 
   const generatorQuestion = React.useMemo(() => {
