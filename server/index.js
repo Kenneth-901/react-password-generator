@@ -185,10 +185,10 @@ app.get("/viewGeneratedPass/:userID", (req, res) => {
   try {
     const qry = `SELECT * FROM password_generator.genpass WHERE userID=?;`
     db.query(qry, userID, (err, result) => {
-      // console.log(result)
+      const passList = result.map(a => a.password);
       if (err) throw err;
       // res.send(JSON.stringify(result));
-      res.send(result)
+      res.send(passList);
     });
   } catch (error) {
     console.log(error);
