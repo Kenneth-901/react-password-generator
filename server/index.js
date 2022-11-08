@@ -131,7 +131,7 @@ app.get("/generateToken/:userID", (req, res) => {
   const userID = req.params.userID
   // console.log(userID)
   // const id = result[0].userID
-  const token = jwt.sign({userID}, "testToken", {expiresIn: 30}) 
+  const token = jwt.sign({userID}, "testToken", {expiresIn: 500}) 
 
   try {
     res.json({
@@ -197,6 +197,7 @@ app.get("/viewGeneratedPass/:userID", (req, res) => {
 
 })
 
+  // Delete Generated Password
 app.get("/deleteGenPassword/:thePassID", (req, res) => {
   const passID = req.params.thePassID
   
@@ -206,12 +207,35 @@ app.get("/deleteGenPassword/:thePassID", (req, res) => {
       // const passList = result.map(a => a.password);
       if (err) throw err;
       // res.send(JSON.stringify(result));
-      res.send(result);
+      res.json({
+        auth: true,
+        result: result
+      });
     });
   } catch (error) {
     console.log(error);
   }
   
+})
+
+
+  // Edit Generated Password Description
+app.post("/editDescription", (req, res) => {
+  const passID = req.body.thePassID
+  const description = req.body.thedescription
+  
+  try {
+    const qry = `UPDATE genpass SET description=? WHERE genPassID=?`
+    db.query(qry, [description, passID], (err, result) => {
+      if (err) throw err;
+      res.json({
+        auth: true,
+        result: "result"
+      })
+    });
+  } catch (error) {
+    console.log(error);
+  }
 })
 
 // LOG IN

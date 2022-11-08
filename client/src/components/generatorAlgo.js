@@ -56,22 +56,27 @@ const Algo1 = (answer, answer2, answer3) => {
 
   const addingSymbol = () => {
     let addedSymbol = ""
+    let nextToSymbol = ""
 
     if(splitAns3.length === 1){
       if(splitAns3[0] == 0){
         addedSymbol = symbol[9]
+        nextToSymbol = symbol[10]
       }else{
         addedSymbol = symbol[splitAns3[0] - 1]
+        nextToSymbol = symbol[splitAns3[0]]
       }
     }else{
       if(splitAns3[1] == 0){
         addedSymbol = symbol[9]
+        nextToSymbol = symbol[10]
       }else{
         addedSymbol = symbol[splitAns3[1] - 1]
+        nextToSymbol = symbol[splitAns3[1]]
       }
     }
 
-    return addedSymbol.concat(addedSymbol)
+    return addedSymbol.concat(nextToSymbol)
   }
 
 
@@ -125,15 +130,35 @@ const Algo1 = (answer, answer2, answer3) => {
   }
 
   const fifthPasswordFormat = (string, string2, integer) => {
-    
-    
-    
-    return "Hello"
-  }
+    let specialCharacter = addingSymbol()
+    let chosenIntegers = addingNumbers(integer)
 
-  const afterCapitalize = capitalization(joinAns, joinAns2)
-  const afterAddingNumbers = addingNumbers(answer3).toString()
+    const mapReplace = (str, map) => {
+      const matchStr = Object.keys(map).join('|');
+      if (!matchStr) return str;
+      const regexp = new RegExp(matchStr, 'g');
+      return str.replace(regexp, match => map[match]);
+    };
+    
+    const map = { 
+      a: '@', 
+      e: '3',
+      f: '1',
+      g: '9',
+      i: '!',
+      o: '0',
+      s: '$',
+    };
+
+    string = string.charAt(0).toUpperCase() + string.slice(1)
+    string = mapReplace(string, map);
+    string2 = string2.slice(0, string2.length - 1) + string2.charAt(string2.length - 1).toUpperCase()
+    string2 = mapReplace(string2, map)
+    
+    return string.concat(string2).concat(chosenIntegers).concat(specialCharacter)
+  }
   
+
   const genPass1 = firstPasswordFormat(joinAns, joinAns2, answer3, chosenSymbol)
 
   const genPass2 = secondPasswordFormat(joinAns, joinAns2)
@@ -146,6 +171,7 @@ const Algo1 = (answer, answer2, answer3) => {
   
   const allPassword = [genPass1, genPass2, genpass3, genpass4, genpass5]
 
+  
   if(isLoggedIn){
 
     const data = {
@@ -154,6 +180,7 @@ const Algo1 = (answer, answer2, answer3) => {
     }
     
     Axios.post("http://localhost:3001/addGeneratedPassToAcc", data)
+
   }else{
     console.log("need to be logged in")
   }

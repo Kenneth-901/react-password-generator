@@ -4,6 +4,8 @@ import Footer from "./footerContainer"
 import Axios from "axios"
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import FormikDropDownList from "./form/formikDropDownList"
+import ViewEditToggle from "./components/viewEditToggle";
+import InlineDetails from "./components/inlineDetails";
 import * as Yup from "yup"
 import { toast } from "./common/toast"
 
@@ -13,6 +15,9 @@ const GenPassword = () => {
   const [item, setItem] = useState([]);
   const [getPass, setgetPass] = useState([]);
   const [getPassID, setgetPassID] = useState([])
+  const [getDescription, setgetDescription] = useState([])
+  const [editDescription, seteditDescription] = useState(false)
+  const [newDescription, setnewDescription] = useState()
   const userID = sessionStorage.getItem("userID")
   const email = sessionStorage.getItem("email2")
 
@@ -33,8 +38,10 @@ const GenPassword = () => {
     Axios.get(`http://localhost:3001/viewGeneratedPass/${userID}`).then((response) => {
       const passList = response.data.map(a => a.password)
       const passID = response.data.map(a => a.genPassID)
-      setgetPass(passList);
+      const description = response.data.map(a => a.description)
+      setgetPass(passList)
       setgetPassID(passID)
+      setgetDescription(description)
     }).catch (err => console.log(err))
   }
 
@@ -42,27 +49,103 @@ const GenPassword = () => {
     resolve => setTimeout(resolve, ms)
   );
 
-  const handleDelete = async (thePassID) => {
+  const handleDelete = (thePassID) => {
     try{
-      Axios.get(`http://localhost:3001/deleteGenPassword/${thePassID}`)
-      toast.success("Delete Sucessfully");
-      await sleep(1500);
-      window.location.reload()
+      Axios.get(`http://localhost:3001/deleteGenPassword/${thePassID}`).then(async (response) => {
+        if(response.data.auth === true){
+          toast.success("Delete Sucessfully");
+          await sleep(1500);
+          window.location.reload()
+        }else{
+          toast.error("Something went wrong. Please try again later.");
+        }
+      })
     }catch(e) {
       toast.error(e);
     }
   }
 
+  const handleEdit = async (thePassID, thedescription) => {
+    const data = {
+      thePassID: thePassID,
+      thedescription: thedescription.description
+    }
+  
+    try{
+      Axios.post(`http://localhost:3001/editDescription`, data)
+      .then( async (response) => {
+        console.log(response)
+        if(response.data.auth === true){
+          toast.success("Edit Sucessfully");
+          await sleep(1500);
+          window.location.reload()
+        }else{
+          toast.error("Something went wrong. Please try again later.");
+        }
+      })
+    }catch(e) {
+      toast.error(e);
+    }    
+  }
+
   const displayPassword = () => {
-    let test = []
+    const validateDescription = Yup.object().shape({
+      description: Yup.string().required("Please enter a description")
+    })
     
+    let test = []
+
     if(verifyUser){
       for(let i=0; i<getPass.length; i++){
         test.push(
         <tr>
           <td>{i + 1}</td>
           <td>{getPass[i]}</td>
-          <td></td>
+          <td>
+
+            {editDescription === false && <button className="profile-btn" style={{color: "red"}} type="button" onClick={() => seteditDescription(true)}>Edit</button>}
+            
+            <Formik
+              initialValues = {{
+                description: ""
+              }}
+              onSubmit={(data) => handleEdit(getPassID[i], data)}
+              validationSchema={validateDescription} 
+              render={({ handleSubmit }) => (
+                <>
+                  <div className="profile-body">
+                    <ViewEditToggle
+                      isEditMode={editDescription}
+                      renderView={(
+                        <>
+                          {getDescription[i]}
+                        </>
+                      )}
+                      renderEdit={(
+                        <>
+                          <Form onSubmit={handleSubmit}>
+                            <div className="form-group">
+                              <Field
+                                id="Description"
+                                name="description"
+                                type="text"
+                              />
+                              <ErrorMessage name="description" component="span"/>
+                            </div>
+                            <div className="form-group">
+                              <button onClick={handleSubmit} type="button" className="btn btn-primary mr-2">Update</button>
+                              <button type="button" onClick={() => seteditDescription(false)} className="no-decoration-btn text-gray fs-standard mr-4">Cancel</button> 
+                            </div>
+                          </Form>
+                        </>
+                      )}
+                    />
+                  </div>
+                </>
+              )}
+            />
+
+          </td>
           <td><button onClick={() => handleDelete(getPassID[i])}>Delete</button></td>
         </tr>)
       }
