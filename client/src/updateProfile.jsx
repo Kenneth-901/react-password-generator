@@ -27,7 +27,11 @@ const UpdateProfile = () => {
 
   const id = item.map(a => a.userID);
 
-  const onSubmit = (data) => {
+  const sleep = ms => new Promise(
+    resolve => setTimeout(resolve, ms)
+  );
+
+  const onSubmit = async (data) => {
     // console.log(data);
     const apiValue = {
       id: id.toString(),
@@ -43,6 +47,8 @@ const UpdateProfile = () => {
         console.log(response);
       });
       toast.success("Success");
+      await sleep(1500);
+      window.location.reload()
     } catch(e) {
       toast.error(e);
     }

@@ -11,6 +11,7 @@ const PassGen = () => {
   
   const [item, setitem] = useState([])
   const [generatedPassword, setgeneratedPassword] = useState([])
+  const isLoggedIn = localStorage.getItem("isLoggedIn")
   
   const initialValues = {
     generatorQuestion: "",
@@ -32,7 +33,7 @@ const PassGen = () => {
 
   const generatePassword = (data) => {
     setgeneratedPassword(Algo1(data.generatorAnswer, data.generatorAnswer2, data.generatorAnswer3))
-    toast.success("Added Successfully");
+    isLoggedIn ? toast.success("Added Successfully") : <></>
   }
 
   const generatorQuestion = React.useMemo(() => {
