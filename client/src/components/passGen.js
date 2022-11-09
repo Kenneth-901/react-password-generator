@@ -81,97 +81,93 @@ const PassGen = () => {
   }, [])
 
   return(
-  <>
-    <section className='App'>
-      <div className='information'>
-        <h2>Password Generator: </h2> 
-        <Formik
-          initialValues={initialValues}
-          onSubmit={generatePassword}
-          validationSchema={validationSchema}>
+  <section style={{}}>
+    <h2>Password Generator: </h2> 
+    <Formik
+      initialValues={initialValues}
+      onSubmit={generatePassword}
+      validationSchema={validationSchema}>
 
-          <Form>
-            <FormikDropDownList 
-              id="generatorQuestion" 
-              name="generatorQuestion"
-              values={generatorQuestion}
-              placeholder="Select"
-              className={"input100"}
-            />
-            <ErrorMessage name="generatorQuestion" component="span"/>
-            
-            <br />
+      <Form>
+        <FormikDropDownList 
+          id="generatorQuestion" 
+          name="generatorQuestion"
+          values={generatorQuestion}
+          placeholder="Select"
+          className={"input100"}
+        />
+        <ErrorMessage name="generatorQuestion" component="span"/>
+        
+        <br />
 
-            <Field
-              id="generatorAnswer"
-              name="generatorAnswer"
-              placeholder="Enter Answer"
-              className={"input100"}
-            />
-            <ErrorMessage name="generatorAnswer" component="span"/>
+        <Field
+          id="generatorAnswer"
+          name="generatorAnswer"
+          placeholder="Enter Answer"
+          className={"input100"}
+        />
+        <ErrorMessage name="generatorAnswer" component="span"/>
 
-            <br />
+        <br />
 
-            <FormikDropDownList 
-              id="generatorQuestion2" 
-              name="generatorQuestion2"
-              values={generatorQuestion}
-              placeholder="Select"
-              className={"input100"}
-            />
-            <ErrorMessage name="generatorQuestion2" component="span"/>
-            
-            <br />
+        <FormikDropDownList 
+          id="generatorQuestion2" 
+          name="generatorQuestion2"
+          values={generatorQuestion}
+          placeholder="Select"
+          className={"input100"}
+        />
+        <ErrorMessage name="generatorQuestion2" component="span"/>
+        
+        <br />
 
-            <Field
-              id="generatorAnswer2"
-              name="generatorAnswer2"
-              placeholder="Enter Answer"
-              className={"input100"}
-            />
-            <ErrorMessage name="generatorAnswer2" component="span"/>
-            
-            <br />
+        <Field
+          id="generatorAnswer2"
+          name="generatorAnswer2"
+          placeholder="Enter Answer"
+          className={"input100"}
+        />
+        <ErrorMessage name="generatorAnswer2" component="span"/>
+        
+        <br />
 
-            <FormikDropDownList 
-              id="generatorQuestion3" 
-              name="generatorQuestion3"
-              values={generatorQuestion2}
-              placeholder="Select"
-              className={"input100"}
-            />
-            <ErrorMessage name="generatorQuestion3" component="span"/>
-            
-            <br />
+        <FormikDropDownList 
+          id="generatorQuestion3" 
+          name="generatorQuestion3"
+          values={generatorQuestion2}
+          placeholder="Select"
+          className={"input100"}
+        />
+        <ErrorMessage name="generatorQuestion3" component="span"/>
+        
+        <br />
 
-            <Field
-              id="generatorAnswer3"
-              name="generatorAnswer3"
-              placeholder="Enter Answer"
-              type="number"
-              className={"input100"}
-            />
-            <ErrorMessage name="generatorAnswer3" component="span"/>
+        <Field
+          id="generatorAnswer3"
+          name="generatorAnswer3"
+          placeholder="Enter Answer"
+          type="number"
+          className={"input100"}
+        />
+        <ErrorMessage name="generatorAnswer3" component="span"/>
 
-            <br /><br />
+        <br />
 
-            <button type="submit">Generate Password</button>
-            </Form>
-        </Formik>
-        <h1>
-          {generatedPassword[0]} 
-          <br /> 
-          {generatedPassword[1]}
-          <br /> 
-          {generatedPassword[2]} 
-          <br /> 
-          {generatedPassword[3]}
-          <br /> 
-          {generatedPassword[4]}
-        </h1>
-      </div>
-    </section>
-  </>
+        <button type="submit">Generate Password</button>
+        </Form>
+    </Formik>
+    <h1>
+      {generatedPassword[0]} 
+      <br /> 
+      {generatedPassword[1]}
+      <br /> 
+      {generatedPassword[2]} 
+      <br /> 
+      {generatedPassword[3]}
+      <br /> 
+      {generatedPassword[4]}
+    </h1>
+  </section>
   )
 }
 

@@ -22,15 +22,17 @@ const HomePage = () => {
       {/* <button onClick={isLoggedIn}>click here</button> */}
 
       <main>
+        <div className='App'>
+          <div className='information'>
+            {/* Password Meter */}
+            <PassMeter />
+            
+            <br />
 
-        {/* Password Meter */}
-        <PassMeter />
-        
-        <br />
-
-        {/* Password Generator */}
-        <PassGen />
-        
+            {/* Password Generator */}
+            <PassGen />
+          </div>
+        </div>
       </main>
 
       {/* Footer bar here */}

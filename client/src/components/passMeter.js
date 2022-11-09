@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import "../styles/homepage.css" 
+import "../App.css"
 
 const PassMeter = () => {
   
