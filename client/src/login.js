@@ -94,7 +94,7 @@ const Login = () => {
 
               <br />
 
-              <button type="submit">Log In</button> &nbsp; &nbsp;
+              <button className="login" type="submit">Log In</button> &nbsp; &nbsp;
 
               <Link to="/resetPass.js">Forget Password</Link>
 

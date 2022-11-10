@@ -1,4 +1,4 @@
-.strength-meter {
+/* .strength-meter {
   position: relative;
   height: 2rem;
   width: 90%;
@@ -14,7 +14,7 @@
   left: 0;
   height: 100%;
   width: calc(1% * var(--strength, 0));
-  /* background-color: hsl(261, 88%, 67%); */
+  background-color: hsl(261, 88%, 67%);
 
   transition: width 200ms;
 }
@@ -33,9 +33,78 @@
 
 .password-input:focus {
   border-color: hsl(261, 88%, 70%);
+} */
+
+.reasons {
+  margin: 2rem;
+  color: hsl(261, 88%, 80%);
+  border: 1px solid;
 }
 
-.reasons > * {
-  margin-top: .5rem;
-  color: hsl(261, 88%, 80%);
+section > input {
+  width: 100%;
+  height: 50px;
+  padding: 10px;
+  margin: 20px auto 5px auto;
+}
+
+section > form > input {
+  width: 100%;
+  height: 50px;
+  padding: 10px;
+  margin: 20px auto 20px auto;
+  text-align: center;
+}
+
+.buttonFancy{
+  height: 3.6rem;
+  padding: 0 5rem;
+  border-radius: 3rem;
+  background: linear-gradient(-45deg, #9925ea, #338aff, #9925ea);
+  background-size: 400%;
+  background-position: 90% 0;
+  color: #ffffff;
+  transition: background 0.8s;
+  margin: 2rem 1.5rem 2rem 1.5rem;
+  font-size: 1.2rem;
+}
+
+.buttonFancy:hover{
+  background-position: 185% 50%;
+}
+
+.generateButton{
+  position: relative;
+  overflow: hidden;
+  height: 3.5rem;
+  padding: 0.75rem 2rem;
+  margin: 1.5rem;
+  border-radius: 2rem;
+  background: #302650;
+  background-size: 400%;
+  color: #ffffff;
+  
+}
+
+.generateButton:hover::before{
+  transform: scaleX(1);
+}
+
+.button-content{
+  position: relative;
+  z-index: 1;
+}
+
+.generateButton::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  width: 100%;
+  height: inherit;
+  border-radius: inherit;
+  background: linear-gradient(83.2deg, rgba(150, 93, 233, 1) 10.8%, rgba(99, 88, 238, 1) 94.3%);
+  transition: all 0.475s;
 }

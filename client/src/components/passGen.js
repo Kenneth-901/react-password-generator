@@ -5,6 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik"
 import FormikDropDownList from "../form/formikDropDownList"
 import Algo1 from './generatorAlgo'
 import "../styles/homepage.css" 
+import "../App.css"
 import { toast } from "../common/toast"
 
 const PassGen = () => {
@@ -81,7 +82,7 @@ const PassGen = () => {
   }, [])
 
   return(
-  <section style={{}}>
+  <section>
     <h2>Password Generator: </h2> 
     <Formik
       initialValues={initialValues}
@@ -153,9 +154,13 @@ const PassGen = () => {
 
         <br />
 
-        <button type="submit">Generate Password</button>
+        <button className='generateButton' type="submit">
+          <p className='button-content'>Generate Password</p>
+        </button>
+
         </Form>
     </Formik>
+
     <h1>
       {generatedPassword[0]} 
       <br /> 

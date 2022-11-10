@@ -6,26 +6,9 @@ const PassMeter = () => {
   
   const [checkPass, setcheckPass] = useState("")
   const [reasons, setreasons] = useState([])
-  
-  // const updateStrengthMeter = () => {
-  //   const weaknesses = calculatePasswordStrength(passMeter)
-  //   // console.log(weaknesses)
-  //   let strength = 100
-  //   // reasonsContainer.innerHTML = ''
-  //   weaknesses.forEach(weakness => {
-  //     if (weakness == null) return
-  //     strength -= weakness.deduction
-  //     setreasons((prevState) => [...prevState, weakness.message])
-  //     // const messageElement = document.createElement('div')
-  //     // messageElement.innerText = weakness.message
-  //     // reasonsContainer.appendChild(messageElement)
-  //   })
-  //   // strengthMeter.style.setProperty('--strength', strength)
-  // }
 
   const checkPassword = () => {
     const weaknesses = calculatePasswordStrength(checkPass)
-    // let strength = 100
     
     setreasons([])
 
@@ -33,18 +16,13 @@ const PassMeter = () => {
       setreasons("Enter your password") 
       : 
       weaknesses.forEach((weakness) => {
-        // if(weakness == null) return setweaknessExist(false)
         if(weakness == null) return
-
-        // strength -= weakness.deduction
         
         setreasons((prevState) => [
           ...prevState, <>
             {weakness.message} <br />
             </>
         ])
-
-        // setweaknessExist(true)
       })
   }
   
@@ -121,12 +99,6 @@ const PassMeter = () => {
     <section>
             
       <h2>Password Meter: </h2>
-      
-      {/* <div className="strength-meter" id="strength-meter"></div>  */}
-
-      {/* <br /> */}
-
-      {/* <input className="password-input" id="password-input" value="password" type="text" autoFocus aria-labelledby='password'/> */}
 
       <input 
         type="text" 
@@ -137,13 +109,20 @@ const PassMeter = () => {
 
       <br />
 
-      <button onClick={checkPassword}>Check Password</button>
+      <button className='generateButton' onClick={checkPassword}>
+        <p className='button-content'>Check Password</p>
+      </button>
 
-      <br />
 
-      <div id="reasons" className='reasons'>
+
+      {reasons.length === 0 ?
+        <></>
+        :
+        <div id="reasons" className='reasons'>
         {reasons}
-      </div>
+        </div>
+      }
+      
     </section>
   </>
   )
