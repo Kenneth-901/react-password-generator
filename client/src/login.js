@@ -7,24 +7,12 @@ import * as Yup from "yup"
 import "yup-phone"
 import { useNavigate, Link } from "react-router-dom";
 import { AES }from 'crypto-js';
+import "./styles/login.css"
 
 const Login = () => {
 
   const [logInStatus, setlogInStatus] = useState("")
   const navigate = useNavigate();
-  
-  // const logIn = () => {
-  //   Axios.post("http://localhost:3001/login", {
-  //     email: vali_email,
-  //     password: vali_pass,
-  //   }).then((response) => {
-  //     if(response.data.message){
-  //       setLoginStatus(response.data.message)
-  //     }else{
-  //       setLoginStatus(response.data[0].First_Name)
-  //     }
-  //   });
-  // };
 
   Axios.defaults.withCredentials = true
 
@@ -66,21 +54,20 @@ const Login = () => {
     <>
       <Navbar />
 
-      <br />
-
       <div className="App">
-        <div className="information">
+        <div className="test">
         <Formik 
           initialValues = {initialValues}
           onSubmit={logIn} 
           validationSchema={validationSchema}>
-            <Form>
+            <Form className="wrapper">
               <Field
                 id="Email"
                 name="email"
                 placeholder="Enter email"
+                
               />
-              <ErrorMessage name="email" component="span"/>
+              <ErrorMessage name="email" component="span" className="validation"/>
 
               <br />
 
@@ -90,11 +77,13 @@ const Login = () => {
                 type="password"
                 placeholder="Enter password"
               />
-              <ErrorMessage name="password" component="span"/>
+              <ErrorMessage name="password" component="span" className="validation"/>
 
               <br />
 
-              <button className="login" type="submit">Log In</button> &nbsp; &nbsp;
+              <button className="login" type="submit">Log In</button> 
+
+              <br />
 
               <Link to="/resetPass.js">Forget Password</Link>
 

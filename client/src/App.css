@@ -31,7 +31,7 @@ html, body {
   margin: 20px auto 5px auto;
 }
 
-.login{
+/* .login{
   height: 2rem;
   padding: 0 2rem;
   border-radius: 0.375rem;
@@ -50,7 +50,7 @@ html, body {
 
 .login:focus{
   outline: none;
-}
+} */
 
 /* .information {
   display: flex;
@@ -77,7 +77,7 @@ span {
 
 .test{
   margin: 3em auto;
-  max-width: 400px;
+  width: 800px;
   background: #FFFFFF;
   padding: 40px;
   position: relative;
@@ -107,9 +107,9 @@ span {
 }
 
 .password-icon {
-  position: absolute;
-  top: 20px;
-  right: 20px;
+  position: relative;
+  top: -2px;
+  left: 34rem;
   cursor: pointer;
 }
 

@@ -103,23 +103,21 @@ const ResetPass = () => {
     <>
       <Navbar />
 
-      <br />
-
       <div className="App">
-        <div className="information">
+        <div className="test">
           <Formik 
             initialValues = {initialValues}
             onSubmit={checkUser} 
             validationSchema={validationSchema}>
-            <Form>
+            <Form className="wrapper">
               <Field
                 id="Email"
                 name="email"
                 placeholder="Enter email"
               />
-              <ErrorMessage name="email" component="span"/>
+              <ErrorMessage name="email" component="span" className="validation"/>
 
-              <br /><br />
+              <br />
 
               {emailExist && 
                 <>
@@ -130,7 +128,7 @@ const ResetPass = () => {
                     placeholder="Select"
                     className={"input100"}
                   />
-                  <ErrorMessage name="phaseQuestion" component="span"/>
+                  <ErrorMessage name="phaseQuestion" component="span" className="validation"/>
                   
                   <br />
 
@@ -138,11 +136,8 @@ const ResetPass = () => {
                     id="PhaseAnswer"
                     name="phaseAnswer"
                     placeholder="Phase Answer"
-                    className={"input100"}
                   />
-                  <ErrorMessage name="phaseAnswer" component="span"/>
-
-                  <br />
+                  <ErrorMessage name="phaseAnswer" component="span" className="validation"/>
                 </>
               }
 
@@ -153,9 +148,7 @@ const ResetPass = () => {
                     name="password"
                     component={PasswordShowAndHide}
                   />
-                  <ErrorMessage name="password" component="span"/>
-                  
-                  <br />
+                  <ErrorMessage name="password" component="span" className="specialValidation"/>
 
                   <Field 
                     id="Password" 
@@ -164,11 +157,15 @@ const ResetPass = () => {
                     component={ConfirmPasswordShowAndHide}
                     placeholder="Double Confirm Your Password"
                   />
-                  <ErrorMessage name="dPassword" component="span"/>
+                  <ErrorMessage name="dPassword" component="span" className="specialValidation"/>
                 </>
               }
-                
-              <button type="submit">Next</button> 
+
+              <br />
+
+              <button className='generateButton' type="submit">
+                <p className='button-content'>Next</p>
+              </button>
 
             </Form>
           </Formik>

@@ -6,7 +6,7 @@ const PasswordShowAndHide = ({ field, form }) => {
   const hasError = form.touched[field.name] && form.errors[field.name];
 
   return (
-    <div className="validate-input">
+    <div>
       <i
         className={hasError ? "icon-error password-icon" : "fa fa-key password-icon"}
         onClick={() => changeShowHidePassword(!showHidePassword)}
@@ -16,7 +16,6 @@ const PasswordShowAndHide = ({ field, form }) => {
       <input
         type={showHidePassword ? "text" : "password"}
         {...field}
-        className={hasError ? "errorInput" : "input100"}
         placeholder="Password"
       />
     </div>

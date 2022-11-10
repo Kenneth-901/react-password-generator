@@ -1,0 +1,90 @@
+
+/* FOR THE FORM */
+.wrapper{
+  position: relative;
+}
+
+input{
+  width: 35rem;
+  height: 3rem;
+  padding: 0 1rem;
+  margin-top: 1.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid #585858;
+}
+
+.validation{
+  /* position: absolute;
+  bottom: 3rem;
+  display: grid;
+  align-items: center;
+  height: 1.5rem;
+  padding: 0 0.5rem;
+  opacity: 0;
+  transform: translateY(0.75rem);
+  border-radius: 1.5rem;
+  background: #fd4444;
+  color:#f9f9f9;
+  transition: all 0.35s; */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  width: 15rem;
+  padding: 0 0.5rem;
+  margin: 0.25rem 0 0 14.5rem;
+  border-radius: 0.25rem;
+  background: #fd4444;
+  color: #f9f9f9;
+  transition: all 0.35s;
+}
+
+.specialValidation{
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  width: 25rem;
+  padding: 0 0.5rem;
+  margin: 0.25rem 0 0 10rem;
+  border-radius: 0.25rem;
+  background: #fd4444;
+  color: #f9f9f9;
+  transition: all 0.35s;
+}
+
+input:invalid ~ .validation{
+  max-height: 0;
+}
+
+/* FOR THE LOGIN BUTTON */
+.login{
+  height: 2.5rem;
+  width: 8.5rem;
+  padding: 0 2rem;
+  border-radius: 0.75rem;
+  background: #4503dc;
+  color: #ffffff;
+  box-shadow: 0 0.4rem 0 0 #3700b8;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+  margin: 20px auto 20px auto;
+  font-size: 1.05rem;
+}
+
+.login:active{
+  transform: translateY(0.3rem);
+  box-shadow: 0 0.2rem 0 0 #3700b8;
+}
+
+.login:focus{
+  outline: none;
+}
+
+/* FOR THE FORGET PASSWORD  */
+.forget{
+  font-size: 1.05rem;
+  font-weight: 300px;
+}

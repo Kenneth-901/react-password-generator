@@ -62,17 +62,17 @@ const Signup = () => {
         })
     }),
     password: Yup.string().min(8, "Password is too short - should be 8 chars minimum.").password().required("No password provided."),
-    dPassword: Yup.string().when("password", {
+    dPassword: Yup.string().required("Required").when("password", {
       is: val => (val && val.length > 0 ? true : false),
       then: Yup.string().oneOf(
         [Yup.ref("password")],
         "Both password need to be the same"
       )
     }),
-    dob: Yup.date().default(function () {
+    dob: Yup.date().required("DOB required").default(function () {
       return new Date();
     }),
-    phoneNumber: Yup.string().phone("MY").required(),
+    phoneNumber: Yup.string().phone().required(),
     phaseQuestion: Yup.mixed(),
     phaseAnswer: Yup.string().required("Required!"),
     phaseQuestion1: Yup.mixed(),
@@ -110,108 +110,102 @@ const Signup = () => {
             }} 
             validationSchema={validationSchema}
             render={({ errors, status, touched, handleSubmit }) => (
-              <Form className="" onSubmit={handleSubmit}>
-                <div className="form-group">
-                  <Field
-                    id="FirstName"
-                    name="firstName"
-                    type="text"
-                    placeholder="First Name"
-                    className={"input100"}
-                  />
-                  <ErrorMessage name="firstName" component="span"/>
-                </div>
-                <div className="form-group">
-                  <Field
-                    id="LastName"
-                    name="lastName"
-                    placeholder="Last Name"
-                    className={"input100"}
-                  />
-                  <ErrorMessage name="lastName" component="span"/>
-                </div>
-                <div className="form-group">
-                  <Field 
-                    id="email" 
-                    name="email"
-                    placeholder="Email"
-                    className={"input100"}
-                  />
-                  <ErrorMessage name="email" component="span"/>
-                </div>
-                <div className="form-group">
-                  <Field 
-                    id="Password" 
-                    name="password"
-                    component={PasswordShowAndHide}
-                  />
-                  <ErrorMessage name="password" component="span"/>
-                  <br />
-                  <Field 
-                    id="Password" 
-                    name="dPassword"
-                    type="password"
-                    component={ConfirmPasswordShowAndHide}
-                    placeholder="Double Confirm Your Password"
-                  />
-                  <ErrorMessage name="dPassword" component="span"/>
-                </div>
-                <div className="form-group">
-                  <Field 
-                    id="Dob" 
-                    name="dob"
-                    type="date"
-                    placeholder="DOB"
-                    className={"input100"}
-                  />
-                </div>
-                <div className="form-group">
-                  <Field 
-                    id="PhoneNumber" 
-                    name="phoneNumber"
-                    placeholder="Phone Number"
-                    className={"input100"}
-                  />
-                  <ErrorMessage name="phoneNumber" component="span"/>
-                </div>
-                <div className="form-group">
-                  <FormikDropDownList 
-                    id="PhaseQuestion" 
-                    name="phaseQuestion"
-                    values={phaseQuestionList}
-                    placeholder="Select"
-                    className={"input100"}
-                  />
-                  <ErrorMessage name="phaseQuestion" component="span"/>
-                  <Field
-                    id="PhaseAnswer"
-                    name="phaseAnswer"
-                    placeholder="Phase Answer"
-                    className={"input100"}
-                  />
-                  <ErrorMessage name="phaseAnswer" component="span"/>
-                </div>
-                <div className="form-group">
-                  <FormikDropDownList 
-                    id="PhaseQuestion1" 
-                    name="phaseQuestion1"
-                    values={phaseQuestionList}
-                    placeholder="Select"
-                    className={"input100"}
-                  />
-                  <ErrorMessage name="phaseQuestion1" component="span"/>
-                  <Field
-                    id="PhaseAnswer1"
-                    name="phaseAnswer1"
-                    placeholder="Phase Answer"
-                    className={"input100"}
-                  />
-                  <ErrorMessage name="phaseAnswer1" component="span" className="invalid-feedback"/>
-                </div>
-                <div className="form-group">
-                  <Button onClick={handleSubmit}>Register</Button>
-                  <button type="reset">Reset</button>
-                </div>
+              <Form className="wrapper" onSubmit={handleSubmit}>
+
+                <Field
+                  id="FirstName"
+                  name="firstName"
+                  type="text"
+                  placeholder="First Name"
+                />
+                <ErrorMessage name="firstName" component="span" className="validation"/>
+
+
+                <Field
+                  id="LastName"
+                  name="lastName"
+                  placeholder="Last Name"
+                />
+                <ErrorMessage name="lastName" component="span" className="validation"/>
+
+
+                <Field 
+                  id="email" 
+                  name="email"
+                  placeholder="Email"
+                />
+                <ErrorMessage name="email" component="span" className="validation"/>
+
+
+                <Field 
+                  id="Password" 
+                  name="password"
+                  component={PasswordShowAndHide}
+                />
+                <ErrorMessage name="password" component="span" className="specialValidation"/>
+
+                
+                <Field 
+                  id="Password" 
+                  name="dPassword"
+                  type="password"
+                  component={ConfirmPasswordShowAndHide}
+                  placeholder="Repeat Password"
+                />
+                <ErrorMessage name="dPassword" component="span" className="specialValidation"/>
+
+
+                <Field 
+                  id="Dob" 
+                  name="dob"
+                  type="date"
+                  placeholder="DOB"
+                />
+                <ErrorMessage name="dob" component="span" className="specialValidation "/>
+
+                <Field 
+                  id="PhoneNumber" 
+                  name="phoneNumber"
+                  placeholder="Phone Number"
+                />
+                <ErrorMessage name="phoneNumber" component="span" className="specialValidation "/>
+
+
+                <FormikDropDownList 
+                  id="PhaseQuestion" 
+                  name="phaseQuestion"
+                  values={phaseQuestionList}
+                  placeholder="Select"
+                />
+                <ErrorMessage name="phaseQuestion" component="span" className="validation"/>
+
+                <Field
+                  id="PhaseAnswer"
+                  name="phaseAnswer"
+                  placeholder="Phase Answer"
+                />
+                <ErrorMessage name="phaseAnswer" component="span" className="validation"/>
+
+
+                <FormikDropDownList 
+                  id="PhaseQuestion1" 
+                  name="phaseQuestion1"
+                  values={phaseQuestionList}
+                  placeholder="Select"
+                />
+                <ErrorMessage name="phaseQuestion1" component="span" className="validation"/>
+
+                <Field
+                  id="PhaseAnswer1"
+                  name="phaseAnswer1"
+                  placeholder="Phase Answer"
+                />
+                <ErrorMessage name="phaseAnswer1" component="span" className="validation" />
+
+                <br />
+
+                <Button onClick={handleSubmit}>Register</Button>
+                
               </Form>
             )}
           />
