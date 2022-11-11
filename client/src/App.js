@@ -2,8 +2,6 @@ import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./styles/modal.scss";
 import 'react-toastify/dist/ReactToastify.css';
-// import React, { useState } from "react";
-// import Axios from "axios";
 import React from "react";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom"
 import HomePage from "./homePage";
@@ -47,27 +45,6 @@ const App = () => {
       
     </>
   )
-
-  // THIS IS JUST TO TEST
-
-  // const [name, setName] = useState("")
-
-  // const addUser = () => {
-  //   Axios.post("http://localhost:3001/create", {
-  //     name: name
-  //   })
-  // }
-
-  // return (
-  //   <div className="App">
-  //     <div className="information">
-  //       <label>Name:</label>
-  //       <input type="text" onChange={(event) => {setName(event.target.value)}}/>
-
-  //       <button onClick={addUser}>Add User</button>
-  //     </div>
-  //   </div>
-  // )
 }
 
 export default App;

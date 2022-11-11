@@ -104,23 +104,8 @@ const Account = () => {
         />
         </>
       ))}
-        
-        {/* <div className="card">
-          <div className="upper-container">
-            <div className="image-container"></div>
-          </div>
-          <div className="lower-container">
-            {item.length > 0 && item.map(a => (
-              <div key={a.userID}>
-                <h3>{a.First_Name}</h3>
-                <h2>{a.First_Name} + {a.Last_Name}</h2>
-                <h2>{a.Email}</h2>
-              </div>
-            ))}
-            <button type="button" onClick={}>Edit Profile</button>
-          </div>
-        </div> */}
       </div>
+      
       <Footer />
     </>
   )

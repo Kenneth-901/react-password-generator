@@ -7,90 +7,94 @@ import Axios from "axios"
 import { useNavigate } from "react-router-dom";
 import Button from './components/button';
 import { toast } from "./common/toast"
+import "./styles/updateProfile.css"
+// import "./styles/login.css"
 
-const UpdateProfileComfirmModal = ({
-  isOpen, onClose, onClickYes, isLoading, data
-}) => {
-const email = data.map(a => a.Email);
-const navigate = useNavigate();
-const initialValues = {
-    email: email.toString(),
-    password: "",
-};
+  const UpdateProfileComfirmModal = ({
+    isOpen, onClose, onClickYes, isLoading, data
+  }) => {
+    const email = data.map(a => a.Email);
+    const navigate = useNavigate();
+    const initialValues = {
+        email: email.toString(),
+        password: "",
+    };
 
-const onSubmit = (data) => {
-    // Axios.post("http://localhost:3001/updateConfirmation", data).then((response) => {
-    //     console.log(response);
-    // });
-};
+    const onSubmit = (data) => {
+    };
 
-const validationSchema = Yup.object().shape({
-    password: Yup.string().required("No password provided.").test('Unique Password', 'Wrong Password', 
-    function(value){
-        return new Promise((resolve, reject) => {
-            const apiValue = {
-              email: email,
-              password: value
-            }
-            Axios.post(`http://localhost:3001/updateConfirmation`, apiValue).then((res) => {
-                if (res.data.message === "Success") {
-                    resolve(true);
-                }else {
-                    resolve(false);
-                }
-            })
-        })
-    }),
-});
+    const validationSchema = Yup.object().shape({
+      password: Yup.string().required("No password provided.").test('Unique Password', 'Wrong Password', 
+      function(value){
+          return new Promise((resolve, reject) => {
+              const apiValue = {
+                email: email,
+                password: value
+              }
+              Axios.post(`http://localhost:3001/updateConfirmation`, apiValue).then((res) => {
+                  if (res.data.message === "Success") {
+                      resolve(true);
+                  }else {
+                      resolve(false);
+                  }
+              })
+          })
+      }),
+    });
 
-return (
-  <Modal
-    isOpen={isOpen}
-    onClick={onClose}
-    title={"Please Enter Your Password"}
-    styleMode="small"
-    overlayClassName="front"
-  >
-    <div className="">
-      <Formik 
-        initialValues = {initialValues}
-        onSubmit={(v) => {
-          onSubmit(v);
-          navigate("/updateProfile");
-        }} 
-        validationSchema={validationSchema}
-        render={({ handleSubmit, errors, status, touched }) => (
-          <>
-            <Form onSubmit={handleSubmit} className="App">
-              <div className="form-group">
-                <Field
-                  id="Email"
-                  name="email"
-                  readOnly
-                />
-              </div>
-              <div className="form-group">
-                <Field
-                  id="Password"
-                  name="password"
-                  type="password"
-                  placeholder="Enter Your Password"
-                />
-                <ErrorMessage name="password" component="span"/>
-              </div>
-            </Form>
-            <div className="d-flex justify-content-end mt-4">
-              <button type="button" onClick={onClose} className="no-decoration-btn text-gray fs-standard mr-4">
-                  {"Cancel"}
-              </button>
-              <Button onClick={handleSubmit} className="btn btn-brand">Yes</Button>
-            </div>
-          </>
-        )}
-      />
-    </div>
-  </Modal>
-)};
+    return (
+      <Modal
+        isOpen={isOpen}
+        onClick={onClose}
+        title={"Please Enter Your Password"}
+        styleMode="small"
+        overlayClassName="front"
+      >
+        <div className="wrapper">
+          <Formik 
+            initialValues = {initialValues}
+            onSubmit={(v) => {
+              onSubmit(v);
+              navigate("/updateProfile");
+            }} 
+            validationSchema={validationSchema}
+            render={({ handleSubmit, errors, status, touched }) => (
+              <>
+                <Form onSubmit={handleSubmit} className="wrapUpdate">
+                  
+                    <Field
+                      id="Email"
+                      name="email"
+                      readOnly
+                      className="updateInput"
+                    />
+                  
+                    <Field
+                      id="Password"
+                      name="password"
+                      type="password"
+                      placeholder="Enter Your Password"
+                      className="updateInput"
+                    />
+
+                    <ErrorMessage name="password" component="span" className='updateValidation'/>
+
+                </Form>
+
+                <div className="wrapUpdateButton">
+                  
+                  <button onClick={handleSubmit} className="updateButton">Yes</button>
+
+                  <button type="button" onClick={onClose} className="updateButtonSecondary">Cancel</button>
+                  
+                </div>
+                
+              </>
+            )}
+          />
+        </div>
+      </Modal>
+    )};
 
 UpdateProfileComfirmModal.propTypes = {
   isOpen: PropTypes.bool,

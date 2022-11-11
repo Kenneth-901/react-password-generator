@@ -52,11 +52,11 @@ const CardButton = ({
     <div
       role="button"
       tabIndex={-1}
-      className={`card card-button h-100 ${onClick ? 'hoverable' : 'no-pointer'}  ${selectedTab ? 'selected' : ''} ${className || ''}`}
+      className={`test ${onClick ? 'hoverable' : 'no-pointer'}  ${selectedTab ? 'selected' : ''} ${className || ''}`}
       onClick={handleOnClick}
     >
       {title && (
-        <div className="card-header">
+        <>
           {titleButton ? (
             <div className="header-title d-flex flex-row align-items-center justify-content-md-between">
               {title}
@@ -70,7 +70,7 @@ const CardButton = ({
             </div>
 
           )}
-        </div>
+        </>
       )}
       {src && <img className="card-img-top" src={src} alt={alt} />}
       <div className="card-body">

@@ -52,7 +52,7 @@ const CustomModal = ({
     isOpen={isOpen}
     onAfterOpen={onAfterOpen}
     onRequestClose={onRequestClose}
-    className={styles(styleMode)}
+    className="test"
     overlayClassName={`modal-overlay ${overlayClass(overlayClassName)}`}
     ariaHideApp={false}
   >
@@ -61,6 +61,7 @@ const CustomModal = ({
         <div className="fs-subtitle font-weight-bold">{title}</div>
         <IoClose
           onClick={onClick}
+          style={{cursor: "pointer"}}
         />
       </div>
       <div className="modal-content">
