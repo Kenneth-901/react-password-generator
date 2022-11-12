@@ -77,7 +77,7 @@ import "./styles/updateProfile.css"
                       className="updateInput"
                     />
 
-                    <ErrorMessage name="password" component="span" className='updateValidation'/>
+                    <ErrorMessage name="password" component="span" className="updateValidation"/>
 
                 </Form>
 

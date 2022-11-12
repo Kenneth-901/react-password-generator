@@ -31,6 +31,29 @@ html, body {
   margin: 20px auto 5px auto;
 }
 
+/* .dropDownWrapper{
+  perspective: 1000px;
+}
+
+.dropDown{
+  opacity: 0;
+  visibility: hidden;
+  backface-visibility: hidden;
+  transform: rotate(1, 0, 0, -90deg);
+  transform-origin: 0% 0%;
+  transition: all 0.35;
+}
+
+.dropDown.open{
+  visibility: visible;
+  opacity: 1;
+  transform: rotate3d(0, 0, 0, 0);
+} */
+
+.dropDown{
+  margin-top: 2rem;
+}
+
 /* .login{
   height: 2rem;
   padding: 0 2rem;

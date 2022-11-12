@@ -9,7 +9,6 @@ import { AES, enc }from 'crypto-js';
 import PasswordShowAndHide from "./components/passwordShowAndHide";
 import ConfirmPasswordShowAndHide from "./components/ConfrimPasswordShowAndHide";
 import ViewEditToggle from "./components/viewEditToggle";
-import Button from "./components/button";
 import InlineDetails from "./components/inlineDetails";
 import { toast } from "./common/toast"
 
@@ -23,7 +22,6 @@ const UpdateProfile = () => {
   const [editPhoneNumber, setEditPhoneNumber] = useState(false);
   const decrypted = AES.decrypt(window.sessionStorage.getItem("email"), 'MYKEY4DEMO');
   const loggedEmail = decrypted.toString(enc.Utf8);
-  // const refresh = () => window.location.reload(true);
 
   const id = item.map(a => a.userID);
 
@@ -77,7 +75,7 @@ const UpdateProfile = () => {
   });
 
   const validationPhoneNumber = Yup.object().shape({
-    phoneNumber: Yup.string().phone("MY").required()
+    phoneNumber: Yup.string().phone().required()
   });
 
   useEffect(() => {
@@ -88,7 +86,9 @@ const UpdateProfile = () => {
 
   return(
     <div className="App">
-      <div className="profile">
+      <Link to="/account" style={{marginTop: "2rem"}}>{"<"} Back</Link>
+
+      <div className="test" style={{borderRadius: "20px"}}>
         <div className="profile-header">
           <div className="profile-title">
             Personal Details
@@ -134,7 +134,8 @@ const UpdateProfile = () => {
                             type="text"
                             placeholder="First Name"
                           />
-                          <ErrorMessage name="firstName" component="span"/>
+                          <ErrorMessage name="firstName" component="span" className="updateValidation"/>
+                          
                         </div>
                         <div className="form-group">
                           <Field
@@ -142,12 +143,14 @@ const UpdateProfile = () => {
                             name="lastName"
                             placeholder="Last Name"
                           />
-                          <ErrorMessage name="lastName" component="span"/>
+                          <ErrorMessage name="lastName" component="span"className="updateValidation"/>
                         </div>
-                        <div className="form-group">
-                          <Button onClick={handleSubmit} className="btn btn-primary mr-2">Update</Button>
-                          <button onClick={() => setEditName(false)} className="no-decoration-btn text-gray fs-standard mr-4">Cancel</button> 
+
+                        <div className="wrapUpdateButton" style={{marginRight: "10rem"}}>
+                          <button onClick={handleSubmit} className="updateButton">Update</button>
+                          <button onClick={() => setEditName(false)} className="updateButtonSecondary">Cancel</button> 
                         </div>
+
                       </Form>
                     </>
                   )}
@@ -158,49 +161,7 @@ const UpdateProfile = () => {
         />
       </div>
 
-      {/* Email Field */}
-      <div className="profile">
-        <div className="profile-header">
-          <div className="profile-title">
-            Email
-            {/* <button className="profile-btn" onClick={() => setEditEmail(true)}>Edit Email</button> */}
-          </div>
-        </div>
-        <Formik
-          initialValues = {{
-            email: ""
-          }}
-          onSubmit={(v) => {
-            onSubmit(v);
-          }} 
-          // validationSchema={validationSchema}
-          render={({ handleSubmit }) => (
-            <>
-              <div className="profile-body">
-                <ViewEditToggle
-                  isEditMode={false}
-                  renderView={(
-                    <>
-                      {item.length > 0 && item.map(a => (
-                        <div key={a.userID} className="d-flex flex-column lh-24">
-                          <div className="">
-                            <InlineDetails
-                              title={"Email: "}
-                              label={`${a.Email}`}
-                            />
-                          </div>
-                        </div>
-                      ))}
-                    </>
-                  )}
-                />
-              </div>
-            </>
-          )}
-        />
-      </div>
-
-      <div className="profile">
+      <div className="test" style={{borderRadius: "20px"}}>
         <div className="profile-header">
           <div className="profile-title">
             Personal Details Password
@@ -245,7 +206,7 @@ const UpdateProfile = () => {
                             name="password"
                             component={PasswordShowAndHide}
                           />
-                          <ErrorMessage name="password" component="span"/>
+                          <ErrorMessage name="password" component="span" className="specialValidation"/>
                           <br />
                           <Field 
                             id="Password" 
@@ -254,11 +215,11 @@ const UpdateProfile = () => {
                             component={ConfirmPasswordShowAndHide}
                             placeholder="Double Confirm Your Password"
                           />
-                          <ErrorMessage name="dPassword" component="span"/>
+                          <ErrorMessage name="dPassword" component="span" className="specialValidation"/>
                         </div>
-                        <div className="form-group">
-                          <Button onClick={handleSubmit} className="btn btn-primary mr-2">Update</Button>
-                          <button onClick={() => setEditPass(false)} className="no-decoration-btn text-gray fs-standard mr-4">Cancel</button> 
+                        <div className="wrapUpdateButton" style={{marginRight: "10rem"}}>
+                          <button onClick={handleSubmit} className="updateButton">Update</button>
+                          <button onClick={() => setEditPass(false)} className="updateButtonSecondary">Cancel</button> 
                         </div>
                       </Form>
                     </>
@@ -270,7 +231,7 @@ const UpdateProfile = () => {
         />
       </div>
 
-      <div className="profile">
+      <div className="test" style={{borderRadius: "20px"}}>
         <div className="profile-header">
           <div className="profile-title">
             Date Of Birth
@@ -316,9 +277,9 @@ const UpdateProfile = () => {
                             placeholder="DOB"
                           />
                         </div>
-                        <div className="form-group">
-                          <Button onClick={handleSubmit} className="btn btn-primary mr-2">Update</Button>
-                          <button onClick={() => setEditDob(false)} className="no-decoration-btn text-gray fs-standard mr-4">Cancel</button> 
+                        <div className="wrapUpdateButton" style={{marginRight: "10rem"}}>
+                          <button onClick={handleSubmit} className="updateButton">Update</button>
+                          <button onClick={() => setEditDob(false)} className="updateButtonSecondary">Cancel</button> 
                         </div>
                       </Form>
                     </>
@@ -330,7 +291,7 @@ const UpdateProfile = () => {
         />
       </div>
 
-      <div className="profile">
+      <div className="test" style={{borderRadius: "20px"}}>
         <div className="profile-header">
           <div className="profile-title">
             Phone Number
@@ -374,11 +335,11 @@ const UpdateProfile = () => {
                             name="phoneNumber"
                             placeholder="Phone Number"
                           />
-                          <ErrorMessage name="phoneNumber" component="span"/>
+                          <ErrorMessage name="phoneNumber" component="span" className="specialValidation "/>
                         </div>
-                        <div className="form-group">
-                          <Button onClick={handleSubmit} className="btn btn-primary mr-2">Update</Button>
-                          <button onClick={() => setEditPhoneNumber(false)} className="no-decoration-btn text-gray fs-standard mr-4">Cancel</button> 
+                        <div className="wrapUpdateButton" style={{marginRight: "10rem"}}>
+                          <button onClick={handleSubmit} className="updateButton">Update</button>
+                          <button onClick={() => setEditPhoneNumber(false)} className="updateButtonSecondary">Cancel</button> 
                         </div>
                       </Form>
                     </>
@@ -389,9 +350,56 @@ const UpdateProfile = () => {
           )}
         />
       </div>
-      <Link to="/account">Back</Link>
+
+      <Link to="/account" style={{marginBottom: "2rem"}}>{"<"} Back</Link>
     </div>
   )
 }
 
 export default UpdateProfile;
+
+
+/* 
+  Email Field
+  <div className="profile">
+    <div className="profile-header">
+      <div className="profile-title">
+        Email
+        <button className="profile-btn" onClick={() => setEditEmail(true)}>Edit Email</button> 
+        </div>
+        </div>
+        <Formik
+          initialValues = {{
+            email: ""
+          }}
+          onSubmit={(v) => {
+            onSubmit(v);
+          }} 
+          // validationSchema={validationSchema}
+          render={({ handleSubmit }) => (
+            <>
+              <div className="profile-body">
+                <ViewEditToggle
+                  isEditMode={false}
+                  renderView={(
+                    <>
+                      {item.length > 0 && item.map(a => (
+                        <div key={a.userID} className="d-flex flex-column lh-24">
+                          <div className="">
+                            <InlineDetails
+                              title={"Email: "}
+                              label={`${a.Email}`}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </>
+                  )}
+                />
+              </div>
+            </>
+          )}
+        />
+      </div>
+    
+*/

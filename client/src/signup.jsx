@@ -168,7 +168,7 @@ const Signup = () => {
                   name="phoneNumber"
                   placeholder="Phone Number"
                 />
-                <ErrorMessage name="phoneNumber" component="span" className="specialValidation "/>
+                <ErrorMessage name="phoneNumber" component="span" className="specialValidation"/>
 
 
                 <FormikDropDownList 

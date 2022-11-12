@@ -95,7 +95,6 @@ const PassGen = () => {
           name="generatorQuestion"
           values={generatorQuestion}
           placeholder="Select"
-          className={"input100"}
         />
         <ErrorMessage name="generatorQuestion" component="span"/>
         
@@ -105,7 +104,7 @@ const PassGen = () => {
           id="generatorAnswer"
           name="generatorAnswer"
           placeholder="Enter Answer"
-          className={"input100"}
+          style={{width: "35rem"}}
         />
         <ErrorMessage name="generatorAnswer" component="span"/>
 
@@ -116,7 +115,6 @@ const PassGen = () => {
           name="generatorQuestion2"
           values={generatorQuestion}
           placeholder="Select"
-          className={"input100"}
         />
         <ErrorMessage name="generatorQuestion2" component="span"/>
         
@@ -126,7 +124,7 @@ const PassGen = () => {
           id="generatorAnswer2"
           name="generatorAnswer2"
           placeholder="Enter Answer"
-          className={"input100"}
+          style={{width: "35rem"}}
         />
         <ErrorMessage name="generatorAnswer2" component="span"/>
         
@@ -137,7 +135,6 @@ const PassGen = () => {
           name="generatorQuestion3"
           values={generatorQuestion2}
           placeholder="Select"
-          className={"input100"}
         />
         <ErrorMessage name="generatorQuestion3" component="span"/>
         
@@ -148,7 +145,7 @@ const PassGen = () => {
           name="generatorAnswer3"
           placeholder="Enter Answer"
           type="number"
-          className={"input100"}
+          style={{width: "35rem"}}
         />
         <ErrorMessage name="generatorAnswer3" component="span"/>
 

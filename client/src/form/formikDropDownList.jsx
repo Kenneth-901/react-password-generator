@@ -2,7 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { connect, getIn } from 'formik';
 import Select from 'react-select';
-
+import "../styles/button.scss"
 
 const FormikDropDownList = (props) => {
   const {
@@ -57,7 +57,8 @@ const FormikDropDownList = (props) => {
   }
 
   return (
-    <div>
+    <div className='App'>
+      {/* <div className="dropdown-container"> */}
         <label htmlFor={id} className={'text-purple'}>
           {label}
         </label>
@@ -69,9 +70,11 @@ const FormikDropDownList = (props) => {
           onChange={value => onHandleChange(value)}
           onBlur={onHandleBlur}
           value={formikValue}
+          className="dropDown"
         />
         {isInvalid && (<div style={{ color: 'red', marginTop: '.5rem' }}>{error}</div>)}
-      </div>
+      {/* </div> */}
+    </div>
   );
 };
 

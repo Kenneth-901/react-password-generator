@@ -219,19 +219,19 @@ const GenPassword = () => {
       <Navbar />
 
       <div className="App">
-        <div className="information">
+        <div className="">
           {!verifyUser ?
             <Formik 
             initialValues = {initialValues}
             onSubmit={vali} 
             validationSchema={validationSchema}>
-              <Form>
+              <Form className="wrapper">
+
                 <FormikDropDownList 
                   id="PhaseQuestion" 
                   name="phaseQuestion"
                   values={phaseQuestionList}
                   placeholder="Select"
-                  className={"input100"}
                 />
                 <ErrorMessage name="phaseQuestion" component="span"/>
 
@@ -241,13 +241,12 @@ const GenPassword = () => {
                   id="PhaseAnswer"
                   name="phaseAnswer"
                   placeholder="Phase Answer"
-                  className={"input100"}
                 />
-                <ErrorMessage name="phaseAnswer" component="span"/>
+                <ErrorMessage name="phaseAnswer" component="span" className="validation" style={{marginLeft: "22.5rem"}}/>
 
                 <br />
 
-                <button type="submit">View my passwords</button> 
+                <button type="submit" className="updateButton">View my passwords</button> 
               </Form>
             </Formik>
             : 
