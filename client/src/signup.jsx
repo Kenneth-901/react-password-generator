@@ -110,7 +110,7 @@ const Signup = () => {
             }} 
             validationSchema={validationSchema}
             render={({ errors, status, touched, handleSubmit }) => (
-              <Form className="wrapper" onSubmit={handleSubmit}>
+              <Form onSubmit={handleSubmit}>
 
                 <Field
                   id="FirstName"
@@ -118,7 +118,7 @@ const Signup = () => {
                   type="text"
                   placeholder="First Name"
                 />
-                <ErrorMessage name="firstName" component="span" className="validation"/>
+                <ErrorMessage name="firstName" component="span" className="errorValidation2"/>
 
 
                 <Field
@@ -126,7 +126,7 @@ const Signup = () => {
                   name="lastName"
                   placeholder="Last Name"
                 />
-                <ErrorMessage name="lastName" component="span" className="validation"/>
+                <ErrorMessage name="lastName" component="span" className="errorValidation2"/>
 
 
                 <Field 
@@ -134,7 +134,7 @@ const Signup = () => {
                   name="email"
                   placeholder="Email"
                 />
-                <ErrorMessage name="email" component="span" className="validation"/>
+                <ErrorMessage name="email" component="span" className="errorValidation2"/>
 
 
                 <Field 
@@ -142,7 +142,7 @@ const Signup = () => {
                   name="password"
                   component={PasswordShowAndHide}
                 />
-                <ErrorMessage name="password" component="span" className="specialValidation"/>
+                <ErrorMessage name="password" component="span" className="errorValidation2"/>
 
                 
                 <Field 
@@ -152,7 +152,7 @@ const Signup = () => {
                   component={ConfirmPasswordShowAndHide}
                   placeholder="Repeat Password"
                 />
-                <ErrorMessage name="dPassword" component="span" className="specialValidation"/>
+                <ErrorMessage name="dPassword" component="span" className="errorValidation2"/>
 
 
                 <Field 
@@ -161,46 +161,48 @@ const Signup = () => {
                   type="date"
                   placeholder="DOB"
                 />
-                <ErrorMessage name="dob" component="span" className="specialValidation "/>
+                <ErrorMessage name="dob" component="span" className="specialValidation"/>
 
                 <Field 
                   id="PhoneNumber" 
                   name="phoneNumber"
                   placeholder="Phone Number"
                 />
-                <ErrorMessage name="phoneNumber" component="span" className="specialValidation"/>
+                <ErrorMessage name="phoneNumber" component="span" className="errorValidation2" style={{width: "65%"}}/>
 
-
-                <FormikDropDownList 
-                  id="PhaseQuestion" 
-                  name="phaseQuestion"
-                  values={phaseQuestionList}
-                  placeholder="Select"
-                />
-                <ErrorMessage name="phaseQuestion" component="span" className="validation"/>
+                <div className="dropDown">
+                  <FormikDropDownList 
+                    id="PhaseQuestion" 
+                    name="phaseQuestion"
+                    values={phaseQuestionList}
+                    placeholder="Select"
+                  />
+                  <ErrorMessage name="phaseQuestion" component="span" className="errorValidation2"/>
+                </div>
 
                 <Field
                   id="PhaseAnswer"
                   name="phaseAnswer"
                   placeholder="Phase Answer"
                 />
-                <ErrorMessage name="phaseAnswer" component="span" className="validation"/>
+                <ErrorMessage name="phaseAnswer" component="span" className="errorValidation2"/>
 
-
-                <FormikDropDownList 
-                  id="PhaseQuestion1" 
-                  name="phaseQuestion1"
-                  values={phaseQuestionList}
-                  placeholder="Select"
-                />
-                <ErrorMessage name="phaseQuestion1" component="span" className="validation"/>
+                <div className="dropDown">                
+                  <FormikDropDownList 
+                    id="PhaseQuestion1" 
+                    name="phaseQuestion1"
+                    values={phaseQuestionList}
+                    placeholder="Select"
+                  />
+                  <ErrorMessage name="phaseQuestion1" component="span" className="errorValidation2"/>
+                </div>
 
                 <Field
                   id="PhaseAnswer1"
                   name="phaseAnswer1"
                   placeholder="Phase Answer"
                 />
-                <ErrorMessage name="phaseAnswer1" component="span" className="validation" />
+                <ErrorMessage name="phaseAnswer1" component="span" className="errorValidation2" />
 
                 <br />
 

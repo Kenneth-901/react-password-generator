@@ -24,7 +24,7 @@ import "./styles/updateProfile.css"
     };
 
     const validationSchema = Yup.object().shape({
-      password: Yup.string().required("No password provided.").test('Unique Password', 'Wrong Password', 
+      password: Yup.string().required("No password provided.").test('Unique Password', 
       function(value){
           return new Promise((resolve, reject) => {
               const apiValue = {
@@ -50,48 +50,53 @@ import "./styles/updateProfile.css"
         styleMode="small"
         overlayClassName="front"
       >
-        <div className="wrapper">
-          <Formik 
-            initialValues = {initialValues}
-            onSubmit={(v) => {
-              onSubmit(v);
-              navigate("/updateProfile");
-            }} 
-            validationSchema={validationSchema}
-            render={({ handleSubmit, errors, status, touched }) => (
-              <>
-                <Form onSubmit={handleSubmit} className="wrapUpdate">
-                  
-                    <Field
-                      id="Email"
-                      name="email"
-                      readOnly
-                      className="updateInput"
-                    />
-                  
-                    <Field
-                      id="Password"
-                      name="password"
-                      type="password"
-                      placeholder="Enter Your Password"
-                      className="updateInput"
-                    />
 
-                    <ErrorMessage name="password" component="span" className="updateValidation"/>
+        <div className="App" style={{gridTemplateColumns: "100%"}}>
+          
+            <Formik 
+              initialValues = {initialValues}
+              onSubmit={(v) => {
+                onSubmit(v);
+                navigate("/updateProfile");
+              }} 
+              validationSchema={validationSchema}
+              render={({ handleSubmit, errors, status, touched }) => (
+                <>
+                  <Form onSubmit={handleSubmit} className="wrapper">
+                    
+                      <Field
+                        id="Email"
+                        name="email"
+                        readOnly
+                        className="updateInput"
+                      />
 
-                </Form>
+                      <br />
+                    
+                      <Field
+                        id="Password"
+                        name="password"
+                        type="password"
+                        placeholder="Enter Your Password"
+                        className="updateInput"
+                      />
 
-                <div className="wrapUpdateButton">
+                      <ErrorMessage name="password" component="span" className="updateValidation"/>
+
+                  </Form>
+
+                  <div className="wrapUpdateButton">
+                    
+                    <button onClick={handleSubmit} className="updateButton">Verify</button>
+
+                    <button type="button" onClick={onClose} className="updateButtonSecondary">Cancel</button>
+                    
+                  </div>
                   
-                  <button onClick={handleSubmit} className="updateButton">Yes</button>
-
-                  <button type="button" onClick={onClose} className="updateButtonSecondary">Cancel</button>
-                  
-                </div>
-                
-              </>
-            )}
-          />
+                </>
+              )}
+            />
+          
         </div>
       </Modal>
     )};

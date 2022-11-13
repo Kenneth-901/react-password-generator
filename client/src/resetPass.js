@@ -121,15 +121,17 @@ const ResetPass = () => {
 
               {emailExist && 
                 <>
-                  <FormikDropDownList 
-                    id="PhaseQuestion" 
-                    name="phaseQuestion"
-                    values={phaseQuestionList}
-                    placeholder="Select"
-                    className={"input100"}
-                  />
-                  <ErrorMessage name="phaseQuestion" component="span" className="validation"/>
-                  
+
+                  <div className="dropDown">
+                    <FormikDropDownList 
+                      id="PhaseQuestion" 
+                      name="phaseQuestion"
+                      values={phaseQuestionList}
+                      placeholder="Select"
+                    />
+                    <ErrorMessage name="phaseQuestion" component="span" className="errorValidation2"/>
+                  </div>
+
                   <br />
 
                   <Field
@@ -137,7 +139,7 @@ const ResetPass = () => {
                     name="phaseAnswer"
                     placeholder="Phase Answer"
                   />
-                  <ErrorMessage name="phaseAnswer" component="span" className="validation"/>
+                  <ErrorMessage name="phaseAnswer" component="span" className="errorValidation2"/>
                 </>
               }
 
@@ -148,7 +150,7 @@ const ResetPass = () => {
                     name="password"
                     component={PasswordShowAndHide}
                   />
-                  <ErrorMessage name="password" component="span" className="specialValidation"/>
+                  <ErrorMessage name="password" component="span" className="errorValidation2"/>
 
                   <Field 
                     id="Password" 
@@ -157,7 +159,7 @@ const ResetPass = () => {
                     component={ConfirmPasswordShowAndHide}
                     placeholder="Double Confirm Your Password"
                   />
-                  <ErrorMessage name="dPassword" component="span" className="specialValidation"/>
+                  <ErrorMessage name="dPassword" component="span" className="errorValidation2"/>
                 </>
               }
 

@@ -225,7 +225,7 @@ app.post("/editDescription", (req, res) => {
   const description = req.body.thedescription
   
   try {
-    const qry = `UPDATE genpass SET description=? WHERE genPassID=?`
+    const qry = `UPDATE genpass SET description=?, descriptionDate=current_date(), descriptionTime=current_time() WHERE genPassID=?`
     db.query(qry, [description, passID], (err, result) => {
       if (err) throw err;
       res.json({

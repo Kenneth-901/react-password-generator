@@ -88,6 +88,7 @@ const UpdateProfile = () => {
     <div className="App">
       <Link to="/account" style={{marginTop: "2rem"}}>{"<"} Back</Link>
 
+      
       <div className="test" style={{borderRadius: "20px"}}>
         <div className="profile-header">
           <div className="profile-title">
@@ -135,7 +136,7 @@ const UpdateProfile = () => {
                             placeholder="First Name"
                           />
                           <ErrorMessage name="firstName" component="span" className="updateValidation"/>
-                          
+
                         </div>
                         <div className="form-group">
                           <Field
@@ -146,7 +147,7 @@ const UpdateProfile = () => {
                           <ErrorMessage name="lastName" component="span"className="updateValidation"/>
                         </div>
 
-                        <div className="wrapUpdateButton" style={{marginRight: "10rem"}}>
+                        <div className="wrapUpdateButton">
                           <button onClick={handleSubmit} className="updateButton">Update</button>
                           <button onClick={() => setEditName(false)} className="updateButtonSecondary">Cancel</button> 
                         </div>
@@ -206,7 +207,7 @@ const UpdateProfile = () => {
                             name="password"
                             component={PasswordShowAndHide}
                           />
-                          <ErrorMessage name="password" component="span" className="specialValidation"/>
+                          <ErrorMessage name="password" component="span" className="updateValidation"/>
                           <br />
                           <Field 
                             id="Password" 
@@ -215,9 +216,9 @@ const UpdateProfile = () => {
                             component={ConfirmPasswordShowAndHide}
                             placeholder="Double Confirm Your Password"
                           />
-                          <ErrorMessage name="dPassword" component="span" className="specialValidation"/>
+                          <ErrorMessage name="dPassword" component="span" className="updateValidation"/>
                         </div>
-                        <div className="wrapUpdateButton" style={{marginRight: "10rem"}}>
+                        <div className="wrapUpdateButton">
                           <button onClick={handleSubmit} className="updateButton">Update</button>
                           <button onClick={() => setEditPass(false)} className="updateButtonSecondary">Cancel</button> 
                         </div>
@@ -277,7 +278,7 @@ const UpdateProfile = () => {
                             placeholder="DOB"
                           />
                         </div>
-                        <div className="wrapUpdateButton" style={{marginRight: "10rem"}}>
+                        <div className="wrapUpdateButton">
                           <button onClick={handleSubmit} className="updateButton">Update</button>
                           <button onClick={() => setEditDob(false)} className="updateButtonSecondary">Cancel</button> 
                         </div>
@@ -335,9 +336,9 @@ const UpdateProfile = () => {
                             name="phoneNumber"
                             placeholder="Phone Number"
                           />
-                          <ErrorMessage name="phoneNumber" component="span" className="specialValidation "/>
+                          <ErrorMessage name="phoneNumber" component="span" className="updateValidation" style={{width: "65%"}}/>
                         </div>
-                        <div className="wrapUpdateButton" style={{marginRight: "10rem"}}>
+                        <div className="wrapUpdateButton">
                           <button onClick={handleSubmit} className="updateButton">Update</button>
                           <button onClick={() => setEditPhoneNumber(false)} className="updateButtonSecondary">Cancel</button> 
                         </div>

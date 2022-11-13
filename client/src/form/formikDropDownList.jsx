@@ -57,7 +57,7 @@ const FormikDropDownList = (props) => {
   }
 
   return (
-    <div className='App'>
+    <div>
       {/* <div className="dropdown-container"> */}
         <label htmlFor={id} className={'text-purple'}>
           {label}
@@ -70,7 +70,6 @@ const FormikDropDownList = (props) => {
           onChange={value => onHandleChange(value)}
           onBlur={onHandleBlur}
           value={formikValue}
-          className="dropDown"
         />
         {isInvalid && (<div style={{ color: 'red', marginTop: '.5rem' }}>{error}</div>)}
       {/* </div> */}

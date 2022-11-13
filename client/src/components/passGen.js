@@ -89,7 +89,8 @@ const PassGen = () => {
       onSubmit={generatePassword}
       validationSchema={validationSchema}>
 
-      <Form>
+      <Form className="wrapper">
+
         <FormikDropDownList 
           id="generatorQuestion" 
           name="generatorQuestion"
@@ -97,16 +98,15 @@ const PassGen = () => {
           placeholder="Select"
         />
         <ErrorMessage name="generatorQuestion" component="span"/>
-        
+
         <br />
 
         <Field
           id="generatorAnswer"
           name="generatorAnswer"
           placeholder="Enter Answer"
-          style={{width: "35rem"}}
         />
-        <ErrorMessage name="generatorAnswer" component="span"/>
+        <ErrorMessage name="generatorAnswer" component="span" className='errorValidation' />
 
         <br />
 
@@ -119,17 +119,16 @@ const PassGen = () => {
         <ErrorMessage name="generatorQuestion2" component="span"/>
         
         <br />
-
+        
         <Field
           id="generatorAnswer2"
           name="generatorAnswer2"
           placeholder="Enter Answer"
-          style={{width: "35rem"}}
         />
-        <ErrorMessage name="generatorAnswer2" component="span"/>
+        <ErrorMessage name="generatorAnswer2" component="span" className='errorValidation'/>
         
         <br />
-
+        
         <FormikDropDownList 
           id="generatorQuestion3" 
           name="generatorQuestion3"
@@ -137,7 +136,7 @@ const PassGen = () => {
           placeholder="Select"
         />
         <ErrorMessage name="generatorQuestion3" component="span"/>
-        
+
         <br />
 
         <Field
@@ -145,9 +144,8 @@ const PassGen = () => {
           name="generatorAnswer3"
           placeholder="Enter Answer"
           type="number"
-          style={{width: "35rem"}}
         />
-        <ErrorMessage name="generatorAnswer3" component="span"/>
+        <ErrorMessage name="generatorAnswer3" component="span" className='errorValidation' />
 
         <br />
 
@@ -158,17 +156,22 @@ const PassGen = () => {
         </Form>
     </Formik>
 
-    <h1>
-      {generatedPassword[0]} 
-      <br /> 
-      {generatedPassword[1]}
-      <br /> 
-      {generatedPassword[2]} 
-      <br /> 
-      {generatedPassword[3]}
-      <br /> 
-      {generatedPassword[4]}
-    </h1>
+    {generatedPassword.length == 0 ? 
+      <></> 
+      : 
+      <div className='reason' style={{fontWeight: "650"}}>
+        {generatedPassword[0]} 
+        <br /> 
+        {generatedPassword[1]}
+        <br /> 
+        {generatedPassword[2]} 
+        <br /> 
+        {generatedPassword[3]}
+        <br /> 
+        {generatedPassword[4]}
+      </div>
+    }
+    
   </section>
   )
 }

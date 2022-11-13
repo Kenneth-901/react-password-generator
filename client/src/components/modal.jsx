@@ -52,7 +52,7 @@ const CustomModal = ({
     isOpen={isOpen}
     onAfterOpen={onAfterOpen}
     onRequestClose={onRequestClose}
-    className="test"
+    className="modalWrapper"
     overlayClassName={`modal-overlay ${overlayClass(overlayClassName)}`}
     ariaHideApp={false}
   >

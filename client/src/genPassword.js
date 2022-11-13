@@ -17,7 +17,8 @@ const GenPassword = () => {
   const [getPassID, setgetPassID] = useState([])
   const [getDescription, setgetDescription] = useState([])
   const [editDescription, seteditDescription] = useState(false)
-  const [newDescription, setnewDescription] = useState()
+  const [getDescriptionDate, setgetDescriptionDate] = useState([])
+  const [getDescriptionTime, setgetDescriptionTime] = useState([])
   const userID = sessionStorage.getItem("userID")
   const email = sessionStorage.getItem("email2")
 
@@ -39,9 +40,14 @@ const GenPassword = () => {
       const passList = response.data.map(a => a.password)
       const passID = response.data.map(a => a.genPassID)
       const description = response.data.map(a => a.description)
+      const descriptionDate = response.data.map(a => a.descriptionDate)
+      const descriptionTime = response.data.map(a => a.descriptionTime)
+      // console.log(descriptionDate)
       setgetPass(passList)
       setgetPassID(passID)
       setgetDescription(description)
+      setgetDescriptionDate(descriptionDate)
+      setgetDescriptionTime(descriptionTime)
     }).catch (err => console.log(err))
   }
 
@@ -102,9 +108,6 @@ const GenPassword = () => {
           <td>{i + 1}</td>
           <td>{getPass[i]}</td>
           <td>
-
-            {editDescription === false && <button className="profile-btn" style={{color: "red"}} type="button" onClick={() => seteditDescription(true)}>Edit</button>}
-            
             <Formik
               initialValues = {{
                 description: ""
@@ -146,7 +149,13 @@ const GenPassword = () => {
             />
 
           </td>
+          
+          <td>{getDescriptionDate[i]}</td>
+          <td>{getDescriptionTime[i]}</td>
+          <td>{editDescription === false && <button className="profile-btn" type="button" onClick={() => seteditDescription(true)}>Edit</button>}</td>
+          
           <td><button onClick={() => handleDelete(getPassID[i])}>Delete</button></td>
+          
         </tr>)
       }
 
@@ -216,10 +225,11 @@ const GenPassword = () => {
 
   return(
     <>
-      <Navbar />
+    <Navbar />
 
-      <div className="App">
-        <div className="">
+    <div className="App">
+      <div className="information">
+        <div className="test">
           {!verifyUser ?
             <Formik 
             initialValues = {initialValues}
@@ -227,13 +237,15 @@ const GenPassword = () => {
             validationSchema={validationSchema}>
               <Form className="wrapper">
 
-                <FormikDropDownList 
-                  id="PhaseQuestion" 
-                  name="phaseQuestion"
-                  values={phaseQuestionList}
-                  placeholder="Select"
-                />
-                <ErrorMessage name="phaseQuestion" component="span"/>
+                <div className="dropDown">
+                  <FormikDropDownList 
+                    id="PhaseQuestion" 
+                    name="phaseQuestion"
+                    values={phaseQuestionList}
+                    placeholder="Select"
+                  />
+                  <ErrorMessage name="phaseQuestion" component="span"/>
+                </div>
 
                 <br />
 
@@ -242,7 +254,7 @@ const GenPassword = () => {
                   name="phaseAnswer"
                   placeholder="Phase Answer"
                 />
-                <ErrorMessage name="phaseAnswer" component="span" className="validation" style={{marginLeft: "22.5rem"}}/>
+                <ErrorMessage name="phaseAnswer" component="span" className="errorValidation" style={{marginTop: "5px"}}/>
 
                 <br />
 
@@ -250,12 +262,14 @@ const GenPassword = () => {
               </Form>
             </Formik>
             : 
-            <table>
+            <table style={{width: "100%"}}>
               <thead>
                 <tr>
                   <th>No</th>
                   <th>Password</th>
                   <th>Description</th>
+                  <th>Date</th>
+                  <th>Time</th>
                 </tr>
               </thead>
               <tbody>
@@ -268,11 +282,11 @@ const GenPassword = () => {
             }
 
           {/* {getGenPass()} */}
-
         </div>
       </div>
+    </div>
 
-      <Footer /> 
+    <Footer /> 
     </>
   )
 }

@@ -31,65 +31,11 @@ html, body {
   margin: 20px auto 5px auto;
 }
 
-/* .dropDownWrapper{
-  perspective: 1000px;
-}
-
 .dropDown{
-  opacity: 0;
-  visibility: hidden;
-  backface-visibility: hidden;
-  transform: rotate(1, 0, 0, -90deg);
-  transform-origin: 0% 0%;
-  transition: all 0.35;
+  width: 85%;
+  margin-left: 2.5rem;
+
 }
-
-.dropDown.open{
-  visibility: visible;
-  opacity: 1;
-  transform: rotate3d(0, 0, 0, 0);
-} */
-
-.dropDown{
-  margin-top: 2rem;
-}
-
-/* .login{
-  height: 2rem;
-  padding: 0 2rem;
-  border-radius: 0.375rem;
-  background: #4503dc;
-  color: #ffffff;
-  box-shadow: 0 0.4rem 0 0 #3700b8;
-  letter-spacing: 1px;
-  transition: all 0.3s;
-  margin: 20px auto 5px auto;
-}
-
-.login:active{
-  transform: translateY(0.3rem);
-  box-shadow: 0 0.2rem 0 0 #3700b8;
-}
-
-.login:focus{
-  outline: none;
-} */
-
-/* .information {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-} */
-
-/* input {
-  width: 300px;
-  height: 50px;
-  font-size: 20px;
-  padding-left: 10px;
-  margin: 5px;
-} */
 
 span {
   display: grid;
@@ -100,19 +46,18 @@ span {
 
 .test{
   margin: 3em auto;
-  width: 800px;
+  width: 80%;
   background: #FFFFFF;
   padding: 40px;
   position: relative;
   box-shadow: 0 0 20px rgba(0,0,0,.25);
 }
 
-.input100 {
-  font-size: 15px;
-  color: #555555;
-  line-height: 1.2;
-  display: block;
-  background: transparent;
+.test2{
+  margin: 0 auto;
+  width: 80%;
+  position: relative;
+  padding: 40px;
 }
 
 .errorInput {
@@ -125,14 +70,11 @@ span {
 
 /*---------------------------------[ Alert validate ]*/
 
-.validate-input {
-  position: relative;
-}
-
 .password-icon {
   position: relative;
-  top: -2px;
+  top: auto;
   left: 34rem;
+  margin: 0 auto;
   cursor: pointer;
 }
 

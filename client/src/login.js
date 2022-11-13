@@ -55,41 +55,43 @@ const Login = () => {
       <Navbar />
 
       <div className="App">
-        <div className="test">
-        <Formik 
-          initialValues = {initialValues}
-          onSubmit={logIn} 
-          validationSchema={validationSchema}>
-            <Form className="wrapper">
-              <Field
-                id="Email"
-                name="email"
-                placeholder="Enter email"
-                
-              />
-              <ErrorMessage name="email" component="span" className="validation"/>
+        <div className="information">
+          <div className="test">
+          <Formik 
+            initialValues = {initialValues}
+            onSubmit={logIn} 
+            validationSchema={validationSchema}>
+              <Form className="wrapper">
+                <Field
+                  id="Email"
+                  name="email"
+                  placeholder="Enter email"
+                  
+                />
+                <ErrorMessage name="email" component="span" className="errorValidation2"/>
 
-              <br />
+                <br />
 
-              <Field
-                id="Password"
-                name="password"
-                type="password"
-                placeholder="Enter password"
-              />
-              <ErrorMessage name="password" component="span" className="validation"/>
+                <Field
+                  id="Password"
+                  name="password"
+                  type="password"
+                  placeholder="Enter password"
+                />
+                <ErrorMessage name="password" component="span" className="errorValidation2"/>
 
-              <br />
+                <br />
 
-              <button className="login" type="submit">Log In</button> 
+                <button className="login" type="submit">Log In</button> 
 
-              <br />
+                <br />
 
-              <Link to="/resetPass.js">Forget Password</Link>
+                <Link to="/resetPass.js">Forget Password</Link>
 
-            </Form>
-        </Formik>
+              </Form>
+          </Formik>
 
+          </div>
         </div>
       </div>
     

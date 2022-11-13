@@ -13,7 +13,7 @@ const PassMeter = () => {
     setreasons([])
 
     checkPass.length === 0 ? 
-      setreasons("Enter your password") 
+      setreasons("No password found, please enter password") 
       : 
       weaknesses.forEach((weakness) => {
         if(weakness == null) return
@@ -99,7 +99,7 @@ const PassMeter = () => {
     <section>
             
       <h2>Password Meter: </h2>
-
+      
       <input 
         type="text" 
         name="passwordMeter"
@@ -118,9 +118,9 @@ const PassMeter = () => {
       {reasons.length === 0 ?
         <></>
         :
-        <div id="reasons" className='reasons'>
-        {reasons}
-        </div>
+        <div className='reason'>
+          {reasons}
+        </div>  
       }
       
     </section>
