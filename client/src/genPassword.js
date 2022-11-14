@@ -21,6 +21,7 @@ const GenPassword = () => {
   const [getDescriptionTime, setgetDescriptionTime] = useState([])
   const userID = sessionStorage.getItem("userID")
   const email = sessionStorage.getItem("email2")
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const vali = (data) => {
     Axios.get(`http://localhost:3001/generateToken/${userID}`).then((response) => {
@@ -106,7 +107,9 @@ const GenPassword = () => {
         test.push(
         <tr>
           <td>{i + 1}</td>
+
           <td>{getPass[i]}</td>
+
           <td>
             <Formik
               initialValues = {{
@@ -151,7 +154,9 @@ const GenPassword = () => {
           </td>
           
           <td>{getDescriptionDate[i]}</td>
+
           <td>{getDescriptionTime[i]}</td>
+
           <td>{editDescription === false && <button className="profile-btn" type="button" onClick={() => seteditDescription(true)}>Edit</button>}</td>
           
           <td><button onClick={() => handleDelete(getPassID[i])}>Delete</button></td>
@@ -258,7 +263,7 @@ const GenPassword = () => {
 
                 <br />
 
-                <button type="submit" className="updateButton">View my passwords</button> 
+                <button type="submit" className="updateButton" style={{marginTop: "1rem"}}>View passwords</button> 
               </Form>
             </Formik>
             : 

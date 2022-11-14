@@ -17,7 +17,6 @@ const Navbar = () => {
   return(
     <>
       <Nav>
-        <NavLink to='/'>image</NavLink>
         <Bars />
         {isloggedIn ? (
           <>

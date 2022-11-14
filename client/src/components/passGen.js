@@ -13,7 +13,7 @@ const PassGen = () => {
   const [item, setitem] = useState([])
   const [generatedPassword, setgeneratedPassword] = useState([])
   const isLoggedIn = localStorage.getItem("isLoggedIn")
-  
+
   const initialValues = {
     generatorQuestion: "",
     generatorQuestion2: "",

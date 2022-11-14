@@ -131,7 +131,7 @@ app.get("/generateToken/:userID", (req, res) => {
   const userID = req.params.userID
   // console.log(userID)
   // const id = result[0].userID
-  const token = jwt.sign({userID}, "testToken", {expiresIn: 500}) 
+  const token = jwt.sign({userID}, "testToken", {expiresIn: 300}) 
 
   try {
     res.json({
