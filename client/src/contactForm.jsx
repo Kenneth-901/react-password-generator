@@ -30,7 +30,11 @@ const ContactForm = () => {
     message: ""
   };
 
-  const onSubmit = (data) => {
+  const sleep = ms => new Promise(
+    resolve => setTimeout(resolve, ms)
+  );
+
+  const onSubmit =  async (data) => {
     console.log(data);
     const apiValue = {
       id: userID || "",
@@ -40,10 +44,12 @@ const ContactForm = () => {
     };
     console.log(apiValue);
     try {
-      Axios.post("http://localhost:3001/submitForm", apiValue).then((response) => {
+      Axios.post("http://localhost:3001/submitForm", apiValue).then( (response) => {
         // console.log(response);
       });
       toast.success("Your message has been captured");
+      await sleep(2000);
+      window.location.reload()
     } catch(e) {
       toast.error(e);
     }
