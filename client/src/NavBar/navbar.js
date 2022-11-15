@@ -26,7 +26,7 @@ const Navbar = () => {
               <NavLink to="/genPassword.js" activeStyle>Passwords</NavLink>
             </NavMenu>
             <NavBtn>
-              <NavBtnLink to="/signout.js">Sign Out</NavBtnLink> 
+              <NavBtnLink to="/signout.js" style={{padding: "0.5rem 1.8rem"}}>Sign Out</NavBtnLink> 
             </NavBtn>
           </>
         ) : (
@@ -36,7 +36,7 @@ const Navbar = () => {
             </NavMenu>
             <NavBtn>
               <NavBtnLink to="/login.js">Log In</NavBtnLink>
-              <NavBtnLink to="/signup.js">Sign up</NavBtnLink>
+              <NavBtnLink to="/signup.js" style={{background: "#a6a6a6"}}>Sign up</NavBtnLink>
             </NavBtn>
           </>
         )}

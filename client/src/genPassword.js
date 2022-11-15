@@ -234,7 +234,7 @@ const GenPassword = () => {
 
     <div className="App">
       <div className="information">
-        <div className="test">
+        <div className="test" style={{width: "100%"}}>
           {!verifyUser ?
             <Formik 
             initialValues = {initialValues}

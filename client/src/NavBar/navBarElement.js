@@ -69,20 +69,25 @@ export const NavBtn = styled.nav`
 `;
 
 export const NavBtnLink = styled(Link)`
-  border-radius: 4px;
-  background: #C0C0C0;
-  padding: 10px 22px;
-  color: #fff;
-  outline: none;
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  height: 2.5rem;
+  width: 8.5rem;
+  padding: 0.5rem 2.2rem;
+  border-radius: 0.75rem;
+  background: #4503dc;
+  color: #ffffff;
+  box-shadow: 0 0.25rem 0 0 #3700b8;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+  margin: 20px 10px 20px 5px;
+  font-size: 1.05rem;
   text-decoration: none;
-  /* Second Nav */
-  margin-left: 24px;
-  &:hover {
-    transition: all 0.2s ease-in-out;
-    background: #fff;
-    color: #010606;
+  
+  &:active{
+    transform: translateY(0.3rem);
+    box-shadow: 0 0.2rem 0 0 #3700b8;
   }
+  
+  // &:focus{
+  //   outline: none;
+  // }
 `;

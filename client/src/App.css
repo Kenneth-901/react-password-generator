@@ -60,6 +60,10 @@ span {
   padding: 40px;
 }
 
+table, th, td{
+  padding-left: 20px;
+}
+
 .errorInput {
   font-size: 15px;
   color: red;

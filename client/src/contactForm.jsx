@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React from "react"
 import Axios from "axios"
 import Footer from "./footerContainer"
 import Navbar from "./NavBar/navbar"
@@ -8,14 +8,12 @@ import YupPassword from 'yup-password'
 import "yup-phone"
 import "./App.css"
 import { useNavigate } from "react-router-dom";
-import { AES, enc }from 'crypto-js';
 import Button from "./components/button"
 import { toast } from "./common/toast"
 
 
 const ContactForm = () => {
   YupPassword(Yup);
-  const navigate = useNavigate();
   const isloggedIn = window.localStorage.getItem("isLoggedIn");
   const userID = sessionStorage.getItem("userID")
   const UserEmail = sessionStorage.getItem("email2")
@@ -28,7 +26,7 @@ const ContactForm = () => {
 
   const initialValues = {
     fullName: "",
-    email: UserEmail,
+    email: "",
     message: ""
   };
 
@@ -45,7 +43,7 @@ const ContactForm = () => {
       Axios.post("http://localhost:3001/submitForm", apiValue).then((response) => {
         // console.log(response);
       });
-      toast.success("success");
+      toast.success("Your message has been captured");
     } catch(e) {
       toast.error(e);
     }
@@ -53,21 +51,9 @@ const ContactForm = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    fullName: Yup.string().required("Required!"),
-    // email: Yup.string().email().required("Email Required!").test('Unique Email', 'Email already in use', 
-    //   function(value){
-    //     return new Promise((resolve, reject) => {
-    //       Axios.get(`http://localhost:3001/existed/${value}`).then((res) => {
-    //         if (res.data.length > 0) {
-    //           resolve(false);
-    //         }else {
-    //           resolve(true);
-    //         }
-    //       })
-    //     })
-    // }),
-    email: Yup.string().required("Required!"),
-    message: Yup.string()
+    fullName: Yup.string().required("Please enter your name"),
+    email: Yup.string().email().required("Please enter your email address"),
+    message: Yup.string().required("Please enter message")
   });
 
   return(
@@ -77,10 +63,9 @@ const ContactForm = () => {
       <div className="App">
         <div className="test">
           <Formik 
-            initialValues = {isloggedIn ? initialValues : initialValue}
+            initialValues = {initialValue}
             onSubmit={(v) => {
               onSubmit(v);
-              navigate("/");
             }} 
             validationSchema={validationSchema}
             render={({ errors, status, touched, handleSubmit }) => (
@@ -92,7 +77,7 @@ const ContactForm = () => {
                   id="FullName"
                   name="fullName"
                   type="text"
-                  placeholder="Address You"
+                  placeholder="Name"
                 />
                 <ErrorMessage name="fullName" component="span" className="errorValidation2"/>
 
@@ -100,22 +85,26 @@ const ContactForm = () => {
                   id="email" 
                   name="email"
                   placeholder="Email"
-                  readOnly={isloggedIn ? true : false}
+                  // readOnly={isloggedIn ? true : false}
                 />
                 <ErrorMessage name="email" component="span" className="errorValidation2"/>
+                
+                <br /><br />
 
-                <textarea
+                <Field
                   id="Message"
                   name="message"
                   placeholder="Feedback"
+                  as="textarea"
                   rows="4" 
-                  cols="50"
+                  cols="52"
+                  className="contactForm"
                 />
                 <ErrorMessage name="message" component="span" className="errorValidation2" />
 
                 <br />
 
-                <Button onClick={handleSubmit}>Register</Button>
+                <Button onClick={handleSubmit}>Submit</Button>
                 
               </Form>
             )}

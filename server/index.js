@@ -498,6 +498,8 @@ app.post("/addGeneratedPassToAcc", (req, res) => {
   }
 })
 
+
+// CONTACT FORM
 app.post("/submitForm", async (req, res) => {
   
   const userID = req.body.id || null;
