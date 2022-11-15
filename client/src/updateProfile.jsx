@@ -75,7 +75,7 @@ const UpdateProfile = () => {
   });
 
   const validationPhoneNumber = Yup.object().shape({
-    phoneNumber: Yup.string().phone().required()
+    phoneNumber: Yup.string().phone('MY', true, 'Only Malaysia Number').required(),
   });
 
   useEffect(() => {

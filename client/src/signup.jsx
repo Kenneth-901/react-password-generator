@@ -72,7 +72,8 @@ const Signup = () => {
     dob: Yup.date().required("DOB required").default(function () {
       return new Date();
     }),
-    phoneNumber: Yup.string().phone().required(),
+    // phoneNumber: Yup.string().phone().required("MY"),
+    phoneNumber: Yup.string().phone('MY', true, 'Only Malaysia Number').required(),
     phaseQuestion: Yup.mixed(),
     phaseAnswer: Yup.string().required("Required!"),
     phaseQuestion1: Yup.mixed(),
