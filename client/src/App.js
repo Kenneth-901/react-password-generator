@@ -12,6 +12,7 @@ import GenPassword from "./genPassword";
 import SignOut from "./signout";
 import UpdateProfile from "./updateProfile"
 import ResetPass from "./resetPass";
+import ContactForm from "./contactForm";
 import { ToastContainer } from 'react-toastify';
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
           <Route path="/genPassword.js" element={<GenPassword />} />
           <Route path="/updateProfile" element={<UpdateProfile />} />
           <Route path="/resetPass.js" element={<ResetPass />}/>
+          <Route path="/contactForm" element={<ContactForm />}/>
         </Routes>
       </Router>
       <ToastContainer

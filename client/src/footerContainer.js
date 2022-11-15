@@ -12,12 +12,12 @@ const FooterContainer = () => {
           </Footer.Column>
           <Footer.Column>
           <Footer.Title>Services</Footer.Title>
-            <Footer.Link href="#">Password Meter</Footer.Link>
-            <Footer.Link href="#">Passowrd Generator</Footer.Link>
+            <Footer.Link href="/genPassword.js">Password Meter</Footer.Link>
+            <Footer.Link href="/genPassword.js">Passowrd Generator</Footer.Link>
           </Footer.Column>
           <Footer.Column>
           <Footer.Title>Contact Us</Footer.Title>
-            <Footer.Link href="#">Message Us</Footer.Link>
+            <Footer.Link href="contactForm">Message Us</Footer.Link>
           </Footer.Column>
         </Footer.Row>
       </Footer.Wrapper>
