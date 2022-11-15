@@ -481,7 +481,7 @@ app.get("/generatorQuestion", (req, res) => {
 })
 
 
-// IF GOT ACC THEN ADD GENERATED PASSWORD TO THEIR ACC
+  // IF GOT ACC THEN ADD GENERATED PASSWORD TO THEIR ACC
 app.post("/addGeneratedPassToAcc", (req, res) => {
   const passwords = req.body.allPassword
   const userID = req.body.userID

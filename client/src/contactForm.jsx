@@ -26,7 +26,7 @@ const ContactForm = () => {
 
   const initialValues = {
     fullName: "",
-    email: "",
+    email: UserEmail,
     message: ""
   };
 
@@ -63,7 +63,7 @@ const ContactForm = () => {
       <div className="App">
         <div className="test">
           <Formik 
-            initialValues = {initialValue}
+            initialValues = {isloggedIn ? initialValues : initialValue}
             onSubmit={(v) => {
               onSubmit(v);
             }} 
@@ -85,7 +85,7 @@ const ContactForm = () => {
                   id="email" 
                   name="email"
                   placeholder="Email"
-                  // readOnly={isloggedIn ? true : false}
+                  readOnly={isloggedIn ? true : false}
                 />
                 <ErrorMessage name="email" component="span" className="errorValidation2"/>
                 
