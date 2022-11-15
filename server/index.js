@@ -498,6 +498,19 @@ app.post("/addGeneratedPassToAcc", (req, res) => {
   }
 })
 
+app.post("/submitForm", async (req, res) => {
+  
+  const userID = req.body.id || null;
+  const fullName = req.body.fullName;
+  const email = req.body.email;
+  const message = req.body.message;
+
+  db.query("INSERT INTO password_generator.contact_form (user_id, full_name, email, details) VALUES (?, ?, ?, ?)", 
+    [userID, fullName, email, message], (err, result) => {
+      if (err) throw err;
+  });
+});
+
 
 // CHECK IF THE SERVER IS RUNNING
 app.listen(3001, () => {
